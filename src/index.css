@@ -1,0 +1,115 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Outfit:wght@100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+@import "tailwindcss";
+
+* {
+  font-family: "Poppins", sans-serif;
+  box-sizing: border-box;
+  scroll-behavior: smooth;
+  transition: all 0.3s ease;
+}
+
+/* Fix text formatting issues on service display pages */
+.prose h1,
+.prose h2,
+.prose h3,
+.prose h4,
+.prose h5,
+.prose h6 {
+  word-wrap: break-word !important;
+  hyphens: none !important;
+  text-align: left !important;
+  display: block !important;
+  width: 100% !important;
+  line-height: 1.2 !important;
+}
+
+.prose h1 {
+  font-size: 2.5rem !important;
+  font-weight: 900 !important;
+  color: #1f2937 !important;
+  margin: 1.5rem 0 1rem 0 !important;
+  border-bottom: 3px solid #3b82f6 !important;
+  padding-bottom: 0.5rem !important;
+}
+
+.prose h2 {
+  font-size: 2rem !important;
+  font-weight: 700 !important;
+  color: #374151 !important;
+  margin: 1.25rem 0 0.75rem 0 !important;
+  border-bottom: 2px solid #6b7280 !important;
+  padding-bottom: 0.25rem !important;
+}
+
+.prose h3 {
+  font-size: 1.5rem !important;
+  font-weight: 600 !important;
+  color: #4b5563 !important;
+  margin: 1rem 0 0.5rem 0 !important;
+  border-left: 4px solid #9ca3af !important;
+  padding-left: 0.75rem !important;
+}
+
+.prose h4 {
+  font-size: 1.25rem !important;
+  font-weight: 500 !important;
+  color: #6b7280 !important;
+  margin: 0.75rem 0 0.5rem 0 !important;
+  background-color: #f3f4f6 !important;
+  padding: 0.25rem 0.5rem !important;
+  border-radius: 0.25rem !important;
+}
+
+.prose h5 {
+  font-size: 1.125rem !important;
+  font-weight: 400 !important;
+  color: #9ca3af !important;
+  margin: 0.5rem 0 0.25rem 0 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.05em !important;
+}
+
+.prose h6 {
+  font-size: 1rem !important;
+  font-weight: 300 !important;
+  color: #d1d5db !important;
+  margin: 0.5rem 0 0.25rem 0 !important;
+  font-style: italic !important;
+  text-decoration: underline !important;
+}
+
+.prose p {
+  margin: 0.75rem 0 !important;
+  line-height: 1.6 !important;
+  text-align: left !important;
+  word-wrap: break-word !important;
+  hyphens: none !important;
+}
+
+/* Additional fixes for service content display */
+.service-content h1,
+.service-content h2,
+.service-content h3,
+.service-content h4,
+.service-content h5,
+.service-content h6 {
+  word-wrap: break-word !important;
+  hyphens: none !important;
+  text-align: left !important;
+  display: block !important;
+  width: 100% !important;
+}
+
+/* Fix for any content with dangerouslySetInnerHTML */
+[class*="prose"] h1,
+[class*="prose"] h2,
+[class*="prose"] h3,
+[class*="prose"] h4,
+[class*="prose"] h5,
+[class*="prose"] h6 {
+  word-wrap: break-word !important;
+  hyphens: none !important;
+  text-align: left !important;
+  display: block !important;
+  width: 100% !important;
+}
