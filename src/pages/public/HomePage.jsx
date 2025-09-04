@@ -16,6 +16,8 @@ import { useEffect, useState } from "react";
 import { getTestimonials } from "../../features/testimonial/testimonialSlice";
 import "../../styles/animations.css";
 
+
+
 const HomePage = () => {
   const [testimonials, setTestimonials] = useState([]);
   const [currentTestimonial, setCurrentTestimonial] = useState(0);
