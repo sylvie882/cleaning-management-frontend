@@ -61,8 +61,10 @@ const Footer = () => {
   };
 
 
-  
 
+
+
+  
   return (
     <footer className="bg-gray-900 text-white pt-16 pb-8">
       {/* Structured Data for SEO */}
