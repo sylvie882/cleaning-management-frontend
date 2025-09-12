@@ -117,38 +117,31 @@ const Footer = () => {
             </ul>
           </div>
 
-          {/* Newsletter & Socials */}
+          {/* Quick Links */}
           <div>
             <h2 className="text-xl font-semibold mb-3 border-b border-blue-400 pb-1 inline-block">
-              Stay Connected
+              Quick Links
             </h2>
-            <p className="text-gray-400 text-base mb-3">
-              Get cleaning tips & updates:
-            </p>
-            <form className="flex items-center bg-gray-800 rounded-full overflow-hidden mb-4">
-              <input
-                type="email"
-                placeholder="Your email"
-                className="flex-1 px-3 py-2 text-base bg-transparent outline-none placeholder-gray-500"
-              />
-              <button
-                type="submit"
-                className="bg-blue-500 hover:bg-blue-600 p-2"
-              >
-                <Send size={18} />
-              </button>
-            </form>
-            <div className="flex space-x-3">
-              {[Facebook, Twitter, Instagram, Linkedin].map((Icon, idx) => (
-                <a
-                  key={idx}
-                  href="#"
-                  className="bg-gray-800/60 p-2 rounded-full text-gray-400 hover:text-white hover:bg-blue-500/30"
-                >
-                  <Icon size={18} />
-                </a>
+            <ul className="space-y-2 text-base">
+              {[
+                { to: "/", label: "Home" },
+                { to: "/about", label: "About Us" },
+                { to: "/services", label: "All Services" },
+                { to: "/projects", label: "Our Projects" },
+                { to: "/testimonials", label: "Testimonials" },
+                { to: "/contact", label: "Contact Us" },
+                { to: "/book", label: "Book Now" },
+              ].map((link, idx) => (
+                <li key={idx}>
+                  <Link
+                    to={link.to}
+                    className="text-gray-400 hover:text-blue-400"
+                  >
+                    {link.label}
+                  </Link>
+                </li>
               ))}
-            </div>
+            </ul>
           </div>
         </div>
 

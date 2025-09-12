@@ -15,6 +15,7 @@ import cleaner8 from "../../assets/images/Event_venue.png";
 import { useEffect, useState } from "react";
 import { getTestimonials } from "../../features/testimonial/testimonialSlice";
 import "../../styles/animations.css";
+import { ArrowUp} from "lucide-react";
 
 const HomePage = () => {
   const [testimonials, setTestimonials] = useState([]);
@@ -32,6 +33,25 @@ const HomePage = () => {
     cta: false,
     trust: false,
   });
+  const [showScrollTop, setShowScrollTop] = useState(false);
+
+  // Scroll to top function
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth"
+    });
+  };
+
+  // Effect to show/hide scroll to top button
+  useEffect(() => {
+    const handleScroll = () => {
+      setShowScrollTop(window.scrollY > 300);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   // SEO Metadata with Nairobi-specific optimization
   const seoData = {
@@ -1355,6 +1375,17 @@ const HomePage = () => {
           </div>
         </div>
       </section>
+
+      {/* Scroll to Top Button */}
+      <button
+        className={`fixed bottom-28 right-8 w-14 h-14 bg-gradient-to-r from-blue-600 to-indigo-700 text-white rounded-full shadow-2xl flex items-center justify-center transition-all duration-300 z-50 ${
+          showScrollTop ? "opacity-100 scale-100" : "opacity-0 scale-0"
+        } hover:from-blue-700 hover:to-indigo-800 transform hover:scale-110`}
+        onClick={scrollToTop}
+        aria-label="Scroll to top"
+      >
+        <ArrowUp size={24} />
+      </button>
 
       {/* Add custom CSS for animations */}
       <style jsx>{`
