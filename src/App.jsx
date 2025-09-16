@@ -85,6 +85,20 @@ import ServiceDetailPage from "./pages/public/ServiceDetailPage";
 import BlogPage from "./pages/public/BlogPage";
 import ArticleDetailPage from "./pages/public/ArticleDetailPage";
 
+
+// importing the 47 counties pages
+import { 
+  MombasaPage, KwalePage, KilifiPage, TanaRiverPage, LamuPage, TaitaTavetaPage,
+  GarissaPage, WajirPage, ManderaPage, MarsabitPage, IsioloPage, MeruPage,
+  TharakaNithiPage, EmbuPage, KituiPage, MachakosPage, MakueniPage, NyandaruaPage,
+  NyeriPage, KirinyagaPage, MurangaPage, KiambuPage, TurkanaPage, WestPokotPage,
+  SamburuPage, TransNzoiaPage, UasinGishuPage, ElgeyoMarakwetPage, NandiPage, 
+  BaringoPage, LaikipiaPage, NakuruPage, NarokPage, KajiadoPage, KerichoPage,
+  BometPage, KakamegaPage, VihigaPage, BungomaPage, BusiaPage, SiayaPage,
+  KisumuPage, HomaBayPage, MigoriPage, KisiiPage, NyamiraPage, NairobiPage
+} from './pages/public/CountyPage';
+
+
 // Socket connection component
 const SocketConnectionManager = () => {
   const dispatch = useDispatch();
@@ -140,6 +154,54 @@ function AppContent() {
               <Route path="/services/commercial" element={<CommercialCleaning />} />
               <Route path="/services/deep-cleaning" element={<DeepCleaning />} />
               <Route path="/services/specialized" element={<SpecializedCleaning />} />
+
+              <Route path="/mombasa" element={<MombasaPage />} />
+              <Route path="/kwale" element={<KwalePage />} />
+              <Route path="/kilifi" element={<KilifiPage />} />
+              <Route path="/tana-river" element={<TanaRiverPage />} />
+              <Route path="/lamu" element={<LamuPage />} />
+              <Route path="/taita-taveta" element={<TaitaTavetaPage />} />
+              <Route path="/garissa" element={<GarissaPage />} />
+              <Route path="/wajir" element={<WajirPage />} />
+              <Route path="/mandera" element={<ManderaPage />} />
+              <Route path="/marsabit" element={<MarsabitPage />} />
+              <Route path="/isiolo" element={<IsioloPage />} />
+              <Route path="/meru" element={<MeruPage />} />
+              <Route path="/tharaka-nithi" element={<TharakaNithiPage />} />
+              <Route path="/embu" element={<EmbuPage />} />
+              <Route path="/kitui" element={<KituiPage />} />
+              <Route path="/machakos" element={<MachakosPage />} />
+              <Route path="/makueni" element={<MakueniPage />} />
+              <Route path="/nyandarua" element={<NyandaruaPage />} />
+              <Route path="/nyeri" element={<NyeriPage />} />
+              <Route path="/kirinyaga" element={<KirinyagaPage />} />
+              <Route path="/muranga" element={<MurangaPage />} />
+              <Route path="/kiambu" element={<KiambuPage />} />
+              <Route path="/turkana" element={<TurkanaPage />} />
+              <Route path="/west-pokot" element={<WestPokotPage />} />
+              <Route path="/samburu" element={<SamburuPage />} />
+              <Route path="/trans-nzoia" element={<TransNzoiaPage />} />
+              <Route path="/uasin-gishu" element={<UasinGishuPage />} />
+              <Route path="/elgeyo-marakwet" element={<ElgeyoMarakwetPage />} />
+              <Route path="/nandi" element={<NandiPage />} />
+              <Route path="/baringo" element={<BaringoPage />} />
+              <Route path="/laikipia" element={<LaikipiaPage />} />
+              <Route path="/nakuru" element={<NakuruPage />} />
+              <Route path="/narok" element={<NarokPage />} />
+              <Route path="/kajiado" element={<KajiadoPage />} />
+              <Route path="/kericho" element={<KerichoPage />} />
+              <Route path="/bomet" element={<BometPage />} />
+              <Route path="/kakamega" element={<KakamegaPage />} />
+              <Route path="/vihiga" element={<VihigaPage />} />
+              <Route path="/bungoma" element={<BungomaPage />} />
+              <Route path="/busia" element={<BusiaPage />} />
+              <Route path="/siaya" element={<SiayaPage />} />
+              <Route path="/kisumu" element={<KisumuPage />} />
+              <Route path="/homa-bay" element={<HomaBayPage />} />
+              <Route path="/migori" element={<MigoriPage />} />
+              <Route path="/kisii" element={<KisiiPage />} />
+              <Route path="/nyamira" element={<NyamiraPage />} />
+              <Route path="/nairobi" element={<NairobiPage />} />
 
 
               <Route
