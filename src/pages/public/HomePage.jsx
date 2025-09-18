@@ -451,9 +451,10 @@ const HomePage = () => {
 
       {/* Hero Section with Enhanced Animations */}
       <section
-        className="relative h-screen overflow-hidden"
+        className="relative h-screen overflow-hidden pt-44 md:pt-44 lg:pt-44"
         data-section="hero"
-      >
+          >
+
         {/* Animated Background */}
         <div className="absolute inset-0 w-full h-full">
           {carouselData.map((slide, index) => (
