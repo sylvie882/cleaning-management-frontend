@@ -15,7 +15,7 @@ import cleaner8 from "../../assets/images/Event_venue.png";
 import { useEffect, useState } from "react";
 import { getTestimonials } from "../../features/testimonial/testimonialSlice";
 import "../../styles/animations.css";
-import { ArrowUp} from "lucide-react";
+import { ArrowUp } from "lucide-react";
 
 const HomePage = () => {
   const [testimonials, setTestimonials] = useState([]);
@@ -524,8 +524,8 @@ const HomePage = () => {
         </div>
 
         {/* Content */}
-        <div className="container relative z-10 mx-auto h-full px-6 flex items-center justify-center">
-          <div className="text-center max-w-5xl">
+        <div className="container relative z-10 mx-auto h-full px-4 sm:px-6 flex items-center justify-center">
+          <div className="text-center max-w-5xl w-full px-2">
             <div
               className={`transition-all duration-700 ease-out ${
                 isVisible.hero
@@ -534,7 +534,7 @@ const HomePage = () => {
               }`}
             >
               <h1
-                className={`text-5xl md:text-7xl font-bold text-white mb-4 leading-tight transition-all duration-500 ${
+                className={`text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-4 leading-tight transition-all duration-500 ${
                   animatingText
                     ? "opacity-0 transform -translate-y-10"
                     : "opacity-100 transform translate-y-0"
@@ -543,7 +543,7 @@ const HomePage = () => {
                 {carouselData[currentSlide].title}
               </h1>
               <h2
-                className={`text-2xl md:text-4xl font-light text-blue-200 mb-6 transition-all duration-500 ${
+                className={`text-xl sm:text-2xl md:text-3xl lg:text-4xl font-light text-blue-200 mb-6 transition-all duration-500 ${
                   animatingText
                     ? "opacity-0 transform translate-y-10"
                     : "opacity-100 transform translate-y-0"
@@ -552,7 +552,7 @@ const HomePage = () => {
                 {carouselData[currentSlide].subtitle}
               </h2>
               <p
-                className={`text-lg md:text-xl text-gray-200 mb-10 max-w-3xl mx-auto leading-relaxed transition-all duration-500 ${
+                className={`text-base sm:text-lg md:text-xl text-gray-200 mb-8 max-w-3xl mx-auto leading-relaxed transition-all duration-500 ${
                   animatingText
                     ? "opacity-0 transform translate-y-10"
                     : "opacity-100 transform translate-y-0"
@@ -564,14 +564,14 @@ const HomePage = () => {
               <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
                 <Link
                   to="/book"
-                  className={`inline-flex items-center bg-gradient-to-r ${carouselData[currentSlide].accent} hover:scale-105 text-white font-semibold py-4 px-8 rounded-full transition-all duration-300 transform shadow-2xl hover:shadow-blue-500/25 btn-primary animate-pulse-glow`}
+                  className={`inline-flex items-center bg-gradient-to-r ${carouselData[currentSlide].accent} hover:scale-105 text-white font-semibold py-3 px-6 sm:py-4 sm:px-8 rounded-full transition-all duration-300 transform shadow-2xl hover:shadow-blue-500/25 btn-primary animate-pulse-glow text-base sm:text-lg`}
                 >
                   <i className="fas fa-calendar-check mr-2"></i>
                   Book {carouselData[currentSlide].serviceType}
                 </Link>
                 <Link
                   to="/services"
-                  className="inline-flex items-center bg-white/10 backdrop-blur-sm hover:bg-white/20 text-white font-semibold py-4 px-8 rounded-full transition-all duration-300 transform border border-white/20"
+                  className="inline-flex items-center bg-white/10 backdrop-blur-sm hover:bg-white/20 text-white font-semibold py-3 px-6 sm:py-4 sm:px-8 rounded-full transition-all duration-300 transform border border-white/20 text-base sm:text-lg"
                 >
                   <i className="fas fa-info-circle mr-2"></i>
                   Learn More
@@ -580,7 +580,7 @@ const HomePage = () => {
             </div>
 
             {/* Enhanced Carousel Indicators */}
-            <div className="flex justify-center mt-16 space-x-3">
+            <div className="flex justify-center mt-12 sm:mt-16 space-x-3">
               {carouselData.map((_, index) => (
                 <button
                   key={index}
@@ -595,8 +595,8 @@ const HomePage = () => {
                   }}
                   className={`transition-all duration-300 rounded-full ${
                     currentSlide === index
-                      ? "bg-blue-500 w-12 h-3 shadow-lg shadow-blue-500/50"
-                      : "bg-white/30 w-3 h-3 hover:bg-white/50"
+                      ? "bg-blue-500 w-10 sm:w-12 h-2 sm:h-3 shadow-lg shadow-blue-500/50"
+                      : "bg-white/30 w-2 sm:w-3 h-2 sm:h-3 hover:bg-white/50"
                   }`}
                   aria-label={`Slide ${index + 1}`}
                 ></button>
@@ -614,10 +614,10 @@ const HomePage = () => {
       </section>
 
       {/* Statistics Section - NEW */}
-      <section className="py-20 bg-gradient-to-r from-blue-600 via-blue-700 to-indigo-800 relative overflow-hidden">
+      <section className="py-16 sm:py-20 bg-gradient-to-r from-blue-600 via-blue-700 to-indigo-800 relative overflow-hidden">
         <div className="absolute inset-0 bg-black/10"></div>
-        <div className="container mx-auto px-6 relative z-10">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+        <div className="container mx-auto px-4 sm:px-6 relative z-10">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 sm:gap-8 text-center">
             {[
               { number: "5000+", label: "Happy Clients", icon: "fas fa-smile" },
               {
@@ -637,11 +637,11 @@ const HomePage = () => {
               },
             ].map((stat, index) => (
               <div key={index} className="text-white">
-                <div className="text-4xl md:text-5xl font-bold mb-2 counter">
+                <div className="text-3xl sm:text-4xl md:text-5xl font-bold mb-2 counter">
                   {stat.number}
                 </div>
-                <div className="text-blue-100 mb-3">{stat.label}</div>
-                <div className="text-3xl text-blue-200">
+                <div className="text-sm sm:text-base text-blue-100 mb-3">{stat.label}</div>
+                <div className="text-2xl sm:text-3xl text-blue-200">
                   <i className={stat.icon}></i>
                 </div>
               </div>
@@ -652,31 +652,31 @@ const HomePage = () => {
 
       {/* Services Section with Enhanced Cards */}
       <section
-        className="py-24 bg-gradient-to-br from-gray-50 to-white"
+        className="py-16 sm:py-24 bg-gradient-to-br from-gray-50 to-white"
         data-section="services"
       >
-        <div className="container mx-auto px-6">
+        <div className="container mx-auto px-4 sm:px-6">
           <div
-            className={`text-center mb-20 transition-all duration-1000 ${
+            className={`text-center mb-12 sm:mb-20 transition-all duration-1000 ${
               isVisible.services
                 ? "opacity-100 translate-y-0"
                 : "opacity-0 translate-y-10"
             }`}
           >
-            <h2 className="text-4xl md:text-5xl font-bold text-gray-800 mb-6">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-800 mb-4 sm:mb-6">
               Our Professional Services
             </h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
+            <p className="text-lg sm:text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
               Comprehensive cleaning solutions designed to meet your specific
               needs with the highest standards of quality and professionalism
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
             {services.map((service, index) => (
               <div
                 key={index}
-                className={`group bg-white rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 border border-gray-100 hover-lift hover-glow ${
+                className={`group bg-white rounded-2xl p-6 sm:p-8 shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 border border-gray-100 hover-lift hover-glow ${
                   isVisible.services
                     ? "opacity-100 translate-y-0"
                     : "opacity-0 translate-y-10"
@@ -684,21 +684,21 @@ const HomePage = () => {
                 style={{ transitionDelay: `${index * 100}ms` }}
               >
                 <div
-                  className={`w-16 h-16 bg-gradient-to-r ${service.color} rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300`}
+                  className={`w-14 h-14 sm:w-16 sm:h-16 bg-gradient-to-r ${service.color} rounded-2xl flex items-center justify-center mb-4 sm:mb-6 group-hover:scale-110 transition-transform duration-300`}
                 >
-                  <i className={`${service.icon} text-white text-2xl`}></i>
+                  <i className={`${service.icon} text-white text-xl sm:text-2xl`}></i>
                 </div>
-                <h3 className="text-xl font-bold text-gray-800 mb-4 group-hover:text-blue-600 transition-colors duration-300">
+                <h3 className="text-lg sm:text-xl font-bold text-gray-800 mb-3 sm:mb-4 group-hover:text-blue-600 transition-colors duration-300">
                   {service.title}
                 </h3>
-                <p className="text-gray-600 mb-6 leading-relaxed">
+                <p className="text-gray-600 mb-4 sm:mb-6 leading-relaxed text-sm sm:text-base">
                   {service.description}
                 </p>
-                <ul className="space-y-2 mb-6">
+                <ul className="space-y-2 mb-4 sm:mb-6">
                   {service.features.map((feature, idx) => (
                     <li
                       key={idx}
-                      className="flex items-center text-sm text-gray-500"
+                      className="flex items-center text-xs sm:text-sm text-gray-500"
                     >
                       <i className="fas fa-check text-green-500 mr-2"></i>
                       {feature}
@@ -707,7 +707,7 @@ const HomePage = () => {
                 </ul>
                 <Link
                   to="/services"
-                  className="inline-flex items-center text-blue-600 hover:text-blue-800 font-semibold group-hover:translate-x-1 transition-all duration-300"
+                  className="inline-flex items-center text-blue-600 hover:text-blue-800 font-semibold text-sm sm:text-base group-hover:translate-x-1 transition-all duration-300"
                 >
                   Learn More
                   <svg
@@ -732,52 +732,52 @@ const HomePage = () => {
 
       {/* Why Choose Us Section with Enhanced Design */}
       <section
-        className="py-24 bg-gradient-to-br from-blue-50 to-indigo-50"
+        className="py-16 sm:py-24 bg-gradient-to-br from-blue-50 to-indigo-50"
         data-section="whyChoose"
       >
-        <div className="container mx-auto px-6">
+        <div className="container mx-auto px-4 sm:px-6">
           <div
-            className={`text-center mb-20 transition-all duration-1000 ${
+            className={`text-center mb-12 sm:mb-20 transition-all duration-1000 ${
               isVisible.whyChoose
                 ? "opacity-100 translate-y-0"
                 : "opacity-0 translate-y-10"
             }`}
           >
-            <h2 className="text-4xl md:text-5xl font-bold text-gray-800 mb-6">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-800 mb-4 sm:mb-6">
               Why Customers Choose Us
             </h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
+            <p className="text-lg sm:text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
               Experience the difference when you choose our professional
               cleaning services backed by years of expertise and commitment to
               excellence
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
             {chooseBenefits.map((benefit, index) => (
               <div
                 key={index}
-                className={`bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-500 transform hover:-translate-y-2 border-l-4 border-blue-500 ${
+                className={`bg-white rounded-2xl p-6 sm:p-8 shadow-lg hover:shadow-xl transition-all duration-500 transform hover:-translate-y-2 border-l-4 border-blue-500 ${
                   isVisible.whyChoose
                     ? "opacity-100 translate-y-0"
                     : "opacity-0 translate-y-10"
                 }`}
                 style={{ transitionDelay: `${index * 100}ms` }}
               >
-                <div className="flex items-start mb-6">
-                  <div className="bg-gradient-to-r from-blue-500 to-cyan-500 p-4 rounded-2xl mr-4 shadow-lg">
-                    <i className={`${benefit.icon} text-white text-2xl`}></i>
+                <div className="flex items-start mb-4 sm:mb-6">
+                  <div className="bg-gradient-to-r from-blue-500 to-cyan-500 p-3 sm:p-4 rounded-2xl mr-3 sm:mr-4 shadow-lg">
+                    <i className={`${benefit.icon} text-white text-xl sm:text-2xl`}></i>
                   </div>
                   <div className="flex-1">
-                    <h3 className="text-xl font-bold text-gray-800 mb-2">
+                    <h3 className="text-lg sm:text-xl font-bold text-gray-800 mb-2">
                       {benefit.title}
                     </h3>
-                    <div className="bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-sm font-semibold inline-block">
+                    <div className="bg-blue-100 text-blue-700 px-2 sm:px-3 py-1 rounded-full text-xs sm:text-sm font-semibold inline-block">
                       {benefit.stat}
                     </div>
                   </div>
                 </div>
-                <p className="text-gray-600 leading-relaxed">
+                <p className="text-gray-600 leading-relaxed text-sm sm:text-base">
                   {benefit.description}
                 </p>
               </div>
@@ -787,25 +787,25 @@ const HomePage = () => {
       </section>
 
       {/* How It Works Section with Enhanced Steps */}
-      <section className="py-24 bg-white" data-section="howItWorks">
-        <div className="container mx-auto px-6">
+      <section className="py-16 sm:py-24 bg-white" data-section="howItWorks">
+        <div className="container mx-auto px-4 sm:px-6">
           <div
-            className={`text-center mb-20 transition-all duration-1000 ${
+            className={`text-center mb-12 sm:mb-20 transition-all duration-1000 ${
               isVisible.howItWorks
                 ? "opacity-100 translate-y-0"
                 : "opacity-0 translate-y-10"
             }`}
           >
-            <h2 className="text-4xl md:text-5xl font-bold text-gray-800 mb-6">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-800 mb-4 sm:mb-6">
               How It Works
             </h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
+            <p className="text-lg sm:text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
               Simple steps to get your space cleaned professionally with our
               streamlined process
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
             {[
               {
                 step: "1",
@@ -845,21 +845,21 @@ const HomePage = () => {
                 }`}
                 style={{ transitionDelay: `${index * 200}ms` }}
               >
-                <div className="relative mb-8">
-                  <div className="w-20 h-20 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-full flex items-center justify-center text-white text-2xl font-bold mx-auto shadow-xl">
+                <div className="relative mb-6 sm:mb-8">
+                  <div className="w-16 h-16 sm:w-20 sm:h-20 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-full flex items-center justify-center text-white text-xl sm:text-2xl font-bold mx-auto shadow-xl">
                     {step.step}
                   </div>
-                  <div className="absolute -top-2 -right-2 w-8 h-8 bg-gradient-to-r from-green-400 to-emerald-500 rounded-full flex items-center justify-center">
-                    <i className={`${step.icon} text-white text-sm`}></i>
+                  <div className="absolute -top-2 -right-2 w-6 h-6 sm:w-8 sm:h-8 bg-gradient-to-r from-green-400 to-emerald-500 rounded-full flex items-center justify-center">
+                    <i className={`${step.icon} text-white text-xs sm:text-sm`}></i>
                   </div>
                   {index < 3 && (
-                    <div className="hidden lg:block absolute top-10 left-full w-full h-1 bg-gradient-to-r from-blue-200 to-cyan-200 transform translate-x-4"></div>
+                    <div className="hidden lg:block absolute top-8 sm:top-10 left-full w-full h-1 bg-gradient-to-r from-blue-200 to-cyan-200 transform translate-x-4"></div>
                   )}
                 </div>
-                <h3 className="text-xl font-bold text-gray-800 mb-4">
+                <h3 className="text-lg sm:text-xl font-bold text-gray-800 mb-3 sm:mb-4">
                   {step.title}
                 </h3>
-                <p className="text-gray-600 leading-relaxed">
+                <p className="text-gray-600 leading-relaxed text-sm sm:text-base">
                   {step.description}
                 </p>
               </div>
@@ -870,27 +870,27 @@ const HomePage = () => {
 
       {/* YouTube Videos Section with Enhanced Layout */}
       <section
-        className="py-24 bg-gradient-to-br from-gray-50 to-white"
+        className="py-16 sm:py-24 bg-gradient-to-br from-gray-50 to-white"
         data-section="videos"
       >
-        <div className="container mx-auto px-6">
+        <div className="container mx-auto px-4 sm:px-6">
           <div
-            className={`text-center mb-20 transition-all duration-1000 ${
+            className={`text-center mb-12 sm:mb-20 transition-all duration-1000 ${
               isVisible.videos
                 ? "opacity-100 translate-y-0"
                 : "opacity-0 translate-y-10"
             }`}
           >
-            <h2 className="text-4xl md:text-5xl font-bold text-gray-800 mb-6">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-800 mb-4 sm:mb-6">
               See Our Team in Action
             </h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
+            <p className="text-lg sm:text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
               Watch our professional cleaning experts deliver exceptional
               results with our proven methods
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
             {cleaningVideos.map((video, index) => (
               <div
                 key={index}
@@ -913,21 +913,21 @@ const HomePage = () => {
                     ></iframe>
                   </div>
                   <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-t-2xl"></div>
-                  <div className="absolute top-4 right-4">
-                    <span className="bg-red-600 text-white px-3 py-1 rounded-full text-sm font-semibold shadow-lg">
+                  <div className="absolute top-3 sm:top-4 right-3 sm:right-4">
+                    <span className="bg-red-600 text-white px-2 sm:px-3 py-1 rounded-full text-xs sm:text-sm font-semibold shadow-lg">
                       {video.category}
                     </span>
                   </div>
                 </div>
-                <div className="p-8">
-                  <h3 className="text-xl font-bold text-gray-800 mb-3">
+                <div className="p-6 sm:p-8">
+                  <h3 className="text-lg sm:text-xl font-bold text-gray-800 mb-3">
                     {video.title}
                   </h3>
-                  <p className="text-gray-600 mb-6 leading-relaxed">
+                  <p className="text-gray-600 mb-4 sm:mb-6 leading-relaxed text-sm sm:text-base">
                     {video.description}
                   </p>
                   <div className="flex items-center justify-between">
-                    <div className="flex items-center text-sm text-gray-500">
+                    <div className="flex items-center text-xs sm:text-sm text-gray-500">
                       <i className="fas fa-play-circle mr-2 text-red-500"></i>
                       <span>Watch on YouTube</span>
                     </div>
@@ -935,11 +935,11 @@ const HomePage = () => {
                       href={`https://www.youtube.com/watch?v=${video.id}`}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg text-sm font-semibold transition-all duration-300 transform hover:scale-105"
+                      className="inline-flex items-center bg-red-600 hover:bg-red-700 text-white px-3 sm:px-4 py-1.5 sm:py-2 rounded-lg text-xs sm:text-sm font-semibold transition-all duration-300 transform hover:scale-105"
                     >
                       Full Video
                       <svg
-                        className="w-4 h-4 ml-2"
+                        className="w-3 h-3 sm:w-4 sm:h-4 ml-2"
                         fill="none"
                         stroke="currentColor"
                         viewBox="0 0 24 24"
@@ -958,14 +958,14 @@ const HomePage = () => {
             ))}
           </div>
 
-          <div className="text-center mt-16">
+          <div className="text-center mt-12 sm:mt-16">
             <a
               href="https://www.youtube.com/@yourchannelname"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center bg-red-600 hover:bg-red-700 text-white font-bold py-4 px-8 rounded-full transition-all duration-300 transform hover:scale-105 shadow-xl hover:shadow-red-500/25"
+              className="inline-flex items-center bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-6 sm:py-4 sm:px-8 rounded-full transition-all duration-300 transform hover:scale-105 shadow-xl hover:shadow-red-500/25 text-sm sm:text-base"
             >
-              <i className="fab fa-youtube mr-3 text-2xl"></i>
+              <i className="fab fa-youtube mr-2 sm:mr-3 text-lg sm:text-xl"></i>
               Visit Our YouTube Channel
             </a>
           </div>
@@ -973,25 +973,25 @@ const HomePage = () => {
       </section>
 
       {/* Our Projects Section with Enhanced Cards */}
-      <section className="py-24 bg-white" data-section="projects">
-        <div className="container mx-auto px-6">
+      <section className="py-16 sm:py-24 bg-white" data-section="projects">
+        <div className="container mx-auto px-4 sm:px-6">
           <div
-            className={`text-center mb-20 transition-all duration-1000 ${
+            className={`text-center mb-12 sm:mb-20 transition-all duration-1000 ${
               isVisible.projects
                 ? "opacity-100 translate-y-0"
                 : "opacity-0 translate-y-10"
             }`}
           >
-            <h2 className="text-4xl md:text-5xl font-bold text-gray-800 mb-6">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-800 mb-4 sm:mb-6">
               Our Recent Projects
             </h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
+            <p className="text-lg sm:text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
               See the difference our professional cleaning services can make in
               transforming spaces
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
             {projects.map((project, index) => (
               <div
                 key={index}
@@ -1002,7 +1002,7 @@ const HomePage = () => {
                 }`}
                 style={{ transitionDelay: `${index * 150}ms` }}
               >
-                <div className="relative h-64 overflow-hidden">
+                <div className="relative h-48 sm:h-64 overflow-hidden">
                   {project.video ? (
                     <iframe
                       src={
@@ -1038,49 +1038,27 @@ const HomePage = () => {
                     />
                   )}
                   <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                  <div className="absolute bottom-4 left-4 right-4">
-                    <span className="bg-blue-600 text-white px-3 py-1 rounded-full text-sm font-semibold">
+                  <div className="absolute bottom-3 sm:bottom-4 left-3 sm:left-4 right-3 sm:right-4">
+                    <span className="bg-blue-600 text-white px-2 sm:px-3 py-1 rounded-full text-xs sm:text-sm font-semibold">
                       {project.category}
                     </span>
                   </div>
                 </div>
-                <div className="p-6">
-                  <h3 className="text-lg font-bold text-gray-800 mb-3 group-hover:text-blue-600 transition-colors duration-300">
+                <div className="p-4 sm:p-6">
+                  <h3 className="text-base sm:text-lg font-bold text-gray-800 mb-2 sm:mb-3 group-hover:text-blue-600 transition-colors duration-300">
                     {project.title}
                   </h3>
-                  <p className="text-gray-600 text-sm mb-4 leading-relaxed">
+                  <p className="text-gray-600 text-xs sm:text-sm mb-3 sm:mb-4 leading-relaxed">
                     {project.description}
                   </p>
 
-                  {/* Project Stats */}
-                  {/* <div className="grid grid-cols-3 gap-2 mb-4 text-xs">
-                    <div className="text-center">
-                      <div className="font-semibold text-blue-600">
-                        {project.stats.area}
-                      </div>
-                      <div className="text-gray-500">Area</div>
-                    </div>
-                    <div className="text-center">
-                      <div className="font-semibold text-green-600">
-                        {project.stats.time}
-                      </div>
-                      <div className="text-gray-500">Duration</div>
-                    </div>
-                    <div className="text-center">
-                      <div className="font-semibold text-purple-600">
-                        {project.stats.team}
-                      </div>
-                      <div className="text-gray-500">Team</div>
-                    </div>
-                  </div> */}
-
                   <Link
                     to="/projects"
-                    className="inline-flex items-center text-blue-600 hover:text-blue-800 font-semibold text-sm group-hover:translate-x-1 transition-all duration-300"
+                    className="inline-flex items-center text-blue-600 hover:text-blue-800 font-semibold text-xs sm:text-sm group-hover:translate-x-1 transition-all duration-300"
                   >
                     View Project
                     <svg
-                      className="w-4 h-4 ml-2 transform group-hover:translate-x-1 transition-transform duration-300"
+                      className="w-3 h-3 sm:w-4 sm:h-4 ml-1 sm:ml-2 transform group-hover:translate-x-1 transition-transform duration-300"
                       fill="none"
                       stroke="currentColor"
                       viewBox="0 0 24 24"
@@ -1098,10 +1076,10 @@ const HomePage = () => {
             ))}
           </div>
 
-          <div className="text-center mt-16">
+          <div className="text-center mt-12 sm:mt-16">
             <Link
               to="/projects"
-              className="inline-flex items-center bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 px-8 rounded-full transition-all duration-300 transform hover:scale-105 shadow-xl hover:shadow-blue-500/25"
+              className="inline-flex items-center bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 sm:py-4 sm:px-8 rounded-full transition-all duration-300 transform hover:scale-105 shadow-xl hover:shadow-blue-500/25 text-sm sm:text-base"
             >
               <i className="fas fa-images mr-2"></i>
               View All Projects
@@ -1113,21 +1091,21 @@ const HomePage = () => {
       {/* Enhanced Testimonials Section */}
       {testimonials.length > 0 && (
         <section
-          className="py-24 bg-gradient-to-br from-gray-50 to-white"
+          className="py-16 sm:py-24 bg-gradient-to-br from-gray-50 to-white"
           data-section="testimonials"
         >
-          <div className="container mx-auto px-6">
+          <div className="container mx-auto px-4 sm:px-6">
             <div
-              className={`text-center mb-20 transition-all duration-1000 ${
+              className={`text-center mb-12 sm:mb-20 transition-all duration-1000 ${
                 isVisible.testimonials
                   ? "opacity-100 translate-y-0"
                   : "opacity-0 translate-y-10"
               }`}
             >
-              <h2 className="text-4xl md:text-5xl font-bold text-gray-800 mb-6">
+              <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-800 mb-4 sm:mb-6">
                 What Our Clients Say
               </h2>
-              <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
+              <p className="text-lg sm:text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
                 Hear from our satisfied customers about their experience with
                 our professional cleaning services
               </p>
@@ -1135,20 +1113,20 @@ const HomePage = () => {
 
             <div className="max-w-5xl mx-auto">
               <div
-                className={`bg-white rounded-3xl shadow-2xl p-10 md:p-12 relative overflow-hidden transition-all duration-1000 ${
+                className={`bg-white rounded-3xl shadow-2xl p-6 sm:p-8 md:p-10 lg:p-12 relative overflow-hidden transition-all duration-1000 ${
                   isVisible.testimonials
                     ? "opacity-100 translate-y-0"
                     : "opacity-0 translate-y-10"
                 }`}
               >
                 <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-blue-400 via-cyan-400 to-blue-600"></div>
-                <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-blue-50 to-transparent rounded-full -translate-y-16 translate-x-16"></div>
+                <div className="absolute top-0 right-0 w-24 h-24 sm:w-32 sm:h-32 bg-gradient-to-br from-blue-50 to-transparent rounded-full -translate-y-12 sm:-translate-y-16 translate-x-12 sm:translate-x-16"></div>
 
-                <div className="flex items-center mb-8">
+                <div className="flex items-center mb-6 sm:mb-8">
                   {[...Array(5)].map((_, i) => (
                     <svg
                       key={i}
-                      className={`w-8 h-8 ${
+                      className={`w-6 h-6 sm:w-8 sm:h-8 ${
                         i < testimonials[currentTestimonial]?.rating
                           ? "text-yellow-400"
                           : "text-gray-300"
@@ -1161,20 +1139,20 @@ const HomePage = () => {
                   ))}
                 </div>
 
-                <p className="text-2xl md:text-3xl font-light text-gray-700 italic mb-10 leading-relaxed">
+                <p className="text-xl sm:text-2xl md:text-3xl font-light text-gray-700 italic mb-6 sm:mb-10 leading-relaxed">
                   "{testimonials[currentTestimonial]?.comment}"
                 </p>
 
-                <div className="flex items-center justify-between">
+                <div className="flex flex-col sm:flex-row items-center justify-between gap-4 sm:gap-0">
                   <div className="flex items-center">
-                    <div className="bg-gradient-to-r from-blue-500 to-cyan-500 rounded-full w-16 h-16 flex items-center justify-center text-white font-bold text-xl shadow-lg">
+                    <div className="bg-gradient-to-r from-blue-500 to-cyan-500 rounded-full w-12 h-12 sm:w-16 sm:h-16 flex items-center justify-center text-white font-bold text-lg sm:text-xl shadow-lg">
                       {testimonials[currentTestimonial]?.name.charAt(0)}
                     </div>
-                    <div className="ml-6">
-                      <p className="font-bold text-gray-800 text-lg">
+                    <div className="ml-4 sm:ml-6">
+                      <p className="font-bold text-gray-800 text-base sm:text-lg">
                         {testimonials[currentTestimonial]?.name}
                       </p>
-                      <p className="text-gray-500">
+                      <p className="text-gray-500 text-sm sm:text-base">
                         {testimonials[currentTestimonial]?.serviceType}
                       </p>
                     </div>
@@ -1185,9 +1163,9 @@ const HomePage = () => {
                       <button
                         key={index}
                         onClick={() => setCurrentTestimonial(index)}
-                        className={`w-4 h-4 rounded-full transition-all duration-300 ${
+                        className={`w-3 h-3 sm:w-4 sm:h-4 rounded-full transition-all duration-300 ${
                           currentTestimonial === index
-                            ? "bg-blue-600 w-8 shadow-lg"
+                            ? "bg-blue-600 w-6 sm:w-8 shadow-lg"
                             : "bg-gray-300 hover:bg-gray-400"
                         }`}
                       ></button>
@@ -1201,19 +1179,19 @@ const HomePage = () => {
       )}
 
       {/* Professional Features Section - NEW */}
-      <section className="py-24 bg-white" data-section="features">
-        <div className="container mx-auto px-6">
-          <div className="text-center mb-20">
-            <h2 className="text-4xl md:text-5xl font-bold text-gray-800 mb-6">
+      <section className="py-16 sm:py-24 bg-white" data-section="features">
+        <div className="container mx-auto px-4 sm:px-6">
+          <div className="text-center mb-12 sm:mb-20">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-800 mb-4 sm:mb-6">
               Professional Features
             </h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
+            <p className="text-lg sm:text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
               Discover what makes our cleaning services stand out from the
               competition
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
             {[
               {
                 icon: "fas fa-shield-alt",
@@ -1254,17 +1232,17 @@ const HomePage = () => {
             ].map((feature, index) => (
               <div
                 key={index}
-                className="group bg-gray-50 rounded-2xl p-8 text-center hover:bg-white hover:shadow-xl transition-all duration-500 transform hover:-translate-y-2 border border-gray-100"
+                className="group bg-gray-50 rounded-2xl p-6 sm:p-8 text-center hover:bg-white hover:shadow-xl transition-all duration-500 transform hover:-translate-y-2 border border-gray-100"
               >
                 <div
-                  className={`w-20 h-20 bg-gradient-to-r ${feature.color} rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300 shadow-lg`}
+                  className={`w-16 h-16 sm:w-20 sm:h-20 bg-gradient-to-r ${feature.color} rounded-2xl flex items-center justify-center mx-auto mb-4 sm:mb-6 group-hover:scale-110 transition-transform duration-300 shadow-lg`}
                 >
-                  <i className={`${feature.icon} text-white text-3xl`}></i>
+                  <i className={`${feature.icon} text-white text-2xl sm:text-3xl`}></i>
                 </div>
-                <h3 className="text-xl font-bold text-gray-800 mb-4 group-hover:text-blue-600 transition-colors duration-300">
+                <h3 className="text-lg sm:text-xl font-bold text-gray-800 mb-3 sm:mb-4 group-hover:text-blue-600 transition-colors duration-300">
                   {feature.title}
                 </h3>
-                <p className="text-gray-600 leading-relaxed">
+                <p className="text-gray-600 leading-relaxed text-sm sm:text-base">
                   {feature.description}
                 </p>
               </div>
@@ -1275,7 +1253,7 @@ const HomePage = () => {
 
       {/* Enhanced Call to Action */}
       <section
-        className="py-24 bg-gradient-to-br from-blue-600 via-blue-700 to-indigo-800 relative overflow-hidden"
+        className="py-16 sm:py-24 bg-gradient-to-br from-blue-600 via-blue-700 to-indigo-800 relative overflow-hidden"
         data-section="cta"
       >
         <div className="absolute inset-0 bg-black/10"></div>
@@ -1283,7 +1261,7 @@ const HomePage = () => {
           <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-blue-600/20 via-transparent to-indigo-800/20"></div>
         </div>
 
-        <div className="container relative z-10 mx-auto px-6 text-center">
+        <div className="container relative z-10 mx-auto px-4 sm:px-6 text-center">
           <div
             className={`transition-all duration-1000 ${
               isVisible.cta
@@ -1291,27 +1269,27 @@ const HomePage = () => {
                 : "opacity-0 translate-y-10"
             }`}
           >
-            <h2 className="text-4xl md:text-6xl font-bold text-white mb-8 leading-tight">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6 sm:mb-8 leading-tight">
               Ready to Experience Professional Cleaning?
             </h2>
-            <p className="text-xl md:text-2xl text-blue-100 mb-12 max-w-4xl mx-auto leading-relaxed">
+            <p className="text-lg sm:text-xl md:text-2xl text-blue-100 mb-8 sm:mb-12 max-w-4xl mx-auto leading-relaxed">
               Book your service today and enjoy a cleaner, healthier space with
               our guaranteed satisfaction
             </p>
 
-            <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
+            <div className="flex flex-col sm:flex-row gap-4 sm:gap-6 justify-center items-center">
               <Link
                 to="/book"
-                className="inline-flex items-center bg-white hover:bg-gray-100 text-blue-700 font-bold py-5 px-10 rounded-full transition-all duration-300 transform hover:scale-105 shadow-2xl hover:shadow-white/25 text-lg"
+                className="inline-flex items-center bg-white hover:bg-gray-100 text-blue-700 font-bold py-4 px-8 sm:py-5 sm:px-10 rounded-full transition-all duration-300 transform hover:scale-105 shadow-2xl hover:shadow-white/25 text-base sm:text-lg"
               >
-                <i className="fas fa-calendar-check mr-3 text-xl"></i>
+                <i className="fas fa-calendar-check mr-2 sm:mr-3 text-lg sm:text-xl"></i>
                 Book Your Service Now
               </Link>
               <Link
                 to="/contact"
-                className="inline-flex items-center bg-transparent hover:bg-white/10 text-white font-bold py-5 px-10 rounded-full transition-all duration-300 border-2 border-white/30 hover:border-white/50 text-lg"
+                className="inline-flex items-center bg-transparent hover:bg-white/10 text-white font-bold py-4 px-8 sm:py-5 sm:px-10 rounded-full transition-all duration-300 border-2 border-white/30 hover:border-white/50 text-base sm:text-lg"
               >
-                <i className="fas fa-phone mr-3 text-xl"></i>
+                <i className="fas fa-phone mr-2 sm:mr-3 text-lg sm:text-xl"></i>
                 Call Us Today
               </Link>
             </div>
@@ -1320,10 +1298,10 @@ const HomePage = () => {
       </section>
 
       {/* Enhanced Trust Badges Section */}
-      <section className="py-20 bg-white" data-section="trust">
-        <div className="container mx-auto px-6">
+      <section className="py-16 sm:py-20 bg-white" data-section="trust">
+        <div className="container mx-auto px-4 sm:px-6">
           <div
-            className={`grid grid-cols-2 md:grid-cols-4 gap-8 transition-all duration-1000 ${
+            className={`grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 sm:gap-8 transition-all duration-1000 ${
               isVisible.trust
                 ? "opacity-100 translate-y-0"
                 : "opacity-0 translate-y-10"
@@ -1361,14 +1339,14 @@ const HomePage = () => {
                 style={{ transitionDelay: `${index * 100}ms` }}
               >
                 <div
-                  className={`w-20 h-20 bg-gradient-to-r ${badge.color} rounded-2xl flex items-center justify-center text-white text-3xl mb-6 shadow-lg group-hover:scale-110 transition-transform duration-300`}
+                  className={`w-16 h-16 sm:w-20 sm:h-20 bg-gradient-to-r ${badge.color} rounded-2xl flex items-center justify-center text-white text-2xl sm:text-3xl mb-4 sm:mb-6 shadow-lg group-hover:scale-110 transition-transform duration-300`}
                 >
                   <i className={badge.icon}></i>
                 </div>
-                <h3 className="text-xl font-bold text-gray-800 mb-3 group-hover:text-blue-600 transition-colors duration-300">
+                <h3 className="text-lg sm:text-xl font-bold text-gray-800 mb-2 sm:mb-3 group-hover:text-blue-600 transition-colors duration-300">
                   {badge.title}
                 </h3>
-                <p className="text-gray-600 leading-relaxed">
+                <p className="text-gray-600 leading-relaxed text-sm sm:text-base">
                   {badge.description}
                 </p>
               </div>
@@ -1379,13 +1357,13 @@ const HomePage = () => {
 
       {/* Scroll to Top Button */}
       <button
-        className={`fixed bottom-28 right-8 w-14 h-14 bg-gradient-to-r from-blue-600 to-indigo-700 text-white rounded-full shadow-2xl flex items-center justify-center transition-all duration-300 z-50 ${
+        className={`fixed bottom-28 right-4 sm:right-8 w-12 h-12 sm:w-14 sm:h-14 bg-gradient-to-r from-blue-600 to-indigo-700 text-white rounded-full shadow-2xl flex items-center justify-center transition-all duration-300 z-50 ${
           showScrollTop ? "opacity-100 scale-100" : "opacity-0 scale-0"
         } hover:from-blue-700 hover:to-indigo-800 transform hover:scale-110`}
         onClick={scrollToTop}
         aria-label="Scroll to top"
       >
-        <ArrowUp size={24} />
+        <ArrowUp size={20} className="sm:w-6 sm:h-6" />
       </button>
 
       {/* Add custom CSS for animations */}

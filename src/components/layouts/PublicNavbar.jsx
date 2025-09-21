@@ -126,20 +126,23 @@ const PublicNavbar = () => {
         }`}
       >
         <div className="container mx-auto px-4 md:px-6 flex items-center justify-between">
-          {/* Enhanced Logo */}
+          {/* Enhanced Logo - Fixed background */}
           <Link
             to="/"
             className="flex items-center space-x-3 group transition-all duration-300 transform hover:scale-105"
           >
             <div className="relative">
               <div className="absolute -inset-2 bg-blue-500/10 rounded-xl blur-lg group-hover:bg-blue-500/20 transition-all opacity-0 group-hover:opacity-100"></div>
-              <img
-                src={logo}
-                alt="Sylvie Services Logo"
-                className={`relative transition-all duration-300 ${
-                  scrolled ? "h-10" : "h-12"
-                } w-auto drop-shadow-lg`}
-              />
+              {/* Added white background to logo container */}
+              <div className="relative bg-white p-1.5 rounded-lg shadow-sm">
+                <img
+                  src={logo}
+                  alt="Sylvie Services Logo"
+                  className={`transition-all duration-300 ${
+                    scrolled ? "h-10" : "h-12"
+                  } w-auto`}
+                />
+              </div>
             </div>
             <div className="hidden sm:block">
               <span className="text-blue-600 font-bold text-lg md:text-xl transition-all duration-300 group-hover:text-blue-700">
@@ -151,26 +154,27 @@ const PublicNavbar = () => {
             </div>
           </Link>
 
-          {/* Enhanced Mobile Menu Button */}
+          {/* Enhanced Mobile Menu Button - Professional icon */}
           <button
-            className="lg:hidden focus:outline-none text-blue-600 hover:text-blue-700 transition-all duration-300 transform hover:scale-110 p-2 rounded-lg hover:bg-blue-50"
+            className="lg:hidden focus:outline-none text-blue-600 hover:text-blue-700 transition-all duration-300 transform hover:scale-110 p-3 rounded-lg hover:bg-blue-50"
             onClick={() => setIsMenuOpen(!isMenuOpen)}
             aria-label="Toggle menu"
           >
-            <div className="relative w-6 h-6">
+            {/* Professional hamburger menu icon */}
+            <div className="relative w-7 h-7 flex flex-col justify-center items-center">
               <span
-                className={`absolute h-0.5 w-6 bg-current transform transition-all duration-300 ${
-                  isMenuOpen ? "rotate-45 translate-y-2.5" : "-translate-y-1"
+                className={`absolute block w-7 h-0.5 bg-current transform transition-all duration-300 ${
+                  isMenuOpen ? "rotate-45 translate-y-0" : "-translate-y-2"
                 }`}
               ></span>
               <span
-                className={`absolute h-0.5 w-6 bg-current transform transition-all duration-300 ${
+                className={`absolute block w-7 h-0.5 bg-current transform transition-all duration-300 ${
                   isMenuOpen ? "opacity-0" : "opacity-100"
                 }`}
               ></span>
               <span
-                className={`absolute h-0.5 w-6 bg-current transform transition-all duration-300 ${
-                  isMenuOpen ? "-rotate-45 translate-y-2.5" : "translate-y-1"
+                className={`absolute block w-7 h-0.5 bg-current transform transition-all duration-300 ${
+                  isMenuOpen ? "-rotate-45 translate-y-0" : "translate-y-2"
                 }`}
               ></span>
             </div>
