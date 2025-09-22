@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+ import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import logo from "../../assets/images/logo.png";
 
@@ -119,8 +119,8 @@ const PublicNavbar = () => {
       <nav
         className={`fixed w-full z-40 transition-all duration-500 ease-in-out ${
           scrolled
-            ? "bg-white/95 backdrop-blur-md shadow-xl py-3 mt-16"
-            : "bg-white/90 backdrop-blur-sm py-5 mt-16"
+            ? "bg-white backdrop-blur-md shadow-xl py-3 mt-16"
+            : "bg-white backdrop-blur-md py-5 mt-16"
         } ${
           isVisible ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-4"
         }`}
@@ -144,14 +144,14 @@ const PublicNavbar = () => {
                 />
               </div>
             </div>
-            <div className="hidden sm:block">
+            {/* <div className="hidden sm:block">
               <span className="text-blue-600 font-bold text-lg md:text-xl transition-all duration-300 group-hover:text-blue-700">
                 Sylvie Cleaning Services
               </span>
               <div className="text-xs text-gray-500 font-medium">
                 Professional & Reliable
               </div>
-            </div>
+            </div> */}
           </Link>
 
           {/* Enhanced Mobile Menu Button - Professional icon */}
@@ -218,7 +218,7 @@ const PublicNavbar = () => {
 
         {/* Enhanced Mobile Navigation Menu */}
         <div
-          className={`lg:hidden absolute w-full bg-white/95 backdrop-blur-md shadow-2xl transition-all duration-500 ease-in-out overflow-hidden ${
+          className={`lg:hidden absolute w-full bg-white backdrop-blur-md shadow-2xl transition-all duration-500 ease-in-out overflow-hidden ${
             isMenuOpen
               ? "max-h-96 opacity-100 translate-y-0"
               : "max-h-0 opacity-0 -translate-y-4"
