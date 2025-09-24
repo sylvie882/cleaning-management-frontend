@@ -1,8 +1,8 @@
 // src/services/bookingService.js
 import axios from "axios";
 
-const API_URL = "https://sylvie-kg23.onrender.com/api/bookings/";
-const GET_ALL_BOOKINGS_URL = "https://sylvie-kg23.onrender.com/api/bookings/";
+const API_URL = "https://cleaning-management-backend.onrender.com/api/bookings/";
+const GET_ALL_BOOKINGS_URL = "https://cleaning-management-backend.onrender.com/api/bookings/";
 
 // Get booking by ID (protected) - Enhanced with better error handling
 const getBookingById = async (id) => {

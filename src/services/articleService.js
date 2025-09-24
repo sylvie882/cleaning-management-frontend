@@ -1,7 +1,7 @@
 // src/services/articleService.js
 import axios from "axios";
 
-const API_URL = "https://sylvie-kg23.onrender.com/api/articles";
+const API_URL = "https://cleaning-management-backend.onrender.com/api/articles";
 
 // Get auth token
 const getAuthToken = () => {

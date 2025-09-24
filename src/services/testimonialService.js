@@ -1,7 +1,7 @@
 // src/services/testimonialService.js
 import axios from "axios";
 
-const API_URL = "https://sylvie-kg23.onrender.com/api/testimonials/";
+const API_URL = "https://cleaning-management-backend.onrender.com/api/testimonials/";
 
 // Get all public testimonials
 const getTestimonials = async () => {

@@ -1,7 +1,7 @@
 // src/services/paymentService.js
 import axios from "axios";
 
-const API_URL = "https://sylvie-kg23.onrender.com/api/payments/";
+const API_URL = "https://cleaning-management-backend.onrender.com/api/payments/";
 
 // Helper function to get auth config
 const getAuthConfig = () => {

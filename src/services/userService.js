@@ -1,11 +1,11 @@
 // src/services/userService.js
 import axios from "axios";
 
-const API_URL = "https://sylvie-kg23.onrender.com/api/auth/register";
-const GET_UERS_URL = "https://sylvie-kg23.onrender.com/api/auth/users";
+const API_URL = "https://cleaning-management-backend.onrender.com/api/auth/register";
+const GET_UERS_URL = "https://cleaning-management-backend.onrender.com/api/auth/users";
 const GET_USER_BY_ROLE =
-  "https://sylvie-kg23.onrender.com/api/auth/users/role/";
-const BASE_URL = "https://sylvie-kg23.onrender.com/api/auth/users";
+  "https://cleaning-management-backend.onrender.com/api/auth/users/role/";
+const BASE_URL = "https://cleaning-management-backend.onrender.com/api/auth/users";
 
 // Get all users
 const getUsers = async () => {

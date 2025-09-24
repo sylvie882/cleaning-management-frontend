@@ -1,7 +1,7 @@
 // src/services/contactService.js
 import axios from "axios";
 
-const API_URL = "https://sylvie-kg23.onrender.com/api/contact/";
+const API_URL = "https://cleaning-management-backend.onrender.com/api/contact/";
 
 // Send contact message (public)
 const sendContactMessage = async (messageData) => {

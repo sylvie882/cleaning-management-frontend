@@ -1,7 +1,7 @@
 // src/services/settingsService.js
 import axios from "axios";
 
-const API_URL = "https://sylvie-kg23.onrender.com/api/settings/";
+const API_URL = "https://cleaning-management-backend.onrender.com/api/settings/";
 
 // Get all settings (public can access public settings, admin can access all)
 const getSettings = async (publicOnly = false) => {
