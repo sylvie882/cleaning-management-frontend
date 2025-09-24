@@ -279,7 +279,7 @@ const BookingForm = () => {
         </div>
 
         {/* Progress Indicator */}
-        <div className="flex justify-center mb-8">
+        {/* <div className="flex justify-center mb-8">
           <div className="bg-white rounded-full shadow-lg px-6 py-3">
             <div className="flex items-center gap-4 text-sm font-medium">
               <span className="flex items-center gap-2 text-blue-600">
@@ -298,7 +298,7 @@ const BookingForm = () => {
               </span>
             </div>
           </div>
-        </div>
+        </div> */}
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Main Form */}
