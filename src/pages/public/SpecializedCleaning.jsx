@@ -23,7 +23,7 @@ const generateServiceStructuredData = () => {
       "name": "Sylvie Cleaning Services",
       "address": {
         "@type": "PostalAddress",
-        "streetAddress": "Dale House, Rhapta Road Westlands",
+        "streetAddress": "Dale House, Rhapta Road,Fox Close",
         "addressLocality": "Nairobi",
         "addressRegion": "Nairobi",
         "postalCode": "00100",

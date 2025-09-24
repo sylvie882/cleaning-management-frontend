@@ -21,7 +21,7 @@ const Footer = () => {
       phone: "+254726933261",
       email: "info@sylviecleaningservices.com",
       address: {
-        street: "DALE HOUSE, RHAPTA ROAD,Fox Close",
+        street: "Dale House, Rhapta Road,Fox Close",
         city: "Nairobi",
         state: "Nairobi",
         zip: "00100",

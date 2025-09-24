@@ -118,7 +118,7 @@ const CountyPage = ({ countyName }) => {
       logo: "https://www.sylviecleaningservices.com/logo.png",
       phone: "+254726933261",
       address: {
-        street: "Dale House, Rhapta Road Westlands",
+        street: "Dale House, Rhapta Road,Fox Close",
         city: countyName,
         state: countyName,
         zip: "00100",
