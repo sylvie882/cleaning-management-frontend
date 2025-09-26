@@ -53,16 +53,16 @@ const HomePage = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // ENHANCED SEO Metadata with Nairobi-specific optimization - FIXED KEYWORDS
+  // SEO Metadata with Nairobi-specific optimization for SEO only
   const seoData = {
     title: "Best Cleaning Services in Nairobi Kenya | Professional House & Office Cleaning | Sylvie Cleaning Services",
     description: "Top-rated cleaning company in Nairobi Kenya offering professional house cleaning, office cleaning, carpet cleaning, sofa cleaning & deep cleaning services. Affordable prices with satisfaction guarantee. Book online today!",
     canonicalUrl: "https://www.sylviecleaningservices.com",
-    siteName: "Sylvie Cleaning Services Nairobi Kenya",
+    siteName: "Sylvie Cleaning Services",
     twitterHandle: "@sylviecleaning",
     socialImage: heroImage,
     businessInfo: {
-      name: "Sylvie Cleaning Services Nairobi Kenya",
+      name: "Sylvie Cleaning Services",
       url: "https://www.sylviecleaningservices.com",
       logo: "https://www.sylviecleaningservices.com/logo.png",
       phone: "+254726933261",
@@ -85,7 +85,7 @@ const HomePage = () => {
         "Ngong", "Upper Hill", "Naivasha", "Nakuru County", "Narok", "Kiambu", "Thika", "Ongata Rongai", "Parklands", "Highridge", "Syokimau", "Kitengela",
         "Horse Shoe Village", "Barton Estate", "Whispers Estate", "Migaa Golf Estate", "Daisy Road", "Tara Road", "Fairview Estate", "Riverrun Estates", "Amani Ridge", "Zaria Village", "Karogo Estate", "Mind Bridge Gardens", "Mhasibu Silver Birch Estate", "Royale Ville Gardens", "Mitini Scapes Migaa", "Rose Gate Estate", "Nawiri Estate", "Nderi Road", "Shanzu Road", "Kibarage Estate", "Gitanga Road", "Waithaka Estate", "Muthithi Gardens", "Ngong Forest View", "Langata Forest View Estate", "Karen Greens Estate", "Karen Ridge Estate", "Karen Road", "Langata Road", "Marula Lane", "Karen Brooks Estate", "Karen Brooks Road", "Acacia Drive", "Situ Village", "Ololua Ridge", "Diepolos Road", "Kangawa Road", "Zambia Road", "Baboon Crescent", "Cedar Road", "Gitonga Drive", "Windy Ridge", "Pepo Lane", "Rhino Park Road", "Elgeyo Marakwet Road", "Safari Park Avenue", "Kivuli Lane", "Usiu Road", "Nyati Road", "Kenyatta Road", "Makuyu Ridge", "Isinya", "Tuala", "Diadpora Village", "Meadows Estate", "Mimosa Road", "Eliud Mathu Street", "Benin Drive", "Glory Road", "Egrets Drive Road", "Red Hill Drive", "Thigiri Ridge Road", "Ndoto Road", "Kisaju", "Olooloitikosh", "Magadi Road", "Amboseli Road", "Convent Road", "Kaptagat Road", "Southern Bypass", "MCAKECH Residence", "Natala Ranch", "Grace Hill Gardens", "Maasai Road", "Olepolos", "Mbagathi Way", "Makuyu", "Samaki Drive", "Nyati Drive", "Lukenya Hills Estate", "Paradise Park Estate", "Thome Estate", "Garden Estate", "Silanga Road", "Kombe Road", "Fana Road", "Mokoyeti South Road", "Mokoyeti West Road", "Karen C Road", "Kumbe Road", "Santack Estate", "Jamhuri Estate", "Kilimani", "Woodley Estate", "Golf Course Estate", "Akinseye Estate", "Muguga Green Estate", "Kitisuru Country Homes", "Shinyalu Road", "D134 Kamau Residency", "Ngenda Road", "Sahara Estate", "Toll Estate", "Wendani Estate", "Zahara Estate", "Saitoti Road", "Shombole Road", "Gem Lane", "Taita Villas", "Natare Gardens", "Eve Gardens Estate", "Third Brooks Avenue", "Ngong Road", "Street Elizabeth", "Ngong View Road", "Ngong View Rise", "Forest Line Road", "Muteero Ridge", "Kay Estate", "Brook View Estate", "Kihanya Estate", "Mugumo Crescent", "Kyuna Road", "Kyuna Crescent", "Utawala", "Ruai", "Kangundo Road", "Ruaka", "Nandi Road Karen", "Bogani Karen", "Karen Hills Estate", "Kikenni Drive", "Mukoma Estate", "Sandalwood Estate Karen", "Runda Mhasibu", "Kugeria North Close", "Ridgeways", "Ridgeways Drive", "Kigwa Road", "Edenville Estate", "Balozi Estate", "Fourways Junction", "Paradise Lost", "Evergreen", "Tigoni", "Limuru", "Athi River", "Muthaiga North", "Muthaiga South", "Juja", "Wakigwa Estate", "Adams Park Estate", "Juja South Estate", "Chai Estate", "Lower Kabete Road", "Upper Kabete Road", "Spring Valley", "Sports Road", "David Osieli Road", "Mvuli Road", "Lantana Road", "Terrace Close", "Church Road", "Blueman Road", "Parklands Road", "Maasai Lodge Road", "Ndorobo Road", "Muhiti Road", "Gataka Road", "Mayor Road", "Bosto Road", "Mahiga Mairu Avenue", "Riara Road", "Flame Tree Drive", "Safari Park View Estate", "Chady Road", "Airport North Road", "Fahari Close", "Kiambu Road", "Mukabi Road", "Hinga Road", "Loresho Lane", "Thindigua", "Kasarini", "Mushroom Road", "Riabai Road", "Muchatha", "Boma Road", "Kiratina Road", "Kitisuru Road", "Marurui Road", "Githunguri-Githiga Road", "Kamiti Road", "Eastern Bypass Road", "Northern Bypass Road", "Mombasa Road", "Katani Road", "Bustani Estate", "Mwananchi Road", "Muthama Access Road", "Athi River Road", "Loneview Access Road", "Epco Road", "Namanga Road", "Chuna Road", "EPZ Road", "Gesora Road", "Kayole Road", "Uhuru Gardens Estate", "Runda Road", "Runda Grove", "Ruaka Road", "UN Avenue", "Eagle Park", "Andrew Zagoritis Street", "Pan Africa Insurance Avenue", "Elia Zagoritis Road", "Elia Zagoritis Avenue", "Glory Drive", "Alibiza Drive"
       ],
-      services: ["House Cleaning Nairobi", "Office Cleaning Nairobi", "Deep Cleaning Services", "Carpet Cleaning Nairobi", "Sofa Cleaning Nairobi", "Post Construction Cleaning", "Move-In/Move-Out Cleaning Nairobi"]
+      services: ["House Cleaning", "Office Cleaning", "Deep Cleaning Services", "Carpet Cleaning", "Sofa Cleaning", "Post Construction Cleaning", "Move-In/Move-Out Cleaning"]
     }
   };
 
@@ -109,7 +109,7 @@ const HomePage = () => {
     },
     "geo": {
       "@type": "GeoCoordinates",
-      "latitude": "-1.2921",  // More accurate Nairobi coordinates
+      "latitude": "-1.2921",
       "longitude": "36.8219"
     },
     "openingHoursSpecification": {
@@ -126,17 +126,17 @@ const HomePage = () => {
         "latitude": "-1.2921",
         "longitude": "36.8219"
       },
-      "geoRadius": "50000"  // 50km radius from Nairobi center
+      "geoRadius": "50000"
     },
     "hasOfferCatalog": {
       "@type": "OfferCatalog",
-      "name": "Cleaning Services in Nairobi Kenya",
+      "name": "Cleaning Services",
       "itemListElement": seoData.businessInfo.services.map((service, index) => ({
         "@type": "Offer",
         "itemOffered": {
           "@type": "Service",
           "name": service,
-          "description": `Professional ${service} in Nairobi Kenya`,
+          "description": `Professional ${service}`,
           "provider": {
             "@type": "Organization",
             "name": "Sylvie Cleaning Services"
@@ -151,30 +151,30 @@ const HomePage = () => {
     }
   };
 
-  // Carousel data with Nairobi-specific content - ENHANCED KEYWORDS
+  // Carousel data without Nairobi-specific display content
   const carouselData = [
     {
       image: cleaner1,
-      title: "Best Cleaning Services in Nairobi Kenya - Professional House & Office Cleaning",
-      subtitle: "Top-rated Cleaning Company in Nairobi, Westlands, Karen & Surrounding Areas",
-      description: "Professional cleaning services in Nairobi Kenya for homes and offices. Expert carpet cleaning, sofa cleaning, deep cleaning services at affordable prices.",
-      serviceType: "Nairobi Cleaning Services",
+      title: "Professional Cleaning Services - House & Office Cleaning",
+      subtitle: "Top-rated Cleaning Company for Homes and Businesses",
+      description: "Professional cleaning services for homes and offices. Expert carpet cleaning, sofa cleaning, deep cleaning services at affordable prices.",
+      serviceType: "Cleaning Services",
       accent: "from-blue-500 to-cyan-500",
     },
     {
       image: cleaner2,
-      title: "House Cleaning Services Nairobi Kenya | Affordable Home Cleaning",
-      subtitle: "Professional Residential Cleaning in Nairobi Kenya",
-      description: "Expert house cleaning services in Nairobi. Deep cleaning, regular maintenance, move-in/out cleaning for homes across Nairobi County.",
-      serviceType: "House Cleaning Nairobi",
+      title: "House Cleaning Services | Affordable Home Cleaning",
+      subtitle: "Professional Residential Cleaning Solutions",
+      description: "Expert house cleaning services. Deep cleaning, regular maintenance, move-in/out cleaning for homes.",
+      serviceType: "House Cleaning",
       accent: "from-green-500 to-emerald-500",
     },
     {
       image: cleaner3,
-      title: "Office Cleaning Nairobi Kenya | Commercial Cleaning Services",
-      subtitle: "Professional Office Cleaning Company in Nairobi",
-      description: "Commercial cleaning services for offices, businesses, and corporate spaces in Nairobi. Post-construction cleaning, carpet cleaning, and more.",
-      serviceType: "Office Cleaning Nairobi",
+      title: "Office Cleaning | Commercial Cleaning Services",
+      subtitle: "Professional Office Cleaning Company",
+      description: "Commercial cleaning services for offices, businesses, and corporate spaces. Post-construction cleaning, carpet cleaning, and more.",
+      serviceType: "Office Cleaning",
       accent: "from-purple-500 to-indigo-500",
     },
   ];
@@ -182,31 +182,31 @@ const HomePage = () => {
   const cleaningVideos = [
     {
       id: "6s2Vp91YUHw",
-      title: "Professional Home Deep Cleaning Process in Nairobi",
+      title: "Professional Home Deep Cleaning Process",
       description:
-        "Watch our Nairobi cleaning team transform a family home with our comprehensive deep cleaning service.",
-      category: "Deep Cleaning Nairobi",
+        "Watch our cleaning team transform a family home with our comprehensive deep cleaning service.",
+      category: "Deep Cleaning",
     },
     {
       id: "GgoW5zpDVaM",
-      title: "Commercial Office Cleaning Standards in Nairobi Kenya",
+      title: "Commercial Office Cleaning Standards",
       description:
-        "See how we maintain the highest cleaning standards for corporate environments in Nairobi.",
-      category: "Commercial Cleaning Nairobi",
+        "See how we maintain the highest cleaning standards for corporate environments.",
+      category: "Commercial Cleaning",
     },
     {
       id: "U_Wa8nol86k",
-      title: "Move-Out Cleaning Transformation in Nairobi",
+      title: "Move-Out Cleaning Transformation",
       description:
-        "Complete move-out cleaning service in Nairobi that ensures you get your full deposit back.",
-      category: "Move-Out Cleaning Nairobi",
+        "Complete move-out cleaning service that ensures you get your full deposit back.",
+      category: "Move-Out Cleaning",
     },
     {
       id: "MA3sA8Yt62Q",
-      title: "Eco-Friendly Cleaning Techniques in Nairobi Kenya",
+      title: "Eco-Friendly Cleaning Techniques",
       description:
-        "Learn about our environmentally safe cleaning methods and products used in Nairobi.",
-      category: "Residential Cleaning Nairobi",
+        "Learn about our environmentally safe cleaning methods and products.",
+      category: "Residential Cleaning",
     },
   ];
 
@@ -274,12 +274,12 @@ const HomePage = () => {
     return () => observer.disconnect();
   }, []);
 
-  // ENHANCED Services with Nairobi keywords
+  // Services without Nairobi references
   const services = [
     {
-      title: "House Cleaning Nairobi",
+      title: "House Cleaning",
       description:
-        "Professional residential cleaning services in Nairobi Kenya for homes, apartments, and estates across Nairobi County.",
+        "Professional residential cleaning services for homes, apartments, and estates.",
       icon: "fas fa-home",
       features: [
         "Regular Maintenance Cleaning",
@@ -290,12 +290,12 @@ const HomePage = () => {
       color: "from-blue-500 to-cyan-500",
     },
     {
-      title: "Office Cleaning Nairobi",
+      title: "Office Cleaning",
       description:
-        "Commercial cleaning solutions for offices, retail spaces, and businesses in Nairobi Kenya.",
+        "Commercial cleaning solutions for offices, retail spaces, and businesses.",
       icon: "fas fa-building",
       features: [
-        "Office Cleaning Nairobi",
+        "Office Cleaning",
         "Retail Space Cleaning",
         "Industrial Cleaning",
         "24/7 Cleaning Service",
@@ -303,12 +303,12 @@ const HomePage = () => {
       color: "from-purple-500 to-indigo-500",
     },
     {
-      title: "Deep Cleaning Services Nairobi",
+      title: "Deep Cleaning Services",
       description:
-        "Intensive deep cleaning services in Nairobi to remove deep-seated dirt, allergens, and bacteria.",
+        "Intensive deep cleaning services to remove deep-seated dirt, allergens, and bacteria.",
       icon: "fas fa-broom",
       features: [
-        "Allergen Removal Nairobi",
+        "Allergen Removal",
         "Sanitization Services",
         "Hard-to-reach Areas",
         "Eco-friendly Cleaning",
@@ -316,13 +316,13 @@ const HomePage = () => {
       color: "from-green-500 to-emerald-500",
     },
     {
-      title: "Specialized Cleaning Nairobi",
+      title: "Specialized Cleaning",
       description:
-        "Specialized cleaning services in Nairobi for carpets, upholstery, windows, and post-construction.",
+        "Specialized cleaning services for carpets, upholstery, windows, and post-construction.",
       icon: "fas fa-sparkles",
       features: [
-        "Carpet Cleaning Nairobi",
-        "Sofa Cleaning Nairobi",
+        "Carpet Cleaning",
+        "Sofa Cleaning",
         "Post-construction Cleaning",
         "Event Cleanup Services",
       ],
@@ -330,84 +330,84 @@ const HomePage = () => {
     },
   ];
 
-  // Project showcase data with Nairobi context
+  // Project showcase data without Nairobi context
   const projects = [
     {
-      title: "Luxury Home Cleaning in Karen Nairobi",
+      title: "Luxury Home Cleaning",
       description:
-        "Complete cleaning transformation of a 5-bedroom luxury home in Karen Nairobi",
+        "Complete cleaning transformation of a 5-bedroom luxury home",
       image: cleaner1,
       video: "https://youtu.be/XpvmwxpQaGo?si=15-wQ-dyMH3fMCSq",
-      category: "Residential Cleaning Nairobi",
+      category: "Residential Cleaning",
       stats: { area: "4,500 sq ft", time: "6 hours", team: "4 cleaners" },
     },
     {
-      title: "Corporate Office Cleaning in Westlands Nairobi",
+      title: "Corporate Office Cleaning",
       description:
-        "Post-construction cleaning for a new corporate headquarters in Westlands Nairobi",
+        "Post-construction cleaning for a new corporate headquarters",
       image: cleaner3,
-      category: "Commercial Cleaning Nairobi",
+      category: "Commercial Cleaning",
       stats: { area: "25,000 sq ft", time: "3 days", team: "12 cleaners" },
     },
     {
-      title: "Restaurant Deep Clean in Nairobi CBD",
-      description: "Overnight deep cleaning for a popular local restaurant in Nairobi CBD",
+      title: "Restaurant Deep Clean",
+      description: "Overnight deep cleaning for a popular local restaurant",
       image: cleaner4,
       video: "https://youtu.be/TQG_WgXoytk?si=jcUiX7jVG86sCcYp",
-      category: "Deep Cleaning Nairobi",
+      category: "Deep Cleaning",
       stats: { area: "3,200 sq ft", time: "8 hours", team: "6 cleaners" },
     },
     {
-      title: "Event Venue Cleaning in Nairobi",
-      description: "Same-day cleaning for a major corporate event venue in Nairobi",
+      title: "Event Venue Cleaning",
+      description: "Same-day cleaning for a major corporate event venue",
       image: cleaner10,
       video: "https://youtu.be/So3b46JgkAc?si=y7HJtpqvZ6B6UWPH",
-      category: "Special Services Nairobi",
+      category: "Special Services",
       stats: { area: "15,000 sq ft", time: "4 hours", team: "8 cleaners" },
     },
   ];
 
-  // Why choose us data with Nairobi focus
+  // Why choose us data without Nairobi focus
   const chooseBenefits = [
     {
-      title: "Experienced Nairobi Cleaning Team",
+      title: "Experienced Cleaning Team",
       description:
-        "Our Nairobi-based staff has over 10 years of experience in professional cleaning with certified training.",
+        "Our staff has over 10 years of experience in professional cleaning with certified training.",
       icon: "fas fa-user-tie",
-      stat: "10+ Years in Nairobi",
+      stat: "10+ Years Experience",
     },
     {
-      title: "Custom Cleaning Solutions in Nairobi",
+      title: "Custom Cleaning Solutions",
       description:
-        "Personalized cleaning plans tailored to your specific needs and preferences in Nairobi.",
+        "Personalized cleaning plans tailored to your specific needs and preferences.",
       icon: "fas fa-sliders-h",
       stat: "100% Custom",
     },
     {
-      title: "Satisfaction Guarantee Nairobi",
+      title: "Satisfaction Guarantee",
       description:
-        "If you're not satisfied with our Nairobi cleaning services, we'll re-clean at no additional cost.",
+        "If you're not satisfied with our cleaning services, we'll re-clean at no additional cost.",
       icon: "fas fa-medal",
       stat: "100% Guarantee",
     },
     {
-      title: "COVID-19 Safe Protocols in Nairobi",
+      title: "COVID-19 Safe Protocols",
       description:
-        "Enhanced disinfection procedures and safety protocols for your health and safety in Nairobi.",
+        "Enhanced disinfection procedures and safety protocols for your health and safety.",
       icon: "fas fa-shield-virus",
       stat: "Safe & Secure",
     },
     {
-      title: "Flexible Scheduling in Nairobi",
+      title: "Flexible Scheduling",
       description:
-        "Choose from one-time, weekly, bi-weekly, or monthly service to fit your Nairobi schedule.",
+        "Choose from one-time, weekly, bi-weekly, or monthly service to fit your schedule.",
       icon: "fas fa-calendar-alt",
       stat: "24/7 Booking",
     },
     {
-      title: "Transparent Pricing Nairobi",
+      title: "Transparent Pricing",
       description:
-        "No hidden fees or surprise charges. Clear, upfront pricing for all Nairobi cleaning services.",
+        "No hidden fees or surprise charges. Clear, upfront pricing for all cleaning services.",
       icon: "fas fa-tag",
       stat: "No Hidden Fees",
     },
@@ -415,7 +415,7 @@ const HomePage = () => {
 
   return (
     <div className="w-full overflow-x-hidden">
-      {/* ENHANCED SEO Meta Tags with Nairobi keywords */}
+      {/* SEO Meta Tags with Nairobi keywords for SEO only */}
       <Helmet>
         <title>{seoData.title}</title>
         <meta name="description" content={seoData.description} />
@@ -423,8 +423,8 @@ const HomePage = () => {
         <meta name="robots" content="index, follow" />
         <link rel="canonical" href={seoData.canonicalUrl} />
         
-        {/* Primary Keywords for Nairobi Cleaning Services */}
-        <meta name="keywords" content="cleaning services nairobi, house cleaning nairobi, office cleaning nairobi, cleaning company nairobi, carpet cleaning nairobi, sofa cleaning nairobi, deep cleaning services nairobi, professional cleaners nairobi, cleaning services in nairobi kenya, best cleaning company nairobi" />
+        {/* Primary Keywords for SEO only */}
+        <meta name="keywords" content="cleaning services, house cleaning, office cleaning, cleaning company, carpet cleaning, sofa cleaning, deep cleaning services, professional cleaners, cleaning services kenya, best cleaning company" />
         
         {/* Open Graph / Facebook */}
         <meta property="og:type" content="website" />
@@ -456,7 +456,7 @@ const HomePage = () => {
             "@context": "https://schema.org",
             "@type": "LocalBusiness",
             "name": "Sylvie Cleaning Services",
-            "description": "Professional cleaning services in Nairobi Kenya offering house cleaning, office cleaning, carpet cleaning, and deep cleaning services.",
+            "description": "Professional cleaning services offering house cleaning, office cleaning, carpet cleaning, and deep cleaning services.",
             "url": "https://www.sylviecleaningservices.com",
             "telephone": "+254726933261",
             "address": {
@@ -496,7 +496,7 @@ const HomePage = () => {
         <meta name="target" content="Nairobi, Kenya" />
       </Helmet>
 
-      {/* Hero Section with Enhanced Nairobi Keywords */}
+      {/* Hero Section without Nairobi keywords in display */}
       <section
         className="relative h-screen overflow-hidden pt-44 md:pt-44 lg:pt-44"
         data-section="hero"
@@ -660,26 +660,26 @@ const HomePage = () => {
         </div>
       </section>
 
-      {/* Statistics Section - ENHANCED with Nairobi context */}
+      {/* Statistics Section without Nairobi context */}
       <section className="py-16 sm:py-20 bg-gradient-to-r from-blue-600 via-blue-700 to-indigo-800 relative overflow-hidden">
         <div className="absolute inset-0 bg-black/10"></div>
         <div className="container mx-auto px-4 sm:px-6 relative z-10">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6 sm:gap-8 text-center">
             {[
-              { number: "5000+", label: "Happy Clients in Nairobi", icon: "fas fa-smile" },
+              { number: "5000+", label: "Happy Clients", icon: "fas fa-smile" },
               {
                 number: "10+",
-                label: "Years Experience in Nairobi",
+                label: "Years Experience",
                 icon: "fas fa-award",
               },
               {
                 number: "24/7",
-                label: "Nairobi Customer Support",
+                label: "Customer Support",
                 icon: "fas fa-headset",
               },
               {
                 number: "100%",
-                label: "Satisfaction Rate Nairobi",
+                label: "Satisfaction Rate",
                 icon: "fas fa-star",
               },
             ].map((stat, index) => (
@@ -697,7 +697,7 @@ const HomePage = () => {
         </div>
       </section>
 
-      {/* Services Section with Enhanced Nairobi Keywords */}
+      {/* Services Section without Nairobi Keywords */}
       <section
         className="py-16 sm:py-24 bg-gradient-to-br from-gray-50 to-white"
         data-section="services"
@@ -711,10 +711,10 @@ const HomePage = () => {
             }`}
           >
             <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-800 mb-4 sm:mb-6">
-              Professional Cleaning Services in Nairobi Kenya
+              Professional Cleaning Services
             </h2>
             <p className="text-lg sm:text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
-              Comprehensive cleaning solutions in Nairobi designed to meet your specific needs with the highest standards of quality and professionalism. Serving homes and businesses across Nairobi County.
+              Comprehensive cleaning solutions designed to meet your specific needs with the highest standards of quality and professionalism.
             </p>
           </div>
 
@@ -776,7 +776,7 @@ const HomePage = () => {
         </div>
       </section>
 
-      {/* Why Choose Us Section with Nairobi Focus */}
+      {/* Why Choose Us Section without Nairobi Focus */}
       <section
         className="py-16 sm:py-24 bg-gradient-to-br from-blue-50 to-indigo-50"
         data-section="whyChoose"
@@ -790,10 +790,10 @@ const HomePage = () => {
             }`}
           >
             <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-800 mb-4 sm:mb-6">
-              Why Nairobi Customers Choose Us
+              Why Customers Choose Us
             </h2>
             <p className="text-lg sm:text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
-              Experience the difference when you choose our professional cleaning services in Nairobi Kenya, backed by years of expertise and commitment to excellence
+              Experience the difference when you choose our professional cleaning services, backed by years of expertise and commitment to excellence
             </p>
           </div>
 
@@ -830,7 +830,7 @@ const HomePage = () => {
         </div>
       </section>
 
-      {/* How It Works Section with Nairobi Context */}
+      {/* How It Works Section without Nairobi Context */}
       <section className="py-16 sm:py-24 bg-white" data-section="howItWorks">
         <div className="container mx-auto px-4 sm:px-6">
           <div
@@ -841,10 +841,10 @@ const HomePage = () => {
             }`}
           >
             <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-800 mb-4 sm:mb-6">
-              How Our Nairobi Cleaning Service Works
+              How Our Cleaning Service Works
             </h2>
             <p className="text-lg sm:text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
-              Simple steps to get your Nairobi space cleaned professionally with our streamlined process
+              Simple steps to get your space cleaned professionally with our streamlined process
             </p>
           </div>
 
@@ -852,30 +852,30 @@ const HomePage = () => {
             {[
               {
                 step: "1",
-                title: "Book Nairobi Cleaning Service",
+                title: "Book Cleaning Service",
                 description:
-                  "Fill out our simple booking form to request a cleaning service tailored to your Nairobi location.",
+                  "Fill out our simple booking form to request a cleaning service tailored to your location.",
                 icon: "fas fa-calendar-plus",
               },
               {
                 step: "2",
-                title: "Nairobi Pre-Visit Assessment",
+                title: "Pre-Visit Assessment",
                 description:
-                  "Our Nairobi head of cleaning will visit to assess your needs and provide a detailed quote.",
+                  "Our head of cleaning will visit to assess your needs and provide a detailed quote.",
                 icon: "fas fa-clipboard-check",
               },
               {
                 step: "3",
-                title: "Professional Cleaning in Nairobi",
+                title: "Professional Cleaning",
                 description:
-                  "Our skilled Nairobi cleaners will provide exceptional service with attention to every detail.",
+                  "Our skilled cleaners will provide exceptional service with attention to every detail.",
                 icon: "fas fa-broom",
               },
               {
                 step: "4",
-                title: "Quality Assurance in Nairobi",
+                title: "Quality Assurance",
                 description:
-                  "Enjoy your clean Nairobi space and provide feedback. We guarantee your satisfaction.",
+                  "Enjoy your clean space and provide feedback. We guarantee your satisfaction.",
                 icon: "fas fa-star",
               },
             ].map((step, index) => (
@@ -911,7 +911,7 @@ const HomePage = () => {
         </div>
       </section>
 
-      {/* YouTube Videos Section with Nairobi Context */}
+      {/* YouTube Videos Section without Nairobi Context */}
       <section
         className="py-16 sm:py-24 bg-gradient-to-br from-gray-50 to-white"
         data-section="videos"
@@ -925,10 +925,10 @@ const HomePage = () => {
             }`}
           >
             <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-800 mb-4 sm:mb-6">
-              See Our Nairobi Team in Action
+              See Our Team in Action
             </h2>
             <p className="text-lg sm:text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
-              Watch our professional cleaning experts in Nairobi deliver exceptional results with our proven methods
+              Watch our professional cleaning experts deliver exceptional results with our proven methods
             </p>
           </div>
 
@@ -1014,7 +1014,7 @@ const HomePage = () => {
         </div>
       </section>
 
-      {/* Our Projects Section with Nairobi Context */}
+      {/* Our Projects Section without Nairobi Context */}
       <section className="py-16 sm:py-24 bg-white" data-section="projects">
         <div className="container mx-auto px-4 sm:px-6">
           <div
@@ -1025,10 +1025,10 @@ const HomePage = () => {
             }`}
           >
             <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-800 mb-4 sm:mb-6">
-              Our Recent Nairobi Projects
+              Our Recent Projects
             </h2>
             <p className="text-lg sm:text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
-              See the difference our professional cleaning services can make in transforming spaces across Nairobi Kenya
+              See the difference our professional cleaning services can make in transforming spaces
             </p>
           </div>
 
@@ -1123,13 +1123,13 @@ const HomePage = () => {
               className="inline-flex items-center bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 sm:py-4 sm:px-8 rounded-full transition-all duration-300 transform hover:scale-105 shadow-xl hover:shadow-blue-500/25 text-sm sm:text-base"
             >
               <i className="fas fa-images mr-2"></i>
-              View All Nairobi Projects
+              View All Projects
             </Link>
           </div>
         </div>
       </section>
 
-      {/* Enhanced Testimonials Section with Nairobi Context */}
+      {/* Enhanced Testimonials Section without Nairobi Context */}
       {testimonials.length > 0 && (
         <section
           className="py-16 sm:py-24 bg-gradient-to-br from-gray-50 to-white"
@@ -1144,10 +1144,10 @@ const HomePage = () => {
               }`}
             >
               <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-800 mb-4 sm:mb-6">
-                What Our Nairobi Clients Say
+                What Our Clients Say
               </h2>
               <p className="text-lg sm:text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
-                Hear from our satisfied Nairobi customers about their experience with our professional cleaning services in Kenya
+                Hear from our satisfied customers about their experience with our professional cleaning services
               </p>
             </div>
 
@@ -1193,7 +1193,7 @@ const HomePage = () => {
                         {testimonials[currentTestimonial]?.name}
                       </p>
                       <p className="text-gray-500 text-sm sm:text-base">
-                        {testimonials[currentTestimonial]?.serviceType} - Nairobi
+                        {testimonials[currentTestimonial]?.serviceType}
                       </p>
                     </div>
                   </div>
@@ -1218,15 +1218,15 @@ const HomePage = () => {
         </section>
       )}
 
-      {/* Professional Features Section - ENHANCED with Nairobi */}
+      {/* Professional Features Section without Nairobi */}
       <section className="py-16 sm:py-24 bg-white" data-section="features">
         <div className="container mx-auto px-4 sm:px-6">
           <div className="text-center mb-12 sm:mb-20">
             <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-800 mb-4 sm:mb-6">
-              Why Choose Our Nairobi Cleaning Services
+              Why Choose Our Cleaning Services
             </h2>
             <p className="text-lg sm:text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
-              Discover what makes our cleaning services in Nairobi stand out from the competition
+              Discover what makes our cleaning services stand out from the competition
             </p>
           </div>
 
@@ -1234,38 +1234,38 @@ const HomePage = () => {
             {[
               {
                 icon: "fas fa-shield-alt",
-                title: "Fully Insured in Nairobi",
-                description: "Complete coverage for your peace of mind in Nairobi",
+                title: "Fully Insured",
+                description: "Complete coverage for your peace of mind",
                 color: "from-green-500 to-emerald-500",
               },
               {
                 icon: "fas fa-clock",
-                title: "Punctual Nairobi Service",
-                description: "We value your time and always arrive on schedule in Nairobi",
+                title: "Punctual Service",
+                description: "We value your time and always arrive on schedule",
                 color: "from-blue-500 to-cyan-500",
               },
               {
                 icon: "fas fa-leaf",
-                title: "Eco-Friendly Nairobi Cleaning",
-                description: "Environmentally safe cleaning products in Nairobi",
+                title: "Eco-Friendly Cleaning",
+                description: "Environmentally safe cleaning products",
                 color: "from-green-400 to-teal-500",
               },
               {
                 icon: "fas fa-user-check",
-                title: "Vetted Nairobi Staff",
-                description: "Background-checked and trained Nairobi professionals",
+                title: "Vetted Staff",
+                description: "Background-checked and trained professionals",
                 color: "from-purple-500 to-indigo-500",
               },
               {
                 icon: "fas fa-medal",
-                title: "Nairobi Quality Guarantee",
-                description: "100% satisfaction or we'll re-clean for free in Nairobi",
+                title: "Quality Guarantee",
+                description: "100% satisfaction or we'll re-clean for free",
                 color: "from-yellow-500 to-orange-500",
               },
               {
                 icon: "fas fa-credit-card",
-                title: "Flexible Nairobi Payment",
-                description: "Multiple payment options for your Nairobi convenience",
+                title: "Flexible Payment",
+                description: "Multiple payment options for your convenience",
                 color: "from-pink-500 to-rose-500",
               },
             ].map((feature, index) => (
@@ -1290,7 +1290,7 @@ const HomePage = () => {
         </div>
       </section>
 
-      {/* Enhanced Call to Action with Nairobi Keywords */}
+      {/* Enhanced Call to Action without Nairobi Keywords */}
       <section
         className="py-16 sm:py-24 bg-gradient-to-br from-blue-600 via-blue-700 to-indigo-800 relative overflow-hidden"
         data-section="cta"
@@ -1309,10 +1309,10 @@ const HomePage = () => {
             }`}
           >
             <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6 sm:mb-8 leading-tight">
-              Ready to Experience Professional Cleaning in Nairobi?
+              Ready to Experience Professional Cleaning?
             </h2>
             <p className="text-lg sm:text-xl md:text-2xl text-blue-100 mb-8 sm:mb-12 max-w-4xl mx-auto leading-relaxed">
-              Book your Nairobi cleaning service today and enjoy a cleaner, healthier space with our guaranteed satisfaction
+              Book your cleaning service today and enjoy a cleaner, healthier space with our guaranteed satisfaction
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 sm:gap-6 justify-center items-center">
@@ -1321,21 +1321,21 @@ const HomePage = () => {
                 className="inline-flex items-center bg-white hover:bg-gray-100 text-blue-700 font-bold py-4 px-8 sm:py-5 sm:px-10 rounded-full transition-all duration-300 transform hover:scale-105 shadow-2xl hover:shadow-white/25 text-base sm:text-lg"
               >
                 <i className="fas fa-calendar-check mr-2 sm:mr-3 text-lg sm:text-xl"></i>
-                Book Nairobi Service Now
+                Book Service Now
               </Link>
               <Link
                 to="/contact"
                 className="inline-flex items-center bg-transparent hover:bg-white/10 text-white font-bold py-4 px-8 sm:py-5 sm:px-10 rounded-full transition-all duration-300 border-2 border-white/30 hover:border-white/50 text-base sm:text-lg"
               >
                 <i className="fas fa-phone mr-2 sm:mr-3 text-lg sm:text-xl"></i>
-                Call Nairobi Office
+                Call Our Office
               </Link>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Enhanced Trust Badges Section with Nairobi */}
+      {/* Enhanced Trust Badges Section without Nairobi */}
       <section className="py-16 sm:py-20 bg-white" data-section="trust">
         <div className="container mx-auto px-4 sm:px-6">
           <div
@@ -1348,26 +1348,26 @@ const HomePage = () => {
             {[
               {
                 icon: "fas fa-shield-alt",
-                title: "Insured & Bonded Nairobi",
-                description: "Your Nairobi property is fully protected",
+                title: "Insured & Bonded",
+                description: "Your property is fully protected",
                 color: "from-green-500 to-emerald-500",
               },
               {
                 icon: "fas fa-user-check",
-                title: "Screened Nairobi Staff",
-                description: "Background checked Nairobi professionals",
+                title: "Screened Staff",
+                description: "Background checked professionals",
                 color: "from-blue-500 to-cyan-500",
               },
               {
                 icon: "fas fa-clock",
-                title: "Reliable Nairobi Service",
-                description: "On-time, every time guarantee in Nairobi",
+                title: "Reliable Service",
+                description: "On-time, every time guarantee",
                 color: "from-purple-500 to-indigo-500",
               },
               {
                 icon: "fas fa-leaf",
-                title: "Eco-Friendly Nairobi",
-                description: "Green cleaning options available in Nairobi",
+                title: "Eco-Friendly",
+                description: "Green cleaning options available",
                 color: "from-green-400 to-teal-500",
               },
             ].map((badge, index) => (
