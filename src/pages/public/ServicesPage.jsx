@@ -297,7 +297,7 @@ const ServicesPage = () => {
 
       {/* Hero Banner */}
       <div
-        className="relative bg-gradient-to-r from-blue-600 via-blue-700 to-indigo-800 h-80 md:h-96 w-full overflow-hidden shadow-xl"
+        className="relative bg-gradient-to-r from-blue-600 via-blue-700 to-indigo-800 h-80 md:h-96 w-full overflow-hidden shadow-xl pt-24"
         data-section="hero"
       >
         {/* Animated background icons */}

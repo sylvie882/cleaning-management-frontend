@@ -83,9 +83,9 @@ const BookingForm = () => {
 
   // Time slots for better UX
   const timeSlots = [
-    "08:00", "09:00", "10:00", "11:00", 
-    "12:00", "13:00", "14:00", "15:00", 
-    "16:00", "17:00", "18:00"
+    "08:00 AM", "09:00 AM", "10:00 AM", "11:00 AM", 
+    "12:00 PM", "01:00 PM", "02:00 PM", "03:00 PM", 
+    "04:00 PM", "05:00 PM", "06:00 PM"
   ];
 
   // Parse query parameters on component mount
@@ -200,8 +200,8 @@ const BookingForm = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-cyan-50 py-8 px-4 pt-44">
-      <div className="max-w-4xl mx-auto">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-cyan-50 py-8 px-4 pt-32">
+      <div className="max-w-6xl mx-auto">
         {/* SEO Meta Tags */}
         <Helmet>
           <title>{seoData.title}</title>
@@ -253,60 +253,41 @@ const BookingForm = () => {
         </Helmet>
 
         {/* Header Section */}
-        <div className="text-center mb-8 animate-fade-in">
-          <div className="bg-white rounded-3xl shadow-xl p-8 mb-6">
-            <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
-              Book Your Cleaning Service
-            </h1>
-            <p className="text-gray-600 text-lg mb-2">
-              Complete the form below and we'll get back to you within 24 hours
-            </p>
-            <div className="flex justify-center items-center gap-4 text-sm text-gray-500">
-              <span className="flex items-center gap-1">
-                <i className="fas fa-shield-alt text-green-500"></i>
-                Secure booking
-              </span>
-              <span className="flex items-center gap-1">
-                <i className="fas fa-clock text-blue-500"></i>
-                24/7 Support
-              </span>
-              <span className="flex items-center gap-1">
-                <i className="fas fa-star text-yellow-500"></i>
-                5-star rated
-              </span>
-            </div>
-          </div>
-        </div>
+        <div className="text-center mb-12 pt-10">
+  <div className="bg-blue-600 rounded-2xl shadow-sm border border-blue-900 p-8 mb-6">
+    <div className="inline-flex items-center justify-center w-16 h-16 bg-white rounded-full mb-4">
+      <i className="fas fa-calendar-plus text-blue-900 text-2xl"></i>
+    </div>
+    <h1 className="text-4xl font-bold text-white mb-3">
+      Book Your Cleaning Service
+    </h1>
+    <p className="text-blue-100 text-lg max-w-2xl mx-auto leading-relaxed">
+      Complete the form below and we'll get back to you within 24 hours with a free, no-obligation quote
+    </p>
+    {/* <div className="flex flex-wrap justify-center items-center gap-6 mt-6 text-sm">
+      {[
+        { icon: "fa-shield-alt", text: "Secure booking", color: "text-green-400" },
+        { icon: "fa-clock", text: "24/7 Support", color: "text-blue-300" },
+        { icon: "fa-star", text: "5-star rated", color: "text-yellow-400" },
+        { icon: "fa-bolt", text: "Quick response", color: "text-orange-400" }
+      ].map((item, index) => (
+        <span key={index} className="flex items-center gap-2 text-blue-100">
+          <i className={`fas ${item.icon} ${item.color}`}></i>
+          {item.text}
+        </span>
+      ))}
+    </div> */}
+  </div>
+</div>
 
-        {/* Progress Indicator */}
-        {/* <div className="flex justify-center mb-8">
-          <div className="bg-white rounded-full shadow-lg px-6 py-3">
-            <div className="flex items-center gap-4 text-sm font-medium">
-              <span className="flex items-center gap-2 text-blue-600">
-                <span className="w-6 h-6 bg-blue-600 text-white rounded-full flex items-center justify-center text-xs">1</span>
-                Service Details
-              </span>
-              <span className="text-gray-400">→</span>
-              <span className="flex items-center gap-2 text-gray-400">
-                <span className="w-6 h-6 bg-gray-200 text-gray-600 rounded-full flex items-center justify-center text-xs">2</span>
-                Personal Info
-              </span>
-              <span className="text-gray-400">→</span>
-              <span className="flex items-center gap-2 text-gray-400">
-                <span className="w-6 h-6 bg-gray-200 text-gray-600 rounded-full flex items-center justify-center text-xs">3</span>
-                Confirmation
-              </span>
-            </div>
-          </div>
-        </div> */}
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Main Form */}
           <div className="lg:col-span-2">
-            <div className="bg-white rounded-3xl shadow-xl overflow-hidden">
+            <div className="bg-white rounded-2xl shadow-sm border border-blue-100 overflow-hidden">
               {/* Show loading indicator while fetching service */}
               {serviceLoading && !serviceData && (
-                <div className="text-center py-8 animate-fade-in">
+                <div className="text-center py-12">
                   <div className="flex justify-center mb-4">
                     <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
                   </div>
@@ -316,18 +297,21 @@ const BookingForm = () => {
 
               {/* Display selected service details if available */}
               {serviceData && (
-                <div className="bg-gradient-to-r from-blue-50 to-cyan-50 p-6 border-b border-gray-200">
-                  <div className="flex items-center gap-4">
+                <div className="bg-gradient-to-r from-blue-500 to-cyan-500 p-6">
+                  <div className="flex items-center gap-4 text-white">
                     {serviceData.image && (
                       <img
                         src={serviceData.image}
                         alt={serviceData.name}
-                        className="w-16 h-16 rounded-lg object-cover shadow-md"
+                        className="w-16 h-16 rounded-xl object-cover shadow-lg"
                       />
                     )}
                     <div>
-                      <h3 className="font-semibold text-gray-900">Selected Service</h3>
-                      <p className="text-blue-600 font-medium">{serviceData.name}</p>
+                      <p className="text-blue-100 text-sm font-medium">Selected Service</p>
+                      <h3 className="font-bold text-lg">{serviceData.name}</h3>
+                      {serviceData.price && (
+                        <p className="text-blue-100 text-sm">Starting from {serviceData.price}</p>
+                      )}
                     </div>
                   </div>
                 </div>
@@ -339,27 +323,109 @@ const BookingForm = () => {
                 onSubmit={handleSubmit}
                 enableReinitialize={true}
               >
-                {({ isSubmitting, values, setFieldValue }) => (
-                  <Form className="p-6 space-y-6">
-                    {/* Service Details Section */}
-                    <div className="animate-fade-in">
-                      <div className="flex items-center gap-3 mb-4">
-                        <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center">
-                          <i className="fas fa-broom text-blue-600 text-sm"></i>
+                {({ isSubmitting, values, setFieldValue, errors, touched }) => (
+                  <Form className="p-8 space-y-8">
+                    {/* Personal Information Section */}
+                    <div>
+                      <div className="flex items-center gap-3 mb-6">
+                        <div className="w-10 h-10 bg-gradient-to-r from-blue-100 to-cyan-100 rounded-xl flex items-center justify-center">
+                          <i className="fas fa-user text-blue-600 text-lg"></i>
                         </div>
-                        <h3 className="text-xl font-semibold text-gray-900">Service Details</h3>
+                        <div>
+                          <h3 className="text-xl font-bold text-gray-900">Your Information</h3>
+                          <p className="text-gray-500 text-sm">We'll use this to contact you</p>
+                        </div>
                       </div>
                       
-                      <div className="space-y-4">
+                      <div className="space-y-6">
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                          <div>
+                            <label htmlFor="name" className="block text-sm font-semibold text-gray-700 mb-2">
+                              Full Name *
+                            </label>
+                            <Field
+                              type="text"
+                              id="name"
+                              name="name"
+                              placeholder="Enter your full name"
+                              className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 ${
+                                errors.name && touched.name ? 'border-red-300' : 'border-gray-300'
+                              }`}
+                            />
+                            <ErrorMessage
+                              name="name"
+                              component="div"
+                              className="text-red-500 text-sm mt-2 flex items-center gap-1"
+                            />
+                          </div>
+                          
+                          <div>
+                            <label htmlFor="phone" className="block text-sm font-semibold text-gray-700 mb-2">
+                              Phone Number *
+                            </label>
+                            <Field
+                              type="tel"
+                              id="phone"
+                              name="phone"
+                              placeholder="+254 XXX XXX XXX"
+                              className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 ${
+                                errors.phone && touched.phone ? 'border-red-300' : 'border-gray-300'
+                              }`}
+                            />
+                            <ErrorMessage
+                              name="phone"
+                              component="div"
+                              className="text-red-500 text-sm mt-2 flex items-center gap-1"
+                            />
+                          </div>
+                        </div>
+
                         <div>
-                          <label htmlFor="serviceType" className="block text-sm font-medium text-gray-700 mb-2">
+                          <label htmlFor="email" className="block text-sm font-semibold text-gray-700 mb-2">
+                            Email Address *
+                          </label>
+                          <Field
+                            type="email"
+                            id="email"
+                            name="email"
+                            placeholder="your@email.com"
+                            className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 ${
+                              errors.email && touched.email ? 'border-red-300' : 'border-gray-300'
+                            }`}
+                          />
+                          <ErrorMessage
+                            name="email"
+                            component="div"
+                            className="text-red-500 text-sm mt-2 flex items-center gap-1"
+                          />
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Service Details Section */}
+                    <div>
+                      <div className="flex items-center gap-3 mb-6">
+                        <div className="w-10 h-10 bg-gradient-to-r from-green-100 to-emerald-100 rounded-xl flex items-center justify-center">
+                          <i className="fas fa-broom text-green-600 text-lg"></i>
+                        </div>
+                        <div>
+                          <h3 className="text-xl font-bold text-gray-900">Service Details</h3>
+                          <p className="text-gray-500 text-sm">Tell us about your cleaning needs</p>
+                        </div>
+                      </div>
+                      
+                      <div className="space-y-6">
+                        <div>
+                          <label htmlFor="serviceType" className="block text-sm font-semibold text-gray-700 mb-2">
                             Service Type *
                           </label>
                           <Field
                             as="select"
                             id="serviceType"
                             name="serviceType"
-                            className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200"
+                            className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 appearance-none bg-white ${
+                              errors.serviceType && touched.serviceType ? 'border-red-300' : 'border-gray-300'
+                            }`}
                           >
                             <option value="">Select a service type</option>
                             {serviceTypes.map((service, index) => (
@@ -371,13 +437,13 @@ const BookingForm = () => {
                           <ErrorMessage
                             name="serviceType"
                             component="div"
-                            className="text-red-500 text-sm mt-1 flex items-center gap-1"
+                            className="text-red-500 text-sm mt-2 flex items-center gap-1"
                           />
                         </div>
 
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                           <div>
-                            <label htmlFor="city" className="block text-sm font-medium text-gray-700 mb-2">
+                            <label htmlFor="city" className="block text-sm font-semibold text-gray-700 mb-2">
                               City *
                             </label>
                             <Field
@@ -385,16 +451,18 @@ const BookingForm = () => {
                               id="city"
                               name="city"
                               placeholder="Enter your city"
-                              className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200"
+                              className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 ${
+                                errors.city && touched.city ? 'border-red-300' : 'border-gray-300'
+                              }`}
                             />
                             <ErrorMessage
                               name="city"
                               component="div"
-                              className="text-red-500 text-sm mt-1 flex items-center gap-1"
+                              className="text-red-500 text-sm mt-2 flex items-center gap-1"
                             />
                           </div>
                           <div>
-                            <label htmlFor="location" className="block text-sm font-medium text-gray-700 mb-2">
+                            <label htmlFor="location" className="block text-sm font-semibold text-gray-700 mb-2">
                               Address *
                             </label>
                             <Field
@@ -402,12 +470,14 @@ const BookingForm = () => {
                               id="location"
                               name="location"
                               placeholder="Enter your full address"
-                              className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200"
+                              className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 ${
+                                errors.location && touched.location ? 'border-red-300' : 'border-gray-300'
+                              }`}
                             />
                             <ErrorMessage
                               name="location"
                               component="div"
-                              className="text-red-500 text-sm mt-1 flex items-center gap-1"
+                              className="text-red-500 text-sm mt-2 flex items-center gap-1"
                             />
                           </div>
                         </div>
@@ -415,17 +485,20 @@ const BookingForm = () => {
                     </div>
 
                     {/* Schedule Section */}
-                    <div className="animate-fade-in">
-                      <div className="flex items-center gap-3 mb-4">
-                        <div className="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center">
-                          <i className="fas fa-calendar-alt text-green-600 text-sm"></i>
+                    <div>
+                      <div className="flex items-center gap-3 mb-6">
+                        <div className="w-10 h-10 bg-gradient-to-r from-purple-100 to-pink-100 rounded-xl flex items-center justify-center">
+                          <i className="fas fa-calendar-alt text-purple-600 text-lg"></i>
                         </div>
-                        <h3 className="text-xl font-semibold text-gray-900">Schedule Pre-Visit</h3>
+                        <div>
+                          <h3 className="text-xl font-bold text-gray-900">Schedule Pre-Visit</h3>
+                          <p className="text-gray-500 text-sm">Choose your preferred date and time</p>
+                        </div>
                       </div>
                       
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div>
-                          <label htmlFor="preferredDate" className="block text-sm font-medium text-gray-700 mb-2">
+                          <label htmlFor="preferredDate" className="block text-sm font-semibold text-gray-700 mb-2">
                             Preferred Date *
                           </label>
                           <Field
@@ -433,23 +506,27 @@ const BookingForm = () => {
                             id="preferredDate"
                             name="preferredDate"
                             min={getTomorrowDate()}
-                            className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200"
+                            className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 ${
+                              errors.preferredDate && touched.preferredDate ? 'border-red-300' : 'border-gray-300'
+                            }`}
                           />
                           <ErrorMessage
                             name="preferredDate"
                             component="div"
-                            className="text-red-500 text-sm mt-1 flex items-center gap-1"
+                            className="text-red-500 text-sm mt-2 flex items-center gap-1"
                           />
                         </div>
                         <div>
-                          <label htmlFor="preferredTime" className="block text-sm font-medium text-gray-700 mb-2">
+                          <label htmlFor="preferredTime" className="block text-sm font-semibold text-gray-700 mb-2">
                             Preferred Time *
                           </label>
                           <Field
                             as="select"
                             id="preferredTime"
                             name="preferredTime"
-                            className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200"
+                            className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 appearance-none bg-white ${
+                              errors.preferredTime && touched.preferredTime ? 'border-red-300' : 'border-gray-300'
+                            }`}
                           >
                             <option value="">Select a time slot</option>
                             {timeSlots.map((time, index) => (
@@ -461,91 +538,28 @@ const BookingForm = () => {
                           <ErrorMessage
                             name="preferredTime"
                             component="div"
-                            className="text-red-500 text-sm mt-1 flex items-center gap-1"
+                            className="text-red-500 text-sm mt-2 flex items-center gap-1"
                           />
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* Personal Information Section */}
-                    <div className="animate-fade-in">
-                      <div className="flex items-center gap-3 mb-4">
-                        <div className="w-8 h-8 bg-purple-100 rounded-full flex items-center justify-center">
-                          <i className="fas fa-user text-purple-600 text-sm"></i>
-                        </div>
-                        <h3 className="text-xl font-semibold text-gray-900">Your Information</h3>
-                      </div>
-                      
-                      <div className="space-y-4">
-                        <div>
-                          <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2">
-                            Full Name *
-                          </label>
-                          <Field
-                            type="text"
-                            id="name"
-                            name="name"
-                            placeholder="Enter your full name"
-                            className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200"
-                          />
-                          <ErrorMessage
-                            name="name"
-                            component="div"
-                            className="text-red-500 text-sm mt-1 flex items-center gap-1"
-                          />
-                        </div>
-
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                          <div>
-                            <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
-                              Email Address *
-                            </label>
-                            <Field
-                              type="email"
-                              id="email"
-                              name="email"
-                              placeholder="your@email.com"
-                              className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200"
-                            />
-                            <ErrorMessage
-                              name="email"
-                              component="div"
-                              className="text-red-500 text-sm mt-1 flex items-center gap-1"
-                            />
-                          </div>
-                          <div>
-                            <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-2">
-                              Phone Number *
-                            </label>
-                            <Field
-                              type="tel"
-                              id="phone"
-                              name="phone"
-                              placeholder="+254 XXX XXX XXX"
-                              className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200"
-                            />
-                            <ErrorMessage
-                              name="phone"
-                              component="div"
-                              className="text-red-500 text-sm mt-1 flex items-center gap-1"
-                            />
-                          </div>
                         </div>
                       </div>
                     </div>
 
                     {/* Additional Information Section */}
-                    <div className="animate-fade-in">
-                      <div className="flex items-center gap-3 mb-4">
-                        <div className="w-8 h-8 bg-orange-100 rounded-full flex items-center justify-center">
-                          <i className="fas fa-edit text-orange-600 text-sm"></i>
+                    <div>
+                      <div className="flex items-center gap-3 mb-6">
+                        <div className="w-10 h-10 bg-gradient-to-r from-orange-100 to-amber-100 rounded-xl flex items-center justify-center">
+                          <i className="fas fa-edit text-orange-600 text-lg"></i>
                         </div>
-                        <h3 className="text-xl font-semibold text-gray-900">Additional Details</h3>
+                        <div>
+                          <h3 className="text-xl font-bold text-gray-900">Additional Details</h3>
+                          <p className="text-gray-500 text-sm">Any special instructions or requests</p>
+                        </div>
                       </div>
                       
                       <div>
-                        <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-2">
+                        <label htmlFor="message" className="block text-sm font-semibold text-gray-700 mb-2">
                           Special Instructions or Requests
+                          <span className="text-gray-400 font-normal ml-1">(optional)</span>
                         </label>
                         <Field
                           as="textarea"
@@ -553,16 +567,16 @@ const BookingForm = () => {
                           name="message"
                           rows="4"
                           placeholder="Any specific requirements, access instructions, or special requests..."
-                          className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 resize-none"
+                          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 resize-none"
                         />
-                        <div className="flex justify-between text-sm text-gray-500 mt-1">
-                          <span>Optional</span>
+                        <div className="flex justify-between text-sm text-gray-500 mt-2">
+                          <span>Help us serve you better</span>
                           <span>{values.message.length}/500 characters</span>
                         </div>
                         <ErrorMessage
                           name="message"
                           component="div"
-                          className="text-red-500 text-sm mt-1 flex items-center gap-1"
+                          className="text-red-500 text-sm mt-2 flex items-center gap-1"
                         />
                       </div>
                     </div>
@@ -572,21 +586,21 @@ const BookingForm = () => {
                       <button
                         type="submit"
                         disabled={isSubmitting || isLoading}
-                        className="w-full bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700 disabled:from-gray-400 disabled:to-gray-500 text-white font-semibold py-4 px-6 rounded-xl shadow-lg transition-all duration-300 transform hover:scale-[1.02] disabled:scale-100 disabled:cursor-not-allowed"
+                        className="w-full bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700 disabled:from-gray-400 disabled:to-gray-400 text-white font-semibold py-4 px-6 rounded-lg shadow-lg transition-all duration-300 transform hover:scale-[1.02] disabled:scale-100 disabled:cursor-not-allowed group"
                       >
                         {isLoading ? (
-                          <span className="flex items-center justify-center gap-2">
+                          <span className="flex items-center justify-center gap-3">
                             <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
                             Processing Your Booking...
                           </span>
                         ) : (
-                          <span className="flex items-center justify-center gap-2">
-                            <i className="fas fa-calendar-check"></i>
+                          <span className="flex items-center justify-center gap-3 text-lg">
+                            <i className="fas fa-calendar-check group-hover:scale-110 transition-transform"></i>
                             Book Now - Get Free Quote
                           </span>
                         )}
                       </button>
-                      <p className="text-center text-sm text-gray-500 mt-3">
+                      <p className="text-center text-sm text-gray-500 mt-4">
                         By booking, you agree to our terms of service. We'll contact you within 24 hours to confirm.
                       </p>
                     </div>
@@ -598,99 +612,106 @@ const BookingForm = () => {
 
           {/* Sidebar - Benefits and Contact Info */}
           <div className="lg:col-span-1">
-            <div className="space-y-6">
+            <div className="space-y-6 sticky top-6">
               {/* Benefits Card */}
-              <div className="bg-white rounded-3xl shadow-xl p-6">
-                <h3 className="font-semibold text-gray-900 mb-4 text-lg">Why Choose Us</h3>
+              <div className="bg-gradient-to-br from-blue-600 to-cyan-600 rounded-2xl shadow-lg p-6 text-white">
+                <h3 className="font-bold text-lg mb-4 flex items-center gap-2">
+                  <i className="fas fa-star"></i>
+                  Why Choose Sylvie Cleaning
+                </h3>
                 <div className="space-y-4">
                   {[
-                    { icon: "fa-shield-alt", color: "text-green-500", text: "Fully Insured & Bonded" },
-                    { icon: "fa-clock", color: "text-blue-500", text: "Flexible Scheduling" },
-                    { icon: "fa-star", color: "text-yellow-500", text: "5-Star Rated Service" },
-                    { icon: "fa-award", color: "text-purple-500", text: "Professional Staff" },
-                    { icon: "fa-leaf", color: "text-green-400", text: "Eco-Friendly Products" },
-                    { icon: "fa-money-bill-wave", color: "text-green-600", text: "No Hidden Costs" }
+                    { icon: "fa-shield-alt", text: "Fully Insured & Bonded" },
+                    { icon: "fa-clock", text: "Flexible Scheduling" },
+                    { icon: "fa-award", text: "Professional Staff" },
+                    { icon: "fa-leaf", text: "Eco-Friendly Products" },
+                    { icon: "fa-money-bill-wave", text: "No Hidden Costs" },
+                    { icon: "fa-heart", text: "Satisfaction Guaranteed" }
                   ].map((item, index) => (
                     <div key={index} className="flex items-center gap-3">
-                      <i className={`fas ${item.icon} ${item.color} text-lg`}></i>
-                      <span className="text-gray-700">{item.text}</span>
+                      <div className="w-8 h-8 bg-white/20 rounded-lg flex items-center justify-center">
+                        <i className={`fas ${item.icon} text-white`}></i>
+                      </div>
+                      <span className="text-blue-50">{item.text}</span>
                     </div>
                   ))}
                 </div>
               </div>
 
               {/* Contact Info Card */}
-              <div className="bg-gradient-to-br from-blue-600 to-cyan-600 rounded-3xl shadow-xl p-6 text-white">
-                <h3 className="font-semibold mb-4 text-lg">Need Help?</h3>
-                <div className="space-y-3">
-                  <div className="flex items-center gap-3">
-                    <i className="fas fa-phone w-5 text-center"></i>
-                    <span>+254 726 933 261</span>
+              <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-6">
+                <h3 className="font-bold text-gray-900 mb-4 text-lg flex items-center gap-2">
+                  <i className="fas fa-headset text-blue-600"></i>
+                  Need Help?
+                </h3>
+                <div className="space-y-4">
+                  <div className="flex items-center gap-3 p-3 bg-blue-50 rounded-lg">
+                    <div className="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center">
+                      <i className="fas fa-phone text-blue-600"></i>
+                    </div>
+                    <div>
+                      <p className="text-sm text-gray-600">Call us anytime</p>
+                      <p className="font-semibold text-gray-900">+254 726 933 261</p>
+                    </div>
                   </div>
-                  <div className="flex items-center gap-3">
-                    <i className="fas fa-envelope w-5 text-center"></i>
-                    <span>info@sylviecleaning.com</span>
+                  
+                  <div className="flex items-center gap-3 p-3 bg-green-50 rounded-lg">
+                    <div className="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center">
+                      <i className="fas fa-envelope text-green-600"></i>
+                    </div>
+                    <div>
+                      <p className="text-sm text-gray-600">Email us</p>
+                      <p className="font-semibold text-gray-900">info@sylviecleaning.com</p>
+                    </div>
                   </div>
-                  <div className="flex items-center gap-3">
-                    <i className="fas fa-clock w-5 text-center"></i>
-                    <span>Mon-Sun: 7:00 AM - 9:00 PM</span>
+                  
+                  <div className="flex items-center gap-3 p-3 bg-purple-50 rounded-lg">
+                    <div className="w-10 h-10 bg-purple-100 rounded-lg flex items-center justify-center">
+                      <i className="fas fa-clock text-purple-600"></i>
+                    </div>
+                    <div>
+                      <p className="text-sm text-gray-600">Working hours</p>
+                      <p className="font-semibold text-gray-900">Mon-Sun: 7:00 AM - 9:00 PM</p>
+                    </div>
                   </div>
-                </div>
-                <div className="mt-4 pt-4 border-t border-blue-500">
-                  <p className="text-sm opacity-90">
-                    We're here to help you with any questions about our services or booking process.
-                  </p>
                 </div>
               </div>
 
               {/* Quick Facts Card */}
-              <div className="bg-white rounded-3xl shadow-xl p-6">
-                <h3 className="font-semibold text-gray-900 mb-4 text-lg">What to Expect</h3>
-                <div className="space-y-3 text-sm text-gray-600">
-                  <div className="flex items-start gap-2">
-                    <i className="fas fa-check-circle text-green-500 mt-1"></i>
-                    <span>Free, no-obligation quote within 24 hours</span>
-                  </div>
-                  <div className="flex items-start gap-2">
-                    <i className="fas fa-check-circle text-green-500 mt-1"></i>
-                    <span>Professional pre-visit assessment</span>
-                  </div>
-                  <div className="flex items-start gap-2">
-                    <i className="fas fa-check-circle text-green-500 mt-1"></i>
-                    <span>Flexible rescheduling options</span>
-                  </div>
-                  <div className="flex items-start gap-2">
-                    <i className="fas fa-check-circle text-green-500 mt-1"></i>
-                    <span>100% satisfaction guarantee</span>
-                  </div>
+              <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-6">
+                <h3 className="font-bold text-gray-900 mb-4 text-lg flex items-center gap-2">
+                  <i className="fas fa-bolt text-orange-500"></i>
+                  What to Expect
+                </h3>
+                <div className="space-y-3">
+                  {[
+                    "Free, no-obligation quote within 24 hours",
+                    "Professional pre-visit assessment",
+                    "Flexible rescheduling options",
+                    "100% satisfaction guarantee",
+                    "Professional equipment & supplies",
+                    "Thorough quality inspection"
+                  ].map((item, index) => (
+                    <div key={index} className="flex items-start gap-2">
+                      <i className="fas fa-check-circle text-green-500 mt-1 text-sm"></i>
+                      <span className="text-gray-700 text-sm">{item}</span>
+                    </div>
+                  ))}
                 </div>
+              </div>
+
+              {/* Trust Indicators */}
+              <div className="bg-gradient-to-r from-green-500 to-emerald-500 rounded-2xl shadow-lg p-6 text-white text-center">
+                <div className="flex items-center justify-center gap-2 mb-2">
+                  <i className="fas fa-shield-check text-2xl"></i>
+                </div>
+                <h4 className="font-bold mb-1">Secure & Trusted</h4>
+                <p className="text-green-100 text-sm">Your information is safe with us. We respect your privacy.</p>
               </div>
             </div>
           </div>
         </div>
       </div>
-
-      {/* Animations */}
-      <style jsx>{`
-        @keyframes fadeIn {
-          0% {
-            opacity: 0;
-            transform: translateY(20px);
-          }
-          100% {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
-        .animate-fade-in {
-          animation: fadeIn 0.6s ease-out both;
-        }
-        @media (prefers-reduced-motion: reduce) {
-          .animate-fade-in {
-            animation: none;
-          }
-        }
-      `}</style>
     </div>
   );
 };

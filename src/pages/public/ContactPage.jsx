@@ -311,7 +311,7 @@ const ContactPage = () => {
                       {businessInfo.phone}
                     </a>
                   </p>
-                  <p className="mt-1">
+                  {/* <p className="mt-1">
                     <a
                       href={`tel:${businessInfo.alternatePhone.replace(
                         /\s+/g,
@@ -321,7 +321,7 @@ const ContactPage = () => {
                     >
                       {businessInfo.alternatePhone}
                     </a>
-                  </p>
+                  </p> */}
                 </div>
               </div>
 
