@@ -66,7 +66,7 @@ const Dashboard = () => {
           Authorization: `Bearer ${token}`,
         },
       };
-      const URL = "https://sylvie-kg23.onrender.com";
+      const URL = "https://cleaning-management-backend.onrender.com";
 
       // Fetch dashboard stats
       const statsResponse = await axios.get(
@@ -117,7 +117,7 @@ const Dashboard = () => {
           Authorization: `Bearer ${token}`,
         },
       };
-      const URL = "https://sylvie-kg23.onrender.com";
+      const URL = "https://cleaning-management-backend.onrender.com";
 
       const response = await axios.get(`${URL}/api/bookings`, config);
       setBookings(response.data);
@@ -137,7 +137,7 @@ const Dashboard = () => {
           Authorization: `Bearer ${token}`,
         },
       };
-      const URL = "https://sylvie-kg23.onrender.com";
+      const URL = "https://cleaning-management-backend.onrender.com";
 
       const response = await axios.get(
         `${URL}/api/auth/users/role/cleaner`,
