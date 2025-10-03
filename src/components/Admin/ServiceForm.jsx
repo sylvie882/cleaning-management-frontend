@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 // src/components/Admin/ServiceForm.jsx
 import { useState, useEffect, useRef } from "react";
 import RichTextEditor from "./RichTextEditor";
@@ -380,7 +379,6 @@ const ServiceForm = ({ mode, service, onSubmit, onCancel }) => {
   return (
     <div className="fixed inset-0 bg-gray-900 bg-opacity-50 overflow-y-auto h-full w-full z-50 flex items-center justify-center p-4">
       <div className="relative bg-white rounded-xl shadow-xl max-w-4xl w-full mx-auto animate-fadeIn max-h-screen overflow-y-auto">
-        {/* Header */}
         <div className="flex items-center justify-between p-6 border-b border-gray-200 sticky top-0 bg-white rounded-t-xl">
           <h2 className="text-xl font-bold text-gray-800">
             {mode === "create" ? "Add New Service" : "Edit Service"}
@@ -407,10 +405,8 @@ const ServiceForm = ({ mode, service, onSubmit, onCancel }) => {
           </button>
         </div>
 
-        {/* Form */}
         <form onSubmit={handleSubmit} className="p-6">
           <div className="space-y-6">
-            {/* Service Name */}
             <div>
               <label
                 htmlFor="name"
@@ -430,7 +426,6 @@ const ServiceForm = ({ mode, service, onSubmit, onCancel }) => {
               />
             </div>
 
-            {/* Description */}
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">
                 Description <span className="text-red-500">*</span>
@@ -478,7 +473,6 @@ const ServiceForm = ({ mode, service, onSubmit, onCancel }) => {
               </div>
             </div>
 
-            {/* Price and Duration */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
                 <label
@@ -533,7 +527,6 @@ const ServiceForm = ({ mode, service, onSubmit, onCancel }) => {
               </div>
             </div>
 
-            {/* Category */}
             <div>
               <label
                 htmlFor="category"
@@ -557,7 +550,6 @@ const ServiceForm = ({ mode, service, onSubmit, onCancel }) => {
               </select>
             </div>
 
-            {/* Images Section */}
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-3">
                 Service Images
@@ -860,7 +852,6 @@ const ServiceForm = ({ mode, service, onSubmit, onCancel }) => {
               </div>
             </div>
 
-            {/* YouTube Videos Section */}
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-3">
                 YouTube Videos
@@ -1094,7 +1085,6 @@ const ServiceForm = ({ mode, service, onSubmit, onCancel }) => {
               </div>
             </div>
 
-            {/* Features Section */}
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">
                 Features
@@ -1149,7 +1139,6 @@ const ServiceForm = ({ mode, service, onSubmit, onCancel }) => {
               </div>
             </div>
 
-            {/* Requirements Section */}
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">
                 Requirements
@@ -1205,7 +1194,6 @@ const ServiceForm = ({ mode, service, onSubmit, onCancel }) => {
               </div>
             </div>
 
-            {/* Active Checkbox */}
             <div className="flex items-start">
               <div className="flex items-center h-5">
                 <input
@@ -1228,7 +1216,6 @@ const ServiceForm = ({ mode, service, onSubmit, onCancel }) => {
             </div>
           </div>
 
-          {/* Form Actions */}
           <div className="mt-8 pt-5 border-t border-gray-200 flex justify-end space-x-3 sticky bottom-0 bg-white">
             <button
               type="button"
