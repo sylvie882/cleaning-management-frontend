@@ -2,7 +2,7 @@
 // src/services/serviceService.js
 import axios from "axios";
 
-const API_URL = "https://cleaning-management-backend.onrender.com/api/v1/services";
+const API_URL = "https://sylvie-kg23.onrender.com/api/v1/services";
 // const LOCAL_API_URL = "http://localhost:8000/api/v1/services";
 
 // Get all services
