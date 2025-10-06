@@ -35,9 +35,8 @@ const HomePage = () => {
     areas: false,
   });
   const [showScrollTop, setShowScrollTop] = useState(false);
-  const [showAllAreas, setShowAllAreas] = useState(false);
 
-  // All marketing areas organized by region
+  // All marketing areas organized by region - FOR SEO ONLY
   const marketingAreas = {
     "Karen & Langata Region": [
       "Karen Road", "Karen C Road", "Karen Greens Estate", "Karen Ridge Estate", 
@@ -558,54 +557,6 @@ const HomePage = () => {
     },
   ];
 
-  // Function to render areas in a compact grid
-  const renderAreasGrid = () => {
-    const allAreas = Object.values(marketingAreas).flat();
-    const displayedAreas = showAllAreas ? allAreas : allAreas.slice(0, 50);
-    
-    return (
-      <div className="bg-white rounded-2xl shadow-xl p-6 sm:p-8">
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4">
-          {displayedAreas.map((area, index) => (
-            <div
-              key={index}
-              className="bg-gray-50 rounded-lg p-3 sm:p-4 text-center hover:bg-blue-50 transition-colors duration-300 border border-gray-200"
-            >
-              <div className="flex items-center justify-center">
-                <i className="fas fa-map-marker-alt text-blue-500 mr-2 text-sm"></i>
-                <span className="text-xs sm:text-sm font-medium text-gray-700">{area}</span>
-              </div>
-            </div>
-          ))}
-        </div>
-        
-        {!showAllAreas && (
-          <div className="text-center mt-6">
-            <button
-              onClick={() => setShowAllAreas(true)}
-              className="inline-flex items-center bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-6 rounded-full transition-all duration-300 transform hover:scale-105 text-sm"
-            >
-              <i className="fas fa-chevron-down mr-2"></i>
-              Show All {allAreas.length} Areas We Serve
-            </button>
-          </div>
-        )}
-        
-        {showAllAreas && (
-          <div className="text-center mt-6">
-            <button
-              onClick={() => setShowAllAreas(false)}
-              className="inline-flex items-center bg-gray-600 hover:bg-gray-700 text-white font-semibold py-2 px-6 rounded-full transition-all duration-300 transform hover:scale-105 text-sm"
-            >
-              <i className="fas fa-chevron-up mr-2"></i>
-              Show Less Areas
-            </button>
-          </div>
-        )}
-      </div>
-    );
-  };
-
   return (
     <div className="w-full overflow-x-hidden">
       {/* SEO Meta Tags with all areas keywords */}
@@ -964,98 +915,6 @@ const HomePage = () => {
                 </Link>
               </div>
             ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Areas We Serve Section - NEW */}
-      <section
-        className="py-16 sm:py-24 bg-gradient-to-br from-blue-50 to-indigo-50"
-        data-section="areas"
-      >
-        <div className="container mx-auto px-4 sm:px-6">
-          <div
-            className={`text-center mb-12 sm:mb-20 transition-all duration-1000 ${
-              isVisible.areas
-                ? "opacity-100 translate-y-0"
-                : "opacity-0 translate-y-10"
-            }`}
-          >
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-800 mb-4 sm:mb-6">
-              Areas We Serve Across Nairobi
-            </h2>
-            <p className="text-lg sm:text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
-              We provide professional cleaning services in all major neighborhoods and estates across Nairobi and surrounding areas
-            </p>
-          </div>
-
-          {/* Regional Areas Display */}
-          <div className="space-y-8">
-            {Object.entries(marketingAreas).map(([region, areas], regionIndex) => (
-              <div
-                key={region}
-                className={`bg-white rounded-2xl shadow-lg p-6 sm:p-8 transition-all duration-500 ${
-                  isVisible.areas
-                    ? "opacity-100 translate-y-0"
-                    : "opacity-0 translate-y-10"
-                }`}
-                style={{ transitionDelay: `${regionIndex * 100}ms` }}
-              >
-                <div className="flex items-center mb-6">
-                  <div className="bg-gradient-to-r from-blue-500 to-cyan-500 p-3 rounded-2xl mr-4 shadow-lg">
-                    <i className="fas fa-map-marker-alt text-white text-xl"></i>
-                  </div>
-                  <div>
-                    <h3 className="text-xl sm:text-2xl font-bold text-gray-800">{region}</h3>
-                    <p className="text-gray-600">{areas.length} areas served</p>
-                  </div>
-                </div>
-                
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
-                  {areas.slice(0, 8).map((area, areaIndex) => (
-                    <div
-                      key={areaIndex}
-                      className="bg-gray-50 rounded-lg p-3 text-center hover:bg-blue-50 transition-colors duration-300 border border-gray-200"
-                    >
-                      <div className="flex items-center justify-center">
-                        <i className="fas fa-map-pin text-blue-500 mr-2 text-sm"></i>
-                        <span className="text-sm font-medium text-gray-700">{area}</span>
-                      </div>
-                    </div>
-                  ))}
-                  {areas.length > 8 && (
-                    <div className="bg-blue-50 rounded-lg p-3 text-center border border-blue-200">
-                      <div className="flex items-center justify-center text-blue-600">
-                        <i className="fas fa-plus-circle mr-2"></i>
-                        <span className="text-sm font-medium">+{areas.length - 8} more</span>
-                      </div>
-                    </div>
-                  )}
-                </div>
-              </div>
-            ))}
-          </div>
-
-          {/* All Areas Grid */}
-          <div className="mt-12">
-            <div
-              className={`transition-all duration-1000 ${
-                isVisible.areas
-                  ? "opacity-100 translate-y-0"
-                  : "opacity-0 translate-y-10"
-              }`}
-            >
-              <div className="text-center mb-8">
-                <h3 className="text-2xl sm:text-3xl font-bold text-gray-800 mb-4">
-                  Complete List of Areas We Serve
-                </h3>
-                <p className="text-gray-600 max-w-2xl mx-auto">
-                  Browse our comprehensive list of all neighborhoods and estates where we provide professional cleaning services
-                </p>
-              </div>
-              
-              {renderAreasGrid()}
-            </div>
           </div>
         </div>
       </section>
@@ -1469,7 +1328,7 @@ const HomePage = () => {
 
                 <div className="flex flex-col sm:flex-row items-center justify-between gap-4 sm:gap-0">
                   <div className="flex items-center">
-                    <div className="bg-gradient-to-r from-blue-500 to-cyan-500 rounded-full w-12 h-12 sm:w-16 sm:h-16 flex items-center justify-center text-white font-bold text-lg sm:text-xl shadow-lg">
+                    <div className="bg-gradient-to-r from-blue-500 to-cyan-500 rounded-full w-12 h-12 sm:w-16 sm:h-16 flex items-center justify-center text-white text-lg sm:text-xl font-bold mx-auto shadow-lg">
                       {testimonials[currentTestimonial]?.name.charAt(0)}
                     </div>
                     <div className="ml-4 sm:ml-6">

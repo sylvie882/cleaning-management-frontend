@@ -49,10 +49,10 @@ const VideoPlayer = ({ video, isActive, onPlay }) => {
 
   if (!videoId) {
     return (
-      <div className="w-full h-80 bg-gray-200 rounded-lg flex items-center justify-center">
+      <div className="w-full h-48 sm:h-64 md:h-80 bg-gray-200 rounded-lg flex items-center justify-center">
         <div className="text-center">
           <svg
-            className="h-16 w-16 text-gray-400 mx-auto mb-4"
+            className="h-12 w-12 sm:h-16 sm:w-16 text-gray-400 mx-auto mb-2 sm:mb-4"
             fill="none"
             viewBox="0 0 24 24"
             stroke="currentColor"
@@ -64,14 +64,14 @@ const VideoPlayer = ({ video, isActive, onPlay }) => {
               d="M14.828 14.828a4 4 0 01-5.656 0M9 10h1.01M15 10h1.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
             />
           </svg>
-          <p className="text-gray-500">Video not available</p>
+          <p className="text-gray-500 text-sm sm:text-base">Video not available</p>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="w-full h-80 rounded-lg overflow-hidden shadow-md">
+    <div className="w-full h-48 sm:h-64 md:h-80 rounded-lg overflow-hidden shadow-md">
       <iframe
         src={`https://www.youtube.com/embed/${videoId}${
           isActive ? "?autoplay=1" : ""
@@ -167,7 +167,7 @@ const ServiceDetailPage = () => {
         logo: "https://www.sylviecleaningservices.com/logo.png",
         phone: "+254726933261",
         address: {
-          street: "Dale House, Rhapta Road Westlands",
+          street: "Dale House, Rhapta Road,Fox Close",
           city: "Nairobi",
           state: "Nairobi",
           zip: "00100",
@@ -225,16 +225,16 @@ const ServiceDetailPage = () => {
     };
     
     return (
-      <div className="bg-gray-50 min-h-screen pt-20">
+      <div className="bg-gray-50 min-h-screen pt-16 sm:pt-20">
         <Helmet>
           <title>{seoData.title}</title>
           <meta name="description" content={seoData.description} />
           <link rel="canonical" href={seoData.canonicalUrl} />
         </Helmet>
         
-        <div className="flex flex-col items-center justify-center py-20">
-          <div className="w-12 h-12 border-4 border-blue-200 border-t-blue-600 rounded-full animate-spin mb-4"></div>
-          <p className="text-gray-600">Loading service details...</p>
+        <div className="flex flex-col items-center justify-center py-12 sm:py-20 px-4">
+          <div className="w-10 h-10 sm:w-12 sm:h-12 border-4 border-blue-200 border-t-blue-600 rounded-full animate-spin mb-3 sm:mb-4"></div>
+          <p className="text-gray-600 text-sm sm:text-base">Loading service details...</p>
         </div>
       </div>
     );
@@ -248,17 +248,17 @@ const ServiceDetailPage = () => {
     };
     
     return (
-      <div className="bg-gray-50 min-h-screen pt-20">
+      <div className="bg-gray-50 min-h-screen pt-16 sm:pt-20">
         <Helmet>
           <title>{seoData.title}</title>
           <meta name="description" content={seoData.description} />
           <link rel="canonical" href={seoData.canonicalUrl} />
         </Helmet>
         
-        <div className="container mx-auto px-4 py-20 text-center">
-          <div className="bg-white rounded-lg shadow-md p-12">
+        <div className="container mx-auto px-4 py-12 sm:py-20 text-center">
+          <div className="bg-white rounded-lg shadow-md p-6 sm:p-8 md:p-12 max-w-2xl mx-auto">
             <svg
-              className="h-16 w-16 text-gray-400 mx-auto mb-4"
+              className="h-12 w-12 sm:h-16 sm:w-16 text-gray-400 mx-auto mb-3 sm:mb-4"
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"
@@ -270,22 +270,22 @@ const ServiceDetailPage = () => {
                 d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z"
               />
             </svg>
-            <h3 className="text-xl font-bold text-gray-700 mb-2">
+            <h3 className="text-lg sm:text-xl font-bold text-gray-700 mb-2">
               Service Not Found
             </h3>
-            <p className="text-gray-500 mb-6">
+            <p className="text-gray-500 text-sm sm:text-base mb-4 sm:mb-6">
               The service you're looking for doesn't exist or has been removed.
             </p>
-            <div className="space-x-4">
+            <div className="flex flex-col sm:flex-row sm:space-x-4 space-y-3 sm:space-y-0 justify-center">
               <button
                 onClick={() => navigate(-1)}
-                className="bg-gray-600 hover:bg-gray-700 text-white px-6 py-2 rounded-md font-medium transition-colors"
+                className="bg-gray-600 hover:bg-gray-700 text-white px-4 sm:px-6 py-2 rounded-md font-medium transition-colors text-sm sm:text-base"
               >
                 Go Back
               </button>
               <Link
                 to="/services"
-                className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-md font-medium transition-colors"
+                className="bg-blue-600 hover:bg-blue-700 text-white px-4 sm:px-6 py-2 rounded-md font-medium transition-colors text-sm sm:text-base text-center"
               >
                 View All Services
               </Link>
@@ -391,7 +391,7 @@ const ServiceDetailPage = () => {
   ];
 
   return (
-    <div className="bg-gray-50 min-h-screen pt-20">
+    <div className="bg-gray-50 min-h-screen pt-16 sm:pt-20">
       {/* SEO Meta Tags */}
       <Helmet>
         <title>{seoData.title}</title>
@@ -455,50 +455,50 @@ const ServiceDetailPage = () => {
 
       {/* Breadcrumb */}
       <div className="bg-white border-b">
-        <div className="container mx-auto px-4 py-4">
-          <nav className="flex items-center space-x-2 text-sm text-gray-600">
-            <Link to="/" className="hover:text-blue-600">
+        <div className="container mx-auto px-3 sm:px-4 py-3 sm:py-4">
+          <nav className="flex items-center space-x-1 sm:space-x-2 text-xs sm:text-sm text-gray-600">
+            <Link to="/" className="hover:text-blue-600 truncate">
               Home
             </Link>
             <span>/</span>
-            <Link to="/services" className="hover:text-blue-600">
+            <Link to="/services" className="hover:text-blue-600 truncate">
               Services
             </Link>
             <span>/</span>
-            <span className="text-gray-800 font-medium">{service.name}</span>
+            <span className="text-gray-800 font-medium truncate">{service.name}</span>
           </nav>
         </div>
       </div>
 
       {/* Hero Section */}
       <div className="bg-white">
-        <div className="container mx-auto px-4 py-12">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
+        <div className="container mx-auto px-3 sm:px-4 py-8 sm:py-12">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 lg:gap-12 items-start">
             {/* Media Gallery */}
-            <div className="space-y-4">
+            <div className="space-y-3 sm:space-y-4">
               {/* Toggle Buttons for Images/Videos */}
               {hasValidImages && hasValidVideos && (
-                <div className="flex space-x-2 mb-4">
+                <div className="flex space-x-2 mb-3 sm:mb-4">
                   <button
                     onClick={() => setShowVideos(false)}
-                    className={`px-4 py-2 rounded-md font-medium transition-colors ${
+                    className={`px-3 sm:px-4 py-2 rounded-md font-medium transition-colors text-xs sm:text-sm ${
                       !showVideos
                         ? "bg-blue-600 text-white"
                         : "bg-gray-200 text-gray-700 hover:bg-gray-300"
                     }`}
                   >
-                    <i className="fas fa-images mr-2"></i>
+                    <i className="fas fa-images mr-1 sm:mr-2"></i>
                     Images
                   </button>
                   <button
                     onClick={() => setShowVideos(true)}
-                    className={`px-4 py-2 rounded-md font-medium transition-colors ${
+                    className={`px-3 sm:px-4 py-2 rounded-md font-medium transition-colors text-xs sm:text-sm ${
                       showVideos
                         ? "bg-blue-600 text-white"
                         : "bg-gray-200 text-gray-700 hover:bg-gray-300"
                     }`}
                   >
-                    <i className="fas fa-play mr-2"></i>
+                    <i className="fas fa-play mr-1 sm:mr-2"></i>
                     Videos
                   </button>
                 </div>
@@ -517,7 +517,7 @@ const ServiceDetailPage = () => {
                   <img
                     src={serviceImages[selectedImageIndex]}
                     alt={service.name}
-                    className="w-full h-80 object-cover rounded-lg shadow-md"
+                    className="w-full h-48 sm:h-64 md:h-80 object-cover rounded-lg shadow-md"
                     onError={(e) => {
                       e.target.onerror = null;
                       e.target.src = "https://picsum.photos/800/600?random=1";
@@ -530,7 +530,7 @@ const ServiceDetailPage = () => {
               {shouldShowVideos
                 ? // Video Thumbnails
                   serviceVideos.length > 1 && (
-                    <div className="grid grid-cols-4 gap-2">
+                    <div className="grid grid-cols-3 sm:grid-cols-4 gap-1 sm:gap-2">
                       {serviceVideos.map((video, index) => {
                         const videoId =
                           video.videoId || getYouTubeVideoId(video.url);
@@ -548,7 +548,7 @@ const ServiceDetailPage = () => {
                               <img
                                 src={`https://img.youtube.com/vi/${videoId}/mqdefault.jpg`}
                                 alt={video.title}
-                                className="w-full h-20 object-cover"
+                                className="w-full h-16 sm:h-20 object-cover"
                                 onError={(e) => {
                                   e.target.onerror = null;
                                   e.target.src =
@@ -556,8 +556,8 @@ const ServiceDetailPage = () => {
                                 }}
                               />
                             ) : (
-                              <div className="w-full h-20 bg-gray-200 flex items-center justify-center">
-                                <i className="fas fa-play text-gray-400"></i>
+                              <div className="w-full h-16 sm:h-20 bg-gray-200 flex items-center justify-center">
+                                <i className="fas fa-play text-gray-400 text-xs sm:text-sm"></i>
                               </div>
                             )}
                           </button>
@@ -567,7 +567,7 @@ const ServiceDetailPage = () => {
                   )
                 : // Image Thumbnails
                   serviceImages.length > 1 && (
-                    <div className="grid grid-cols-4 gap-2">
+                    <div className="grid grid-cols-3 sm:grid-cols-4 gap-1 sm:gap-2">
                       {serviceImages.map((image, index) => (
                         <button
                           key={index}
@@ -581,7 +581,7 @@ const ServiceDetailPage = () => {
                           <img
                             src={image}
                             alt={`${service.name} ${index + 1}`}
-                            className="w-full h-20 object-cover"
+                            className="w-full h-16 sm:h-20 object-cover"
                             onError={(e) => {
                               e.target.onerror = null;
                               e.target.src =
@@ -595,23 +595,23 @@ const ServiceDetailPage = () => {
 
               {/* Video Section Below Images */}
               {!shouldShowVideos && hasValidVideos && (
-                <div className="mt-8">
-                  <h3 className="text-lg font-semibold text-gray-800 mb-4">
-                    <i className="fas fa-play mr-2 text-blue-600"></i>
+                <div className="mt-4 sm:mt-6 md:mt-8">
+                  <h3 className="text-base sm:text-lg font-semibold text-gray-800 mb-2 sm:mb-4">
+                    <i className="fas fa-play mr-1 sm:mr-2 text-blue-600"></i>
                     Watch Our Work in Action
                   </h3>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
                     {serviceVideos.slice(0, 2).map((video, index) => (
                       <div
                         key={index}
                         className="bg-white rounded-lg shadow-md overflow-hidden"
                       >
                         <VideoPlayer video={video} isActive={false} />
-                        <div className="p-3">
-                          <h4 className="font-medium text-gray-800 text-sm">
+                        <div className="p-2 sm:p-3">
+                          <h4 className="font-medium text-gray-800 text-xs sm:text-sm line-clamp-2">
                             {video.title}
                           </h4>
-                          <p className="text-gray-600 text-xs mt-1">
+                          <p className="text-gray-600 text-xs mt-1 line-clamp-2">
                             {video.description}
                           </p>
                         </div>
@@ -623,26 +623,29 @@ const ServiceDetailPage = () => {
             </div>
 
             {/* Service Info */}
-            <div className="space-y-6">
+            <div className="space-y-4 sm:space-y-6">
               <div>
-                <h1 className="text-3xl lg:text-4xl font-bold text-gray-800 mb-4">
+                <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-800 mb-3 sm:mb-4">
                   {service.name}
                 </h1>
                 {/* Updated to use FormattedDescription component */}
-                <FormattedDescription description={service.description} />
+                <FormattedDescription 
+                  description={service.description}
+                  className="text-sm sm:text-base"
+                />
               </div>
 
               {/* Action Buttons */}
-              <div className="flex space-x-4">
+              <div className="flex flex-col sm:flex-row space-y-3 sm:space-y-0 sm:space-x-4">
                 <Link
                   to={`/book?service=${service._id}`}
-                  className="flex-1 bg-blue-600 hover:bg-blue-700 text-white text-center px-6 py-3 rounded-md font-medium transition-colors"
+                  className="bg-blue-600 hover:bg-blue-700 text-white text-center px-4 sm:px-6 py-3 rounded-md font-medium transition-colors text-sm sm:text-base"
                 >
                   Book This Service
                 </Link>
                 <Link
                   to="/contact"
-                  className="flex-1 border border-gray-300 hover:bg-gray-50 text-gray-700 text-center px-6 py-3 rounded-md font-medium transition-colors"
+                  className="border border-gray-300 hover:bg-gray-50 text-gray-700 text-center px-4 sm:px-6 py-3 rounded-md font-medium transition-colors text-sm sm:text-base"
                 >
                   Get Quote
                 </Link>
@@ -654,10 +657,10 @@ const ServiceDetailPage = () => {
 
       {/* Tabs Section - Responsive */}
       <div className="bg-white border-t">
-        <div className="container mx-auto px-4">
+        <div className="container mx-auto px-3 sm:px-4">
           {/* Mobile: Stacked buttons approach */}
-          <div className="block sm:hidden py-4">
-            <div className="grid grid-cols-2 gap-2">
+          <div className="block sm:hidden py-3">
+            <div className="grid grid-cols-2 gap-1">
               {[
                 { id: "overview", label: "Overview" },
                 { id: "features", label: "What's Included" },
@@ -667,7 +670,7 @@ const ServiceDetailPage = () => {
               ].map((tab) => (
                 <button
                   key={tab.id}
-                  className={`px-3 py-2 text-xs font-medium rounded-md transition-colors ${
+                  className={`px-2 py-2 text-xs font-medium rounded transition-colors ${
                     activeTab === tab.id
                       ? "bg-blue-600 text-white"
                       : "bg-gray-100 text-gray-700 hover:bg-gray-200"
@@ -682,7 +685,7 @@ const ServiceDetailPage = () => {
 
           {/* Tablet: Scrollable tabs */}
           <div className="hidden sm:block lg:hidden">
-            <div className="flex space-x-4 border-b overflow-x-auto pb-0">
+            <div className="flex space-x-2 sm:space-x-4 border-b overflow-x-auto pb-0">
               {[
                 { id: "overview", label: "Overview" },
                 { id: "features", label: "What's Included" },
@@ -692,7 +695,7 @@ const ServiceDetailPage = () => {
               ].map((tab) => (
                 <button
                   key={tab.id}
-                  className={`py-4 px-3 font-medium text-sm border-b-2 transition-colors whitespace-nowrap flex-shrink-0 ${
+                  className={`py-3 px-2 sm:px-3 font-medium text-xs sm:text-sm border-b-2 transition-colors whitespace-nowrap flex-shrink-0 ${
                     activeTab === tab.id
                       ? "border-blue-600 text-blue-600"
                       : "border-transparent text-gray-500 hover:text-gray-700"
@@ -707,7 +710,7 @@ const ServiceDetailPage = () => {
 
           {/* Desktop: Full tabs */}
           <div className="hidden lg:block">
-            <div className="flex space-x-8 border-b">
+            <div className="flex space-x-6 lg:space-x-8 border-b">
               {[
                 { id: "overview", label: "Overview" },
                 { id: "features", label: "What's Included" },
@@ -734,11 +737,11 @@ const ServiceDetailPage = () => {
 
       {/* Tab Content */}
       <div className="bg-white">
-        <div className="container mx-auto px-4 py-12">
+        <div className="container mx-auto px-3 sm:px-4 py-8 sm:py-12">
           {/* Overview Tab */}
           {activeTab === "overview" && (
             <div className="max-w-4xl">
-              <h2 className="text-2xl font-bold text-gray-800 mb-6">
+              <h2 className="text-xl sm:text-2xl font-bold text-gray-800 mb-4 sm:mb-6">
                 About {service.name}
               </h2>
               <FormattedDescription
@@ -751,6 +754,7 @@ Our professional team uses state-of-the-art equipment and eco-friendly cleaning 
 
 Whether you need a one-time deep clean or regular maintenance, our ${service.name?.toLowerCase()} service will leave your space spotless and fresh, giving you more time to focus on what matters most to you.`
                 }
+                className="text-sm sm:text-base"
               />
             </div>
           )}
@@ -758,15 +762,15 @@ Whether you need a one-time deep clean or regular maintenance, our ${service.nam
           {/* Features Tab */}
           {activeTab === "features" && (
             <div className="max-w-4xl">
-              <h2 className="text-2xl font-bold text-gray-800 mb-6">
+              <h2 className="text-xl sm:text-2xl font-bold text-gray-800 mb-4 sm:mb-6">
                 What's Included in {service.name}
               </h2>
               {service.features && service.features.length > 0 ? (
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
                   {service.features.map((feature, index) => (
                     <div key={index} className="flex items-start">
                       <svg
-                        className="h-6 w-6 text-green-500 mr-3 mt-1 flex-shrink-0"
+                        className="h-5 w-5 sm:h-6 sm:w-6 text-green-500 mr-2 sm:mr-3 mt-0.5 sm:mt-1 flex-shrink-0"
                         fill="none"
                         viewBox="0 0 24 24"
                         stroke="currentColor"
@@ -778,13 +782,13 @@ Whether you need a one-time deep clean or regular maintenance, our ${service.nam
                           d="M5 13l4 4L19 7"
                         />
                       </svg>
-                      <span className="text-gray-700">{feature}</span>
+                      <span className="text-gray-700 text-sm sm:text-base">{feature}</span>
                     </div>
                   ))}
                 </div>
               ) : (
-                <div className="bg-gray-50 p-8 rounded-lg text-center">
-                  <p className="text-gray-600">
+                <div className="bg-gray-50 p-4 sm:p-6 md:p-8 rounded-lg text-center">
+                  <p className="text-gray-600 text-sm sm:text-base">
                     Detailed features list will be provided during your
                     consultation. Our team will customize the service based on
                     your specific needs.
@@ -794,16 +798,16 @@ Whether you need a one-time deep clean or regular maintenance, our ${service.nam
 
               {/* Show requirements if available */}
               {service.requirements && service.requirements.length > 0 && (
-                <div className="mt-8">
-                  <h3 className="text-xl font-bold text-gray-800 mb-4">
+                <div className="mt-6 sm:mt-8">
+                  <h3 className="text-lg sm:text-xl font-bold text-gray-800 mb-3 sm:mb-4">
                     Requirements & Preparation
                   </h3>
-                  <div className="bg-amber-50 border border-amber-200 rounded-lg p-6">
-                    <div className="space-y-3">
+                  <div className="bg-amber-50 border border-amber-200 rounded-lg p-4 sm:p-6">
+                    <div className="space-y-2 sm:space-y-3">
                       {service.requirements.map((requirement, index) => (
                         <div key={index} className="flex items-start">
                           <svg
-                            className="h-5 w-5 text-amber-600 mr-3 mt-0.5 flex-shrink-0"
+                            className="h-4 w-4 sm:h-5 sm:w-5 text-amber-600 mr-2 sm:mr-3 mt-0.5 flex-shrink-0"
                             fill="none"
                             viewBox="0 0 24 24"
                             stroke="currentColor"
@@ -815,7 +819,7 @@ Whether you need a one-time deep clean or regular maintenance, our ${service.nam
                               d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z"
                             />
                           </svg>
-                          <span className="text-gray-700">{requirement}</span>
+                          <span className="text-gray-700 text-sm sm:text-base">{requirement}</span>
                         </div>
                       ))}
                     </div>
@@ -828,10 +832,10 @@ Whether you need a one-time deep clean or regular maintenance, our ${service.nam
           {/* Process Tab */}
           {activeTab === "process" && (
             <div className="max-w-4xl">
-              <h2 className="text-2xl font-bold text-gray-800 mb-6">
+              <h2 className="text-xl sm:text-2xl font-bold text-gray-800 mb-4 sm:mb-6">
                 Our {service.name} Process
               </h2>
-              <div className="space-y-8">
+              <div className="space-y-6 sm:space-y-8">
                 {[
                   {
                     step: 1,
@@ -863,14 +867,14 @@ Whether you need a one-time deep clean or regular maintenance, our ${service.nam
                   },
                 ].map((item) => (
                   <div key={item.step} className="flex items-start">
-                    <div className="flex-shrink-0 w-10 h-10 bg-blue-600 text-white rounded-full flex items-center justify-center font-bold mr-4">
+                    <div className="flex-shrink-0 w-8 h-8 sm:w-10 sm:h-10 bg-blue-600 text-white rounded-full flex items-center justify-center font-bold text-sm sm:text-base mr-3 sm:mr-4">
                       {item.step}
                     </div>
                     <div>
-                      <h3 className="text-lg font-semibold text-gray-800 mb-2">
+                      <h3 className="text-base sm:text-lg font-semibold text-gray-800 mb-1 sm:mb-2">
                         {item.title}
                       </h3>
-                      <p className="text-gray-600">{item.description}</p>
+                      <p className="text-gray-600 text-sm sm:text-base">{item.description}</p>
                     </div>
                   </div>
                 ))}
@@ -881,10 +885,10 @@ Whether you need a one-time deep clean or regular maintenance, our ${service.nam
           {/* Videos Tab */}
           {activeTab === "videos" && (
             <div className="max-w-6xl">
-              <h2 className="text-2xl font-bold text-gray-800 mb-6">
+              <h2 className="text-xl sm:text-2xl font-bold text-gray-800 mb-4 sm:mb-6">
                 See Our Work in Action
               </h2>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8">
                 {serviceVideos.map((video) => {
                   const videoId = video.videoId || getYouTubeVideoId(video.url);
                   return (
@@ -900,12 +904,12 @@ Whether you need a one-time deep clean or regular maintenance, our ${service.nam
                             frameBorder="0"
                             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                             allowFullScreen
-                            className="w-full h-48"
+                            className="w-full h-40 sm:h-48"
                           ></iframe>
                         ) : (
-                          <div className="w-full h-48 bg-gray-200 flex items-center justify-center">
+                          <div className="w-full h-40 sm:h-48 bg-gray-200 flex items-center justify-center">
                             <svg
-                              className="h-12 w-12 text-gray-400"
+                              className="h-8 w-8 sm:h-12 sm:w-12 text-gray-400"
                               fill="none"
                               viewBox="0 0 24 24"
                               stroke="currentColor"
@@ -920,11 +924,11 @@ Whether you need a one-time deep clean or regular maintenance, our ${service.nam
                           </div>
                         )}
                       </div>
-                      <div className="p-4">
-                        <h3 className="font-semibold text-gray-800 mb-2">
+                      <div className="p-3 sm:p-4">
+                        <h3 className="font-semibold text-gray-800 text-sm sm:text-base mb-1 sm:mb-2 line-clamp-2">
                           {video.title}
                         </h3>
-                        <p className="text-gray-600 text-sm">
+                        <p className="text-gray-600 text-xs sm:text-sm line-clamp-2">
                           {video.description}
                         </p>
                       </div>
@@ -938,21 +942,21 @@ Whether you need a one-time deep clean or regular maintenance, our ${service.nam
           {/* FAQ Tab */}
           {activeTab === "faq" && (
             <div className="max-w-4xl">
-              <h2 className="text-2xl font-bold text-gray-800 mb-6">
+              <h2 className="text-xl sm:text-2xl font-bold text-gray-800 mb-4 sm:mb-6">
                 Frequently Asked Questions
               </h2>
               <div className="divide-y divide-gray-200">
                 {serviceFAQs.map((faq, index) => (
-                  <div key={index} className="py-6">
+                  <div key={index} className="py-4 sm:py-6">
                     <button
                       className="flex justify-between items-center w-full text-left focus:outline-none"
                       onClick={() => toggleFAQ(index)}
                     >
-                      <h3 className="text-lg font-semibold text-gray-800 pr-4">
+                      <h3 className="text-base sm:text-lg font-semibold text-gray-800 pr-3 sm:pr-4 text-left">
                         {faq.question}
                       </h3>
                       <svg
-                        className={`h-6 w-6 text-blue-600 transform transition-transform flex-shrink-0 ${
+                        className={`h-5 w-5 sm:h-6 sm:w-6 text-blue-600 transform transition-transform flex-shrink-0 ${
                           activeFAQ === index ? "rotate-180" : ""
                         }`}
                         fill="none"
@@ -968,13 +972,13 @@ Whether you need a one-time deep clean or regular maintenance, our ${service.nam
                       </svg>
                     </button>
                     <div
-                      className={`mt-4 transition-all duration-300 overflow-hidden ${
+                      className={`mt-2 sm:mt-4 transition-all duration-300 overflow-hidden ${
                         activeFAQ === index
                           ? "max-h-96 opacity-100"
                           : "max-h-0 opacity-0"
                       }`}
                     >
-                      <p className="text-gray-600 leading-relaxed">
+                      <p className="text-gray-600 leading-relaxed text-sm sm:text-base">
                         {faq.answer}
                       </p>
                     </div>
@@ -988,24 +992,24 @@ Whether you need a one-time deep clean or regular maintenance, our ${service.nam
 
       {/* CTA Section */}
       <div className="bg-gradient-to-r from-blue-600 to-blue-800">
-        <div className="container mx-auto px-4 py-16 text-center text-white">
-          <h2 className="text-3xl font-bold mb-4">
+        <div className="container mx-auto px-3 sm:px-4 py-12 sm:py-16 text-center text-white">
+          <h2 className="text-2xl sm:text-3xl font-bold mb-3 sm:mb-4">
             Ready to Book {service.name}?
           </h2>
-          <p className="text-xl text-blue-100 mb-8 max-w-2xl mx-auto">
+          <p className="text-lg sm:text-xl text-blue-100 mb-6 sm:mb-8 max-w-2xl mx-auto px-2">
             Experience the difference professional cleaning makes. Get started
             with a free consultation and quote.
           </p>
-          <div className="space-x-4">
+          <div className="flex flex-col sm:flex-row space-y-3 sm:space-y-0 sm:space-x-4 justify-center">
             <Link
               to={`/book?service=${service._id}`}
-              className="inline-block bg-white text-blue-600 hover:bg-blue-50 px-8 py-4 rounded-full font-bold text-lg shadow-md transition-colors"
+              className="inline-block bg-white text-blue-600 hover:bg-blue-50 px-6 sm:px-8 py-3 sm:py-4 rounded-full font-bold text-base sm:text-lg shadow-md transition-colors"
             >
               Book Now
             </Link>
             <Link
               to="/contact"
-              className="inline-block border-2 border-white text-white hover:bg-white hover:text-blue-600 px-8 py-4 rounded-full font-bold text-lg transition-colors"
+              className="inline-block border-2 border-white text-white hover:bg-white hover:text-blue-600 px-6 sm:px-8 py-3 sm:py-4 rounded-full font-bold text-base sm:text-lg transition-colors"
             >
               Get Free Quote
             </Link>
