@@ -1,31 +1,31 @@
 /* src/styles/globalCopyProtection.css */
 
-/* Global site container */
+/* Global copy protection styles */
 .copy-protected-site {
-  /* Allow text selection globally */
-  -webkit-user-select: text;
-  -moz-user-select: text;
-  -ms-user-select: text;
-  user-select: text;
+  /* Disable text selection globally */
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 
-  /* Allow highlighting */
-  -webkit-touch-callout: default;
-  -webkit-tap-highlight-color: inherit;
+  /* Disable highlighting */
+  -webkit-touch-callout: none;
+  -webkit-tap-highlight-color: transparent;
 
-  /* Keep outline for accessibility */
-  outline: auto;
+  /* Disable outline on focus */
+  outline: none;
 }
 
-/* Allow text selection for all text elements */
+/* Disable text selection for all text elements */
 .copy-protected-site *,
 .copy-protected-site *::before,
 .copy-protected-site *::after {
-  -webkit-user-select: text;
-  -moz-user-select: text;
-  -ms-user-select: text;
-  user-select: text;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 
-  /* Disable drag only */
+  /* Disable drag */
   -webkit-user-drag: none;
   -khtml-user-drag: none;
   -moz-user-drag: none;
@@ -33,7 +33,7 @@
   user-drag: none;
 }
 
-/* Inputs, forms, editable text */
+/* Re-enable selection for input fields and forms */
 .copy-protected-site input,
 .copy-protected-site textarea,
 .copy-protected-site select,
@@ -45,7 +45,7 @@
   user-select: text;
 }
 
-/* Protect images (disable dragging only) */
+/* Protect all images */
 .copy-protected-site img {
   -webkit-user-drag: none;
   -khtml-user-drag: none;
@@ -70,14 +70,57 @@
   cursor: pointer;
 }
 
-/* Printing behavior */
+/* Hide content when printing */
 @media print {
   .copy-protected-site {
-    display: block !important;
+    display: none !important;
+  }
+
+  body::after {
+    content: "This website content is protected and cannot be printed. Visit our website to view content.";
+    font-size: 24px;
+    color: #333;
+    text-align: center;
+    display: block;
+    margin: 50px;
+    page-break-before: always;
   }
 }
 
-/* Keep watermark overlay */
+/* Disable selection on specific elements */
+.copy-protected-site h1,
+.copy-protected-site h2,
+.copy-protected-site h3,
+.copy-protected-site h4,
+.copy-protected-site h5,
+.copy-protected-site h6,
+.copy-protected-site p,
+.copy-protected-site div,
+.copy-protected-site span,
+.copy-protected-site article,
+.copy-protected-site section {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.copy-protected-site::selection {
+  background: transparent;
+}
+
+.copy-protected-site::-moz-selection {
+  background: transparent;
+}
+
+.copy-protected-site *::selection {
+  background: transparent;
+}
+
+.copy-protected-site *::-moz-selection {
+  background: transparent;
+}
+
 .copy-protected-site::before {
   content: "© Sylvie Cleaning Services";
   position: fixed;
@@ -92,27 +135,27 @@
   white-space: nowrap;
 }
 
-/* Code blocks – allow copy */
+/* Disable copy for code blocks and pre elements */
 .copy-protected-site pre,
 .copy-protected-site code {
-  -webkit-user-select: text;
-  -moz-user-select: text;
-  -ms-user-select: text;
-  user-select: text;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 
-/* Optional: Blur content when devtools detected */
+/* Blur content when dev tools detected (optional) */
 .copy-protected-site.devtools-open {
   filter: blur(5px);
   pointer-events: none;
 }
 
-/* Keep scrollbars visible */
+/* Hide scrollbars to prevent easy screenshot scrolling */
 .copy-protected-site::-webkit-scrollbar {
-  display: block;
+  display: none;
 }
 
 .copy-protected-site {
-  -ms-overflow-style: auto;
-  scrollbar-width: auto;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
