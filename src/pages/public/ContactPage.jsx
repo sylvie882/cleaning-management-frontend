@@ -191,7 +191,7 @@ const ContactPage = () => {
       </Helmet>
 
       {/* Hero Banner */}
-      <div className="relative bg-blue-600 h-64 md:h-80 w-full">
+      <div className="relative bg-blue-600 h-64 md:h-80 w-full pt-24">
         <div className="absolute inset-0 bg-gradient-to-r from-blue-600 to-blue-800 opacity-90"></div>
         <div className="relative container mx-auto px-4 h-full flex flex-col justify-center items-center text-center text-white z-10">
           <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4">

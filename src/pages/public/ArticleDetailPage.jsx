@@ -292,7 +292,7 @@ const ArticleDetailPage = () => {
         <meta name="ICBM" content="-1.2657, 36.8025" />
       </Helmet>
 
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pt-32">
         {/* Rest of the component remains the same */}
         {/* Back to Blog */}
         <div className="mb-8">

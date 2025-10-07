@@ -139,11 +139,22 @@ const ServicesPage = () => {
       setFilteredServices([]);
       return;
     }
+    
+    // Sort services: YouTube videos first, then others
+    const sortedServices = [...services].sort((a, b) => {
+      const aHasVideo = a.youtubeVideos && a.youtubeVideos.length > 0;
+      const bHasVideo = b.youtubeVideos && b.youtubeVideos.length > 0;
+      
+      if (aHasVideo && !bHasVideo) return -1;
+      if (!aHasVideo && bHasVideo) return 1;
+      return 0;
+    });
+
     if (activeCategory === "all") {
-      setFilteredServices(services);
+      setFilteredServices(sortedServices);
     } else {
       setFilteredServices(
-        services.filter((service) => service.category === activeCategory)
+        sortedServices.filter((service) => service.category === activeCategory)
       );
     }
     setCurrentPage(1);
@@ -295,9 +306,9 @@ const ServicesPage = () => {
         </script>
       </Helmet>
 
-      {/* Hero Banner */}
+      {/* Hero Banner - Fixed spacing to push below navbar */}
       <div
-        className="relative bg-gradient-to-r from-blue-600 via-blue-700 to-indigo-800 h-80 md:h-96 w-full overflow-hidden shadow-xl pt-24"
+        className="relative bg-gradient-to-r from-blue-600 via-blue-700 to-indigo-800 h-80 md:h-96 w-full overflow-hidden shadow-xl pt-32"
         data-section="hero"
       >
         {/* Animated background icons */}
@@ -341,12 +352,12 @@ const ServicesPage = () => {
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight drop-shadow-xl">
             Our Professional{" "}
             <span className="block text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 to-blue-200">
-              Cleaning Services
+             Cleaning Services
             </span>
           </h1>
           <p className="text-xl md:text-2xl text-blue-100 max-w-3xl mx-auto leading-relaxed">
-            Comprehensive cleaning solutions designed to meet your specific
-            needs with the highest standards of quality and professionalism
+            {/* Comprehensive cleaning solutions designed to meet your specific
+            needs with the highest standards of quality and professionalism */}
           </p>
         </div>
       </div>
@@ -466,6 +477,11 @@ const ServicesPage = () => {
                             frameBorder="0"
                             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                             allowFullScreen
+                            onLoad={(e) => {
+                              // Ensure video loops properly
+                              const iframe = e.target;
+                              iframe.contentWindow.postMessage('{"event":"command","func":"loopVideo","args":""}', '*');
+                            }}
                           ></iframe>
                           <div className="absolute top-4 right-4 bg-gradient-to-r from-red-600 to-red-700 text-white text-xs px-3 py-2 rounded-full flex items-center gap-2 shadow-lg animate-fade-in">
                             <svg
@@ -508,6 +524,11 @@ const ServicesPage = () => {
                         <h2 className="text-2xl font-bold text-gray-800 flex-1 group-hover:text-blue-600 transition-colors duration-300" itemProp="name">
                           {service.name}
                         </h2>
+                        {media.type === "video" && (
+                          <div className="ml-2 bg-red-100 text-red-600 text-xs px-2 py-1 rounded-full font-semibold animate-pulse">
+                            VIDEO
+                          </div>
+                        )}
                       </div>
                       <div
                         className="text-gray-600 mb-6 leading-relaxed animate-fade-in prose prose-sm max-w-none"
