@@ -12,7 +12,7 @@ const BookingForm = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const dispatch = useDispatch();
-  const { isLoading } = useSelector((state) => state.booking);
+  const { isLoading, isSuccess, error } = useSelector((state) => state.booking);
   const { service, isLoading: serviceLoading } = useSelector(
     (state) => state.services
   );
@@ -68,6 +68,8 @@ const BookingForm = () => {
     preferredTime: "",
     message: "",
   });
+
+  const [submitError, setSubmitError] = useState("");
 
   // List of services offered
   const serviceTypes = [
@@ -129,6 +131,26 @@ const BookingForm = () => {
     }
   }, [service]);
 
+  // Handle successful booking
+  useEffect(() => {
+    if (isSuccess) {
+      // Reset form and navigate to success page
+      navigate("/booking/success", {
+        state: {
+          bookingId: "pending-confirmation", // You might want to get this from the actual response
+          email: initialValues.email,
+        },
+      });
+    }
+  }, [isSuccess, navigate, initialValues.email]);
+
+  // Handle errors
+  useEffect(() => {
+    if (error) {
+      setSubmitError(error.message || "Failed to create booking. Please try again.");
+    }
+  }, [error]);
+
   const validationSchema = Yup.object({
     name: Yup.string()
       .required("Name is required")
@@ -152,38 +174,82 @@ const BookingForm = () => {
   });
 
   const handleSubmit = async (values, { resetForm }) => {
-    const bookingData = {
-      client: {
-        name: values.name,
-        email: values.email,
-        phone: values.phone,
-      },
-      serviceType: values.serviceType,
-      location: {
-        address: values.location,
-        city: values.city,
-      },
-      preferredDateTime: new Date(
-        `${values.preferredDate}T${values.preferredTime}`
-      ),
-      description: values.message,
-      status: "pending",
-    };
-    const queryParams = new URLSearchParams(location.search);
-    const serviceId = queryParams.get("service");
-    if (serviceId) {
-      bookingData.serviceId = serviceId;
-    }
-    const result = await dispatch(createBooking(bookingData));
-    if (createBooking.fulfilled.match(result)) {
-      resetForm();
-      navigate("/booking/success", {
-        state: {
-          bookingId: result.payload._id,
+    setSubmitError(""); // Clear previous errors
+    
+    try {
+      // Format the date and time properly
+      const formattedDate = new Date(`${values.preferredDate}T${convertTimeTo24Hour(values.preferredTime)}`);
+      
+      const bookingData = {
+        client: {
+          name: values.name,
           email: values.email,
+          phone: values.phone,
         },
-      });
+        serviceType: values.serviceType,
+        location: {
+          address: values.location,
+          city: values.city,
+        },
+        preferredDateTime: formattedDate.toISOString(),
+        description: values.message,
+        status: "pending",
+      };
+
+      // Add service ID if available from query params
+      const queryParams = new URLSearchParams(location.search);
+      const serviceId = queryParams.get("service");
+      if (serviceId) {
+        bookingData.serviceId = serviceId;
+      }
+
+      console.log("Submitting booking data:", bookingData); // For debugging
+
+      // Dispatch the createBooking action
+      const result = await dispatch(createBooking(bookingData));
+      
+      if (createBooking.fulfilled.match(result)) {
+        // Success - reset form
+        resetForm();
+        setInitialValues({
+          name: "",
+          email: "",
+          phone: "",
+          serviceType: "",
+          location: "",
+          city: "",
+          preferredDate: "",
+          preferredTime: "",
+          message: "",
+        });
+        
+        // Navigation will be handled by the useEffect watching isSuccess
+      } else if (createBooking.rejected.match(result)) {
+        // Error is already handled by the Redux state and useEffect
+        console.error("Booking failed:", result.error);
+      }
+    } catch (error) {
+      console.error("Error in handleSubmit:", error);
+      setSubmitError("An unexpected error occurred. Please try again.");
     }
+  };
+
+  // Helper function to convert time to 24-hour format
+  const convertTimeTo24Hour = (time12h) => {
+    if (!time12h) return "00:00";
+    
+    const [time, modifier] = time12h.split(' ');
+    let [hours, minutes] = time.split(':');
+    
+    if (hours === '12') {
+      hours = '00';
+    }
+    
+    if (modifier === 'PM') {
+      hours = parseInt(hours, 10) + 12;
+    }
+    
+    return `${hours.padStart(2, '0')}:${minutes}`;
   };
 
   const getServiceData = () => {
@@ -254,32 +320,31 @@ const BookingForm = () => {
 
         {/* Header Section */}
         <div className="text-center mb-12 pt-10">
-  <div className="bg-blue-600 rounded-2xl shadow-sm border border-blue-900 p-8 mb-6">
-    <div className="inline-flex items-center justify-center w-16 h-16 bg-white rounded-full mb-4">
-      <i className="fas fa-calendar-plus text-blue-900 text-2xl"></i>
-    </div>
-    <h1 className="text-4xl font-bold text-white mb-3">
-      Book Your Cleaning Service
-    </h1>
-    <p className="text-blue-100 text-lg max-w-2xl mx-auto leading-relaxed">
-      Complete the form below and we'll get back to you within 24 hours with a free, no-obligation quote
-    </p>
-    {/* <div className="flex flex-wrap justify-center items-center gap-6 mt-6 text-sm">
-      {[
-        { icon: "fa-shield-alt", text: "Secure booking", color: "text-green-400" },
-        { icon: "fa-clock", text: "24/7 Support", color: "text-blue-300" },
-        { icon: "fa-star", text: "5-star rated", color: "text-yellow-400" },
-        { icon: "fa-bolt", text: "Quick response", color: "text-orange-400" }
-      ].map((item, index) => (
-        <span key={index} className="flex items-center gap-2 text-blue-100">
-          <i className={`fas ${item.icon} ${item.color}`}></i>
-          {item.text}
-        </span>
-      ))}
-    </div> */}
-  </div>
-</div>
+          <div className="bg-blue-600 rounded-2xl shadow-sm border border-blue-900 p-8 mb-6">
+            <div className="inline-flex items-center justify-center w-16 h-16 bg-white rounded-full mb-4">
+              <i className="fas fa-calendar-plus text-blue-900 text-2xl"></i>
+            </div>
+            <h1 className="text-4xl font-bold text-white mb-3">
+              Book Your Cleaning Service
+            </h1>
+            <p className="text-blue-100 text-lg max-w-2xl mx-auto leading-relaxed">
+              Complete the form below and we'll get back to you within 24 hours with a free, no-obligation quote
+            </p>
+          </div>
+        </div>
 
+        {/* Error Alert */}
+        {submitError && (
+          <div className="max-w-6xl mx-auto mb-6">
+            <div className="bg-red-50 border border-red-200 rounded-xl p-4 flex items-center gap-3">
+              <i className="fas fa-exclamation-triangle text-red-500 text-xl"></i>
+              <div>
+                <p className="text-red-800 font-medium">Booking Failed</p>
+                <p className="text-red-600 text-sm">{submitError}</p>
+              </div>
+            </div>
+          </div>
+        )}
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Main Form */}
