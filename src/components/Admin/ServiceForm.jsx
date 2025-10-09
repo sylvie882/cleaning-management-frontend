@@ -17,7 +17,7 @@ const ServiceForm = ({ mode, service, onSubmit, onCancel }) => {
     description: "",
     price: "",
     basePrice: "",
-    duration: "15", // Changed default to 15 to meet minimum requirement
+    duration: "15",
     category: "residential",
     isActive: true,
     images: [],
@@ -30,13 +30,12 @@ const ServiceForm = ({ mode, service, onSubmit, onCancel }) => {
   const [newRequirement, setNewRequirement] = useState("");
   const [newImageUrl, setNewImageUrl] = useState("");
   const [newYouTubeUrl, setNewYouTubeUrl] = useState("");
-  const [descriptionMode, setDescriptionMode] = useState("rich"); // 'rich' or 'preview'
+  const [descriptionMode, setDescriptionMode] = useState("rich");
   const [isUploading, setIsUploading] = useState(false);
   const fileInputRef = useRef(null);
 
   useEffect(() => {
     if (mode === "edit" && service) {
-      // Handle backward compatibility for services with single image
       let serviceImages = [];
       if (service.images && Array.isArray(service.images)) {
         serviceImages = service.images;
@@ -46,10 +45,10 @@ const ServiceForm = ({ mode, service, onSubmit, onCancel }) => {
 
       setFormData({
         name: service.name || "",
-        description: formatContentForDisplay(service.description || "", false), // Convert markdown to HTML for editor
+        description: formatContentForDisplay(service.description || "", false),
         price: service.price || service.basePrice || "",
         basePrice: service.basePrice || service.price || "",
-        duration: service.duration || "15", // Ensure minimum 15
+        duration: service.duration || "15",
         category: service.category || "residential",
         isActive: service.isActive !== undefined ? service.isActive : true,
         images: serviceImages,
@@ -60,7 +59,6 @@ const ServiceForm = ({ mode, service, onSubmit, onCancel }) => {
     }
   }, [mode, service]);
 
-  // Handle rich text editor content changes
   const handleDescriptionChange = (htmlContent) => {
     setFormData({
       ...formData,
@@ -70,35 +68,23 @@ const ServiceForm = ({ mode, service, onSubmit, onCancel }) => {
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
-
     setFormData({
       ...formData,
       [name]: type === "checkbox" ? checked : value,
     });
   };
 
-  // Helper function to extract YouTube video ID from URL
   const extractYouTubeVideoId = (url) => {
     if (!url || typeof url !== "string") return null;
-
-    // Remove any whitespace
     url = url.trim();
 
-    // Very permissive patterns to handle ALL YouTube URL formats
     const patterns = [
-      // Standard youtube.com URLs with any parameters
       /(?:youtube\.com\/watch\?.*v=)([a-zA-Z0-9_-]{11})/,
-      // youtu.be short URLs
       /(?:youtu\.be\/)([a-zA-Z0-9_-]{11})/,
-      // youtube.com embed URLs
       /(?:youtube\.com\/embed\/)([a-zA-Z0-9_-]{11})/,
-      // youtube.com/v/ URLs
       /(?:youtube\.com\/v\/)([a-zA-Z0-9_-]{11})/,
-      // Mobile youtube URLs
       /(?:m\.youtube\.com\/watch\?.*v=)([a-zA-Z0-9_-]{11})/,
-      // Gaming youtube URLs
       /(?:gaming\.youtube\.com\/watch\?.*v=)([a-zA-Z0-9_-]{11})/,
-      // Any other youtube format - catch all
       /(?:youtube.*\/.*v[=/])([a-zA-Z0-9_-]{11})/,
     ];
 
@@ -109,14 +95,11 @@ const ServiceForm = ({ mode, service, onSubmit, onCancel }) => {
       }
     }
 
-    // If no pattern matches but it's clearly a YouTube URL, generate a random ID for storage
     if (url.includes("youtube.com") || url.includes("youtu.be")) {
-      // Extract any 11-character alphanumeric sequence that could be a video ID
       const fallbackMatch = url.match(/[a-zA-Z0-9_-]{11}/);
       if (fallbackMatch) {
         return fallbackMatch[0];
       }
-      // Last resort: use the last 11 characters or generate a placeholder
       return (
         url
           .replace(/[^a-zA-Z0-9_-]/g, "")
@@ -128,30 +111,12 @@ const ServiceForm = ({ mode, service, onSubmit, onCancel }) => {
     return null;
   };
 
-  // Helper function to get YouTube thumbnail
   const getYouTubeThumbnail = (videoId) => {
     if (!videoId)
       return "https://via.placeholder.com/320x180/ff0000/ffffff?text=YouTube+Video";
     return `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`;
   };
 
-  // Helper function to validate YouTube URL
-  const isValidYouTubeUrl = (url) => {
-    if (!url || typeof url !== "string") return false;
-
-    const trimmedUrl = url.trim();
-
-    // Very permissive validation - just check if it contains youtube
-    const isYouTubeURL =
-      trimmedUrl.includes("youtube.com") ||
-      trimmedUrl.includes("youtu.be") ||
-      trimmedUrl.includes("youtube"); // Even more permissive
-
-    // Always return true if it looks like a YouTube URL
-    return isYouTubeURL;
-  };
-
-  // Image management functions
   const addImage = () => {
     if (newImageUrl.trim()) {
       setFormData({
@@ -197,7 +162,6 @@ const ServiceForm = ({ mode, service, onSubmit, onCancel }) => {
     }
   };
 
-  // File upload functions
   const handleFileSelect = (event) => {
     const file = event.target.files[0];
     if (file) {
@@ -206,7 +170,6 @@ const ServiceForm = ({ mode, service, onSubmit, onCancel }) => {
   };
 
   const handleFileUpload = async (file) => {
-    // Validate file
     const validation = validateImageFile(file);
     if (!validation.isValid) {
       alert(validation.error);
@@ -217,7 +180,6 @@ const ServiceForm = ({ mode, service, onSubmit, onCancel }) => {
     try {
       const response = await uploadSingleImage(file);
       if (response.success) {
-        // Add the uploaded image URL to the images array
         setFormData({
           ...formData,
           images: [...formData.images, response.data.url],
@@ -228,24 +190,15 @@ const ServiceForm = ({ mode, service, onSubmit, onCancel }) => {
       }
     } catch (error) {
       console.error("Upload error:", error);
-
-      // Check if it's an authentication error
       if (error.response?.status === 401) {
-        alert(
-          "Authentication failed. Please log in again and try uploading the image."
-        );
+        alert("Authentication failed. Please log in again and try uploading the image.");
       } else if (error.response?.status === 404) {
-        alert(
-          "Upload service not available. Please use the URL option to add images for now."
-        );
+        alert("Upload service not available. Please use the URL option to add images for now.");
       } else {
-        alert(
-          "Error uploading image. Please try using the URL option instead."
-        );
+        alert("Error uploading image. Please try using the URL option instead.");
       }
     } finally {
       setIsUploading(false);
-      // Reset file input
       if (fileInputRef.current) {
         fileInputRef.current.value = "";
       }
@@ -264,17 +217,15 @@ const ServiceForm = ({ mode, service, onSubmit, onCancel }) => {
     }
   };
 
-  // YouTube video management functions
   const addYouTubeVideo = () => {
     if (newYouTubeUrl.trim()) {
-      const videoId =
-        extractYouTubeVideoId(newYouTubeUrl.trim()) || "default_id";
+      const videoId = extractYouTubeVideoId(newYouTubeUrl.trim()) || "default_id";
       const videoData = {
         url: newYouTubeUrl.trim(),
         videoId: videoId,
         thumbnail: getYouTubeThumbnail(videoId),
-        title: "", // Can be filled later
-        description: "", // Can be filled later
+        title: "",
+        description: "",
       };
 
       setFormData({
@@ -357,7 +308,6 @@ const ServiceForm = ({ mode, service, onSubmit, onCancel }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    // Enhanced validation
     if (!formData.name?.trim()) {
       alert("Please enter a service name");
       return;
@@ -385,10 +335,9 @@ const ServiceForm = ({ mode, service, onSubmit, onCancel }) => {
       return;
     }
 
-    // Format the data for submission
     const serviceData = {
       name: formData.name.trim(),
-      description: formatContentForStorage(formData.description.trim(), true), // Convert HTML to markdown
+      description: formatContentForStorage(formData.description.trim(), true),
       price: price,
       basePrice: price,
       duration: duration,
@@ -409,7 +358,6 @@ const ServiceForm = ({ mode, service, onSubmit, onCancel }) => {
       console.log("Creating new service...");
       onSubmit(serviceData);
     } else {
-      // Include the service ID in the service data for updates
       const updateData = {
         ...serviceData,
         _id: service._id,
@@ -462,7 +410,7 @@ const ServiceForm = ({ mode, service, onSubmit, onCancel }) => {
         {/* Form */}
         <form onSubmit={handleSubmit} className="p-6">
           <div className="space-y-6">
-            {/* Service Name - Required Field */}
+            {/* Service Name */}
             <div>
               <label
                 htmlFor="name"
@@ -482,13 +430,12 @@ const ServiceForm = ({ mode, service, onSubmit, onCancel }) => {
               />
             </div>
 
-            {/* Enhanced Description - Required Field */}
+            {/* Description */}
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">
                 Description <span className="text-red-500">*</span>
               </label>
 
-              {/* Mode Toggle */}
               <div className="mb-2 flex justify-end">
                 <button
                   type="button"
@@ -504,7 +451,6 @@ const ServiceForm = ({ mode, service, onSubmit, onCancel }) => {
                 </button>
               </div>
 
-              {/* Editor/Preview Area */}
               <div className="relative">
                 {descriptionMode === "rich" ? (
                   <RichTextEditor
@@ -525,7 +471,6 @@ const ServiceForm = ({ mode, service, onSubmit, onCancel }) => {
                 )}
               </div>
 
-              {/* Help Text */}
               <div className="mt-2 text-xs text-gray-500">
                 <strong>Rich Text Editor:</strong> Use the toolbar above to
                 format your text. You can create tables, add links, insert
@@ -533,7 +478,7 @@ const ServiceForm = ({ mode, service, onSubmit, onCancel }) => {
               </div>
             </div>
 
-            {/* Price and Duration - Two Columns */}
+            {/* Price and Duration */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
                 <label
@@ -588,7 +533,7 @@ const ServiceForm = ({ mode, service, onSubmit, onCancel }) => {
               </div>
             </div>
 
-            {/* Category - Required Field */}
+            {/* Category */}
             <div>
               <label
                 htmlFor="category"
@@ -612,13 +557,12 @@ const ServiceForm = ({ mode, service, onSubmit, onCancel }) => {
               </select>
             </div>
 
-            {/* Multiple Images Section */}
+            {/* Images Section */}
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-3">
                 Service Images
               </label>
 
-              {/* Images Grid Display */}
               {formData.images.length > 0 && (
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
                   {formData.images.map((imageUrl, index) => (
@@ -626,14 +570,12 @@ const ServiceForm = ({ mode, service, onSubmit, onCancel }) => {
                       key={index}
                       className="relative bg-white border border-gray-200 rounded-lg p-4 shadow-sm"
                     >
-                      {/* Primary Image Badge */}
                       {index === 0 && (
                         <div className="absolute top-2 left-2 bg-blue-600 text-white text-xs px-2 py-1 rounded-full z-10">
                           Primary
                         </div>
                       )}
 
-                      {/* Image Preview */}
                       <div className="relative h-32 w-full rounded-md border border-gray-300 overflow-hidden mb-3">
                         <img
                           src={imageUrl}
@@ -647,7 +589,6 @@ const ServiceForm = ({ mode, service, onSubmit, onCancel }) => {
                         />
                       </div>
 
-                      {/* Image URL Display */}
                       <div className="mb-3">
                         <p className="text-xs text-gray-500 mb-1">Image URL:</p>
                         <p
@@ -660,7 +601,6 @@ const ServiceForm = ({ mode, service, onSubmit, onCancel }) => {
                         </p>
                       </div>
 
-                      {/* Controls for IMAGES */}
                       <div className="flex items-center justify-between">
                         <div className="flex items-center gap-2">
                           <button
@@ -747,7 +687,6 @@ const ServiceForm = ({ mode, service, onSubmit, onCancel }) => {
                 </div>
               )}
 
-              {/* Add New Image Section */}
               <div className="border-2 border-dashed border-gray-300 rounded-lg p-6 mb-6">
                 <div className="text-center mb-4">
                   <svg
@@ -771,20 +710,14 @@ const ServiceForm = ({ mode, service, onSubmit, onCancel }) => {
                   <p className="mt-1 text-sm text-gray-500">
                     Upload images from your device or add image URLs
                   </p>
-                  <p className="mt-1 text-xs text-orange-600 bg-orange-50 px-2 py-1 rounded">
-                    ⚠️ File upload may not be available yet. You can use image
-                    URLs as an alternative.
-                  </p>
                 </div>
 
                 <div className="space-y-6">
-                  {/* File Upload Section */}
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-3">
                       Upload Image from Device
                     </label>
 
-                    {/* Drag & Drop Area */}
                     <div
                       className={`border-2 border-dashed rounded-lg p-6 text-center transition-colors ${
                         isUploading
@@ -854,7 +787,6 @@ const ServiceForm = ({ mode, service, onSubmit, onCancel }) => {
                       )}
                     </div>
 
-                    {/* Hidden file input */}
                     <input
                       ref={fileInputRef}
                       type="file"
@@ -864,7 +796,6 @@ const ServiceForm = ({ mode, service, onSubmit, onCancel }) => {
                     />
                   </div>
 
-                  {/* Divider */}
                   <div className="relative">
                     <div className="absolute inset-0 flex items-center">
                       <div className="w-full border-t border-gray-300" />
@@ -874,7 +805,6 @@ const ServiceForm = ({ mode, service, onSubmit, onCancel }) => {
                     </div>
                   </div>
 
-                  {/* URL Input Section */}
                   <div>
                     <label
                       htmlFor="newImageUrl"
@@ -909,7 +839,6 @@ const ServiceForm = ({ mode, service, onSubmit, onCancel }) => {
                     </div>
                   </div>
 
-                  {/* Preview new image URL */}
                   {newImageUrl.trim() && (
                     <div className="mt-3">
                       <p className="text-sm text-gray-700 mb-2">Preview:</p>
@@ -937,7 +866,6 @@ const ServiceForm = ({ mode, service, onSubmit, onCancel }) => {
                 YouTube Videos
               </label>
 
-              {/* YouTube Videos Grid Display */}
               {formData.youtubeVideos.length > 0 && (
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
                   {formData.youtubeVideos.map((video, index) => (
@@ -945,14 +873,12 @@ const ServiceForm = ({ mode, service, onSubmit, onCancel }) => {
                       key={index}
                       className="relative bg-white border border-gray-200 rounded-lg p-4 shadow-sm"
                     >
-                      {/* Primary Video Badge */}
                       {index === 0 && (
                         <div className="absolute top-2 left-2 bg-red-600 text-white text-xs px-2 py-1 rounded-full z-10">
                           Primary Video
                         </div>
                       )}
 
-                      {/* Video Thumbnail */}
                       <div className="relative h-32 w-full rounded-md border border-gray-300 overflow-hidden mb-3">
                         <img
                           src={video.thumbnail}
@@ -964,7 +890,6 @@ const ServiceForm = ({ mode, service, onSubmit, onCancel }) => {
                               "https://via.placeholder.com/320x180/ff0000/ffffff?text=YouTube+Video";
                           }}
                         />
-                        {/* Play button overlay */}
                         <div className="absolute inset-0 flex items-center justify-center">
                           <div className="bg-red-600 bg-opacity-80 rounded-full p-3">
                             <svg
@@ -978,7 +903,6 @@ const ServiceForm = ({ mode, service, onSubmit, onCancel }) => {
                         </div>
                       </div>
 
-                      {/* Video URL Display */}
                       <div className="mb-3">
                         <p className="text-xs text-gray-500 mb-1">
                           YouTube URL:
@@ -993,7 +917,6 @@ const ServiceForm = ({ mode, service, onSubmit, onCancel }) => {
                         </p>
                       </div>
 
-                      {/* Controls for YOUTUBE VIDEOS */}
                       <div className="flex items-center justify-between">
                         <div className="flex items-center gap-2">
                           <button
@@ -1082,7 +1005,6 @@ const ServiceForm = ({ mode, service, onSubmit, onCancel }) => {
                 </div>
               )}
 
-              {/* Add New YouTube Video Section */}
               <div className="border-2 border-dashed border-red-300 rounded-lg p-6 mb-6">
                 <div className="text-center mb-4">
                   <svg
@@ -1138,7 +1060,6 @@ const ServiceForm = ({ mode, service, onSubmit, onCancel }) => {
                     </div>
                   </div>
 
-                  {/* Preview new YouTube video */}
                   {newYouTubeUrl.trim() && (
                     <div className="mt-3">
                       <p className="text-sm text-gray-700 mb-2">Preview:</p>
@@ -1169,33 +1090,6 @@ const ServiceForm = ({ mode, service, onSubmit, onCancel }) => {
                       </div>
                     </div>
                   )}
-                </div>
-              </div>
-
-              {/* Updated Help Text for YouTube */}
-              <div className="mt-4 bg-green-50 border border-green-200 rounded-md p-3">
-                <div className="flex">
-                  <div className="flex-shrink-0">
-                    <svg
-                      className="h-5 w-5 text-green-400"
-                      fill="currentColor"
-                      viewBox="0 0 20 20"
-                    >
-                      <path
-                        fillRule="evenodd"
-                        d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
-                        clipRule="evenodd"
-                      />
-                    </svg>
-                  </div>
-                  <div className="ml-3">
-                    <p className="text-sm text-green-700">
-                      <strong>All YouTube URLs Accepted!</strong> You can paste
-                      any YouTube link format - standard URLs, short links,
-                      mobile links, embedded links, or any variation. The system
-                      will automatically process and store your video.
-                    </p>
-                  </div>
                 </div>
               </div>
             </div>

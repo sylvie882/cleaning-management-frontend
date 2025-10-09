@@ -14,7 +14,7 @@ const RichTextEditor = ({
   });
   const editorRef = useRef(null);
   const [selection, setSelection] = useState({ start: 0, end: 0 });
-  let savedRange = null;
+  const savedRange = useRef(null);
 
   useEffect(() => {
     // Only update the editor content if it's different from the current value
@@ -196,7 +196,7 @@ const RichTextEditor = ({
       const range = selection.getRangeAt(0);
       // Only save if the selection is within our editor
       if (editorRef.current.contains(range.commonAncestorContainer)) {
-        savedRange = range.cloneRange();
+        savedRange.current = range.cloneRange();
         // Update format state
         updateFormatState();
       }
@@ -212,14 +212,14 @@ const RichTextEditor = ({
   };
 
   const restoreSelection = () => {
-    if (savedRange) {
+    if (savedRange.current) {
       try {
         const selection = window.getSelection();
         selection.removeAllRanges();
-        selection.addRange(savedRange);
+        selection.addRange(savedRange.current);
       } catch (error) {
         // If restoration fails, clear the saved range
-        savedRange = null;
+        savedRange.current = null;
       }
     }
   };
@@ -262,6 +262,8 @@ const RichTextEditor = ({
   };
 
   const execCommand = (command, value = null) => {
+    if (!editorRef.current) return;
+    
     editorRef.current.focus();
     restoreSelection();
 
@@ -307,6 +309,8 @@ const RichTextEditor = ({
       </table>
     `;
 
+    if (!editorRef.current) return;
+    
     editorRef.current.focus();
     restoreSelection();
     document.execCommand("insertHTML", false, tableHTML);
@@ -319,6 +323,8 @@ const RichTextEditor = ({
         ? '<ol class="list-decimal list-inside mb-4"><li>First item</li><li>Second item</li><li>Third item</li></ol>'
         : '<ul class="list-disc list-inside mb-4"><li>First item</li><li>Second item</li><li>Third item</li></ul>';
 
+    if (!editorRef.current) return;
+    
     editorRef.current.focus();
     restoreSelection();
     document.execCommand("insertHTML", false, listHTML);
@@ -332,6 +338,8 @@ const RichTextEditor = ({
       const linkText = selectedText || "Link";
       const linkHTML = `<a href="${url}" class="text-blue-600 hover:text-blue-800 underline" target="_blank" rel="noopener noreferrer">${linkText}</a>`;
 
+      if (!editorRef.current) return;
+      
       editorRef.current.focus();
       restoreSelection();
       document.execCommand("insertHTML", false, linkHTML);
@@ -344,6 +352,8 @@ const RichTextEditor = ({
     if (url) {
       const imageHTML = `<img src="${url}" alt="Image" class="max-w-full h-auto rounded-lg shadow-md mb-4" />`;
 
+      if (!editorRef.current) return;
+      
       editorRef.current.focus();
       restoreSelection();
       document.execCommand("insertHTML", false, imageHTML);
@@ -354,6 +364,8 @@ const RichTextEditor = ({
   const setTextColor = () => {
     const color = prompt("Enter color (e.g., red, #ff0000, rgb(255,0,0)):");
     if (color) {
+      if (!editorRef.current) return;
+      
       editorRef.current.focus();
       restoreSelection();
       document.execCommand("foreColor", false, color);
@@ -366,6 +378,8 @@ const RichTextEditor = ({
       "Enter background color (e.g., yellow, #ffff00, rgb(255,255,0)):"
     );
     if (color) {
+      if (!editorRef.current) return;
+      
       editorRef.current.focus();
       restoreSelection();
       document.execCommand("hiliteColor", false, color);
@@ -397,6 +411,8 @@ const RichTextEditor = ({
     );
 
     if (choice) {
+      if (!editorRef.current) return;
+      
       editorRef.current.focus();
       restoreSelection();
 
@@ -430,6 +446,8 @@ const RichTextEditor = ({
   const setLineHeight = () => {
     const height = prompt("Enter line height (e.g., 1.2, 1.5, 2, 20px):");
     if (height) {
+      if (!editorRef.current) return;
+      
       editorRef.current.focus();
       restoreSelection();
       applyStyleToSelection("lineHeight", height);
@@ -439,6 +457,8 @@ const RichTextEditor = ({
   const setLetterSpacing = () => {
     const spacing = prompt("Enter letter spacing (e.g., 1px, 0.5em, 2px):");
     if (spacing) {
+      if (!editorRef.current) return;
+      
       editorRef.current.focus();
       restoreSelection();
       applyStyleToSelection("letterSpacing", spacing);
@@ -448,6 +468,8 @@ const RichTextEditor = ({
   const setWordSpacing = () => {
     const spacing = prompt("Enter word spacing (e.g., 2px, 0.5em, 1px):");
     if (spacing) {
+      if (!editorRef.current) return;
+      
       editorRef.current.focus();
       restoreSelection();
       applyStyleToSelection("wordSpacing", spacing);
@@ -455,6 +477,8 @@ const RichTextEditor = ({
   };
 
   const clearFormatting = () => {
+    if (!editorRef.current) return;
+    
     editorRef.current.focus();
     restoreSelection();
 
@@ -508,6 +532,8 @@ const RichTextEditor = ({
   };
 
   const removeFontSize = () => {
+    if (!editorRef.current) return;
+    
     editorRef.current.focus();
     restoreSelection();
 
@@ -543,7 +569,7 @@ const RichTextEditor = ({
   };
 
   const handleContentChange = () => {
-    if (onChange) {
+    if (onChange && editorRef.current) {
       onChange(editorRef.current.innerHTML);
     }
   };
@@ -858,6 +884,7 @@ const RichTextEditor = ({
           fontSize: "14px",
           lineHeight: "1.6",
         }}
+        suppressContentEditableWarning={true}
       />
 
       {/* Help Text */}
