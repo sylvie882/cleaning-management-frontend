@@ -173,6 +173,27 @@ const BookingForm = () => {
     message: Yup.string().max(500, "Message cannot exceed 500 characters"),
   });
 
+  // ✅ FIXED: Helper function to convert time to 24-hour format
+  const convertTimeTo24Hour = (time12h) => {
+    if (!time12h) return "00:00";
+    
+    const [time, modifier] = time12h.split(' ');
+    let [hours, minutes] = time.split(':');
+    
+    // Handle 12 AM/PM conversion
+    if (hours === '12') {
+      hours = '00';
+    }
+    
+    if (modifier === 'PM') {
+      // Convert to number, add 12, then back to string
+      hours = String(parseInt(hours, 10) + 12);
+    }
+    
+    // ✅ FIX: Ensure hours is always a string before using padStart
+    return `${String(hours || '').padStart(2, '0')}:${minutes}`;
+  };
+
   const handleSubmit = async (values, { resetForm }) => {
     setSubmitError(""); // Clear previous errors
     
@@ -232,24 +253,6 @@ const BookingForm = () => {
       console.error("Error in handleSubmit:", error);
       setSubmitError("An unexpected error occurred. Please try again.");
     }
-  };
-
-  // Helper function to convert time to 24-hour format
-  const convertTimeTo24Hour = (time12h) => {
-    if (!time12h) return "00:00";
-    
-    const [time, modifier] = time12h.split(' ');
-    let [hours, minutes] = time.split(':');
-    
-    if (hours === '12') {
-      hours = '00';
-    }
-    
-    if (modifier === 'PM') {
-      hours = parseInt(hours, 10) + 12;
-    }
-    
-    return `${hours.padStart(2, '0')}:${minutes}`;
   };
 
   const getServiceData = () => {
