@@ -29,6 +29,22 @@ const ServiceManagement = () => {
     dispatch(getServices());
   }, [dispatch]);
 
+  // Debug services data
+  useEffect(() => {
+    if (services && services.length > 0) {
+      console.log("Services loaded:", services);
+      services.forEach((service, index) => {
+        console.log(`Service ${index + 1}:`, {
+          name: service.name,
+          images: service.images,
+          imageUrl: service.imageUrl,
+          hasImagesArray: Array.isArray(service.images),
+          imagesCount: service.images ? service.images.length : 0
+        });
+      });
+    }
+  }, [services]);
+
   // Filter services by category and search term
   useEffect(() => {
     // Ensure services is an array before processing
@@ -79,19 +95,31 @@ const ServiceManagement = () => {
 
   // Handle form submission
   const handleSubmit = (serviceData) => {
+    console.log("Submitting service data:", serviceData);
+    
+    // Ensure images array is properly formatted
+    const formattedData = {
+      ...serviceData,
+      images: Array.isArray(serviceData.images) ? serviceData.images : [],
+    };
+
     if (modalMode === "create") {
-      dispatch(createService(serviceData)).then((result) => {
+      dispatch(createService(formattedData)).then((result) => {
         if (createService.fulfilled.match(result)) {
           closeModal();
           dispatch(getServices());
+        } else {
+          console.error("Create failed:", result.error);
         }
       });
     } else {
-      dispatch(updateService({ id: selectedService._id, serviceData })).then(
+      dispatch(updateService({ id: selectedService._id, serviceData: formattedData })).then(
         (result) => {
           if (updateService.fulfilled.match(result)) {
             closeModal();
             dispatch(getServices());
+          } else {
+            console.error("Update failed:", result.error);
           }
         }
       );
@@ -116,12 +144,16 @@ const ServiceManagement = () => {
     const updatedService = {
       ...service,
       isActive: !service.isActive,
+      // Ensure images are preserved
+      images: service.images || [],
     };
 
     dispatch(
       updateService({ id: service._id, serviceData: updatedService })
-    ).then(() => {
-      dispatch(getServices());
+    ).then((result) => {
+      if (updateService.fulfilled.match(result)) {
+        dispatch(getServices());
+      }
     });
   };
 
@@ -233,13 +265,36 @@ const ServiceManagement = () => {
                 !service.isActive ? "opacity-75" : ""
               }`}
             >
-              {/* Service Image */}
+              {/* Service Image - FIXED SECTION */}
               <div className="relative h-48 bg-gray-200">
-                {service.imageUrl ? (
+                {/* Image Count Badge */}
+                {(service.images && service.images.length > 0) && (
+                  <div className="absolute top-4 left-4 z-10">
+                    <span className="inline-flex px-2 py-1 text-xs font-medium rounded-full bg-black bg-opacity-70 text-white">
+                      {service.images.length} {service.images.length === 1 ? 'image' : 'images'}
+                    </span>
+                  </div>
+                )}
+
+                {service.images && service.images.length > 0 ? (
+                  <img
+                    src={service.images[0]} // Use first image from images array
+                    alt={service.name}
+                    className="w-full h-full object-cover"
+                    onError={(e) => {
+                      e.target.onerror = null;
+                      e.target.src = "data:image/svg+xml;charset=UTF-8,%3Csvg xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22 width%3D%22400%22 height%3D%22300%22 viewBox%3D%220 0 400 300%22%3E%3Crect fill%3D%22%23f3f4f6%22 width%3D%22400%22 height%3D%22300%22%2F%3E%3Ctext x%3D%22200%22 y%3D%22150%22 text-anchor%3D%22middle%22 fill%3D%22%239ca3af%22 font-size%3D%2216%22%3ENo Image%3C%2Ftext%3E%3C%2Fsvg%3E";
+                    }}
+                  />
+                ) : service.imageUrl ? (
                   <img
                     src={service.imageUrl}
                     alt={service.name}
                     className="w-full h-full object-cover"
+                    onError={(e) => {
+                      e.target.onerror = null;
+                      e.target.src = "data:image/svg+xml;charset=UTF-8,%3Csvg xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22 width%3D%22400%22 height%3D%22300%22 viewBox%3D%220 0 400 300%22%3E%3Crect fill%3D%22%23f3f4f6%22 width%3D%22400%22 height%3D%22300%22%2F%3E%3Ctext x%3D%22200%22 y%3D%22150%22 text-anchor%3D%22middle%22 fill%3D%22%239ca3af%22 font-size%3D%2216%22%3ENo Image%3C%2Ftext%3E%3C%2Fsvg%3E";
+                    }}
                   />
                 ) : (
                   <div className="w-full h-full flex items-center justify-center bg-blue-50">
