@@ -3,13 +3,13 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
- "scripts": {
-  "dev": "vite",
-  "preview": "vite preview",
-  "lint": "eslint .",
-   "generate-sitemap": "node generate-sitemap.cjs",
-  "build": "npm run generate-sitemap && vite build"
-},
+  "scripts": {
+    "dev": "vite",
+    "preview": "vite preview",
+    "lint": "eslint .",
+    "generate-sitemap": "node generate-sitemap.cjs",
+    "build": "npm run generate-sitemap && vite build"
+  },
   "dependencies": {
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.0",

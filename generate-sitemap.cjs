@@ -1,33 +1,43 @@
 /* eslint-disable */
+const fs = require("fs");
 const { SitemapStream, streamToPromise } = require("sitemap");
-const { createWriteStream } = require("fs");
 
 const siteUrl = "https://www.sylviecleaningservices.com";
 
-// Collect all static routes from App.jsx
-const routes = [
-  { url: "/", changefreq: "weekly", priority: 1.0 },
-  { url: "/about", changefreq: "monthly", priority: 0.8 },
-  { url: "/services", changefreq: "monthly", priority: 0.8 },
-  { url: "/services/residential", changefreq: "monthly", priority: 0.8 },
-  { url: "/services/commercial", changefreq: "monthly", priority: 0.8 },
-  { url: "/services/deep-cleaning", changefreq: "monthly", priority: 0.8 },
-  { url: "/services/specialized", changefreq: "monthly", priority: 0.8 },
-  { url: "/contact", changefreq: "yearly", priority: 0.5 },
-  { url: "/projects", changefreq: "monthly", priority: 0.6 },
-  { url: "/blog", changefreq: "weekly", priority: 0.7 },
-  { url: "/book", changefreq: "monthly", priority: 0.6 },
-  { url: "/booking/success", changefreq: "yearly", priority: 0.4 },
+// Define all static public routes
+const staticRoutes = [
+  "/", "/about", "/services", "/contact", "/book", "/booking/success",
+  "/projects", "/blog", "/services/residential", "/services/commercial",
+  "/services/deep-cleaning", "/services/specialized"
 ];
 
-// Generate sitemap.xml into /public folder
+// Define all 47 county routes (SEO benefit for local searches)
+const counties = [
+  "mombasa","kwale","kilifi","tana-river","lamu","taita-taveta",
+  "garissa","wajir","mandera","marsabit","isiolo","meru","tharaka-nithi",
+  "embu","kitui","machakos","makueni","nyandarua","nyeri","kirinyaga",
+  "muranga","kiambu","turkana","west-pokot","samburu","trans-nzoia",
+  "uasin-gishu","elgeyo-marakwet","nandi","baringo","laikipia","nakuru",
+  "narok","kajiado","kericho","bomet","kakamega","vihiga","bungoma",
+  "busia","siaya","kisumu","homa-bay","migori","kisii","nyamira","nairobi"
+];
+
+// Merge routes
+const allRoutes = [
+  ...staticRoutes.map((url) => ({ url, changefreq: "weekly", priority: 0.8 })),
+  ...counties.map((county) => ({ url: `/${county}`, changefreq: "monthly", priority: 0.6 })),
+  { url: "/blog", changefreq: "weekly", priority: 0.7 }
+];
+
+// Generate sitemap.xml in /public folder
 (async () => {
-  const sitemapStream = new SitemapStream({ hostname: siteUrl });
-  const writeStream = createWriteStream("./public/sitemap.xml");
+  const sitemap = new SitemapStream({ hostname: siteUrl });
+  const writeStream = fs.createWriteStream("./public/sitemap.xml");
 
-  routes.forEach((route) => sitemapStream.write(route));
-  sitemapStream.end();
+  allRoutes.forEach((route) => sitemap.write(route));
+  sitemap.end();
 
-  streamToPromise(sitemapStream).then(() => console.log("✅ Sitemap generated at /public/sitemap.xml"));
-  sitemapStream.pipe(writeStream);
+  await streamToPromise(sitemap);
+  sitemap.pipe(writeStream);
+  console.log("✅ Sitemap successfully created at /public/sitemap.xml");
 })();
