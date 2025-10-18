@@ -216,8 +216,8 @@ const HomePage = () => {
 
   // SEO Metadata with all areas optimization
   const seoData = {
-    title: "Best Cleaning Services in Nairobi Kenya | Professional House & Office Cleaning | Sylvie Cleaning Services",
-    description: "Top-rated cleaning company in Nairobi Kenya offering professional house cleaning, office cleaning, carpet cleaning, sofa cleaning & deep cleaning services. We serve all areas including Karen, Westlands, Runda, Kilimani, Lavington, and more. Affordable prices with satisfaction guarantee. Book online today!",
+    title: "Professional Cleaning Services in Nairobi | Sylvie Cleaning Services",
+    description: "Affordable home and office cleaning in Nairobi. Book reliable, trained cleaners for spotless results today!",
     canonicalUrl: "https://www.sylviecleaningservices.com",
     siteName: "Sylvie Cleaning Services",
     twitterHandle: "@sylviecleaning",
@@ -559,33 +559,35 @@ const HomePage = () => {
 
   return (
     <div className="w-full overflow-x-hidden">
-      {/* SEO Meta Tags with all areas keywords */}
+      {/* ✅ OPTIMIZED SEO META TAGS FOR HOME PAGE */}
       <Helmet>
-        <title>{seoData.title}</title>
-        <meta name="description" content={seoData.description} />
+        <title>Professional Cleaning Services in Nairobi | Sylvie Cleaning Services</title>
+        <meta
+          name="description"
+          content="Affordable home and office cleaning in Nairobi. Book reliable, trained cleaners for spotless results today!"
+        />
+        <meta
+          name="keywords"
+          content="cleaning services Nairobi, house cleaning, office cleaning, deep cleaning Kenya, Sylvie Cleaning"
+        />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta name="robots" content="index, follow" />
         <link rel="canonical" href={seoData.canonicalUrl} />
         
-        {/* Primary Keywords with all areas */}
-        <meta name="keywords" content={`cleaning services, house cleaning, office cleaning, cleaning company, carpet cleaning, sofa cleaning, deep cleaning services, professional cleaners, cleaning services kenya, best cleaning company, ${Object.values(marketingAreas).flat().slice(0, 100).join(', ')}`} />
-        
         {/* Open Graph / Facebook */}
         <meta property="og:type" content="website" />
         <meta property="og:url" content={seoData.canonicalUrl} />
-        <meta property="og:title" content={seoData.title} />
-        <meta property="og:description" content={seoData.description} />
+        <meta property="og:title" content="Professional Cleaning Services in Nairobi | Sylvie Cleaning Services" />
+        <meta property="og:description" content="Affordable home and office cleaning in Nairobi. Book reliable, trained cleaners for spotless results today!" />
         <meta property="og:image" content={seoData.socialImage} />
         <meta property="og:site_name" content={seoData.siteName} />
         <meta property="og:locale" content="en_KE" />
-        <meta property="og:region" content="KE-110" />
-        <meta property="og:country-name" content="Kenya" />
         
         {/* Twitter */}
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:url" content={seoData.canonicalUrl} />
-        <meta name="twitter:title" content={seoData.title} />
-        <meta name="twitter:description" content={seoData.description} />
+        <meta name="twitter:title" content="Professional Cleaning Services in Nairobi | Sylvie Cleaning Services" />
+        <meta name="twitter:description" content="Affordable home and office cleaning in Nairobi. Book reliable, trained cleaners for spotless results today!" />
         <meta name="twitter:image" content={seoData.socialImage} />
         <meta name="twitter:creator" content={seoData.twitterHandle} />
         
@@ -631,7 +633,6 @@ const HomePage = () => {
         <meta name="geo.placename" content="Nairobi, Kenya" />
         <meta name="geo.position" content="-1.2921;36.8219" />
         <meta name="ICBM" content="-1.2921, 36.8219" />
-        <meta name="description" content={seoData.description} />
         
         {/* Location Specific Meta Tags */}
         <meta name="city" content="Nairobi" />
