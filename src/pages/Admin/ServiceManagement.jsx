@@ -50,7 +50,7 @@ const ServiceManagement = () => {
       result = result.filter(
         (service) =>
           service.name.toLowerCase().includes(lowerCaseSearchTerm) ||
-          service.description.toLowerCase().includes(lowerCaseSearchTerm)
+          (service.description && service.description.toLowerCase().includes(lowerCaseSearchTerm))
       );
     }
 
@@ -125,6 +125,20 @@ const ServiceManagement = () => {
     });
   };
 
+  // Get primary image for service (first image in array or single image)
+  const getServiceImage = (service) => {
+    if (service.images && service.images.length > 0) {
+      return service.images[0];
+    }
+    if (service.image) {
+      return service.image;
+    }
+    if (service.imageUrl) {
+      return service.imageUrl;
+    }
+    return null;
+  };
+
   // Service categories
   const categories = [
     { id: "all", name: "All Services" },
@@ -133,6 +147,7 @@ const ServiceManagement = () => {
     { id: "specialized", name: "Specialized" },
     { id: "move-in-out", name: "Move In/Out" },
     { id: "post-construction", name: "Post Construction" },
+    { id: "house-cleaning", name: "House Cleaning" },
   ];
 
   return (
@@ -226,203 +241,224 @@ const ServiceManagement = () => {
         </div>
       ) : filteredServices.length > 0 ? (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {filteredServices.map((service) => (
-            <div
-              key={service._id}
-              className={`bg-white rounded-xl shadow-sm overflow-hidden transition-all duration-200 ${
-                !service.isActive ? "opacity-75" : ""
-              }`}
-            >
-              {/* Service Image */}
-              <div className="relative h-48 bg-gray-200">
-                {service.imageUrl ? (
-                  <img
-                    src={service.imageUrl}
-                    alt={service.name}
-                    className="w-full h-full object-cover"
+          {filteredServices.map((service) => {
+            const serviceImage = getServiceImage(service);
+            return (
+              <div
+                key={service._id}
+                className={`bg-white rounded-xl shadow-sm overflow-hidden transition-all duration-200 ${
+                  !service.isActive ? "opacity-75" : ""
+                }`}
+              >
+                {/* Service Image */}
+                <div className="relative h-48 bg-gray-200">
+                  {serviceImage ? (
+                    <img
+                      src={serviceImage}
+                      alt={service.name}
+                      className="w-full h-full object-cover"
+                      onError={(e) => {
+                        e.target.onerror = null;
+                        e.target.src = "data:image/svg+xml;charset=UTF-8,%3Csvg xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22 width%3D%22320%22 height%3D%22180%22 viewBox%3D%220 0 320 180%22%3E%3Cpath fill%3D%22%23f0f0f0%22 d%3D%22M0 0h320v180H0z%22%2F%3E%3Cpath fill%3D%22%23ccc%22 d%3D%22M40 60h240v80H40z%22%2F%3E%3Ccircle fill%3D%22%23ccc%22 cx%3D%22160%22 cy%3D%2240%22 r%3D%2220%22%2F%3E%3Ctext x%3D%22160%22 y%3D%22120%22 text-anchor%3D%22middle%22 fill%3D%22%23999%22 font-size%3D%2214%22%3EImage Error%3C%2Ftext%3E%3C%2Fsvg%3E";
+                      }}
+                    />
+                  ) : (
+                    <div className="w-full h-full flex items-center justify-center bg-blue-50">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="h-16 w-16 text-blue-300"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={1}
+                          d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"
+                        />
+                      </svg>
+                    </div>
+                  )}
+                  <div className="absolute top-4 right-4">
+                    <span
+                      className={`inline-flex px-2 py-1 text-xs font-medium rounded-full ${
+                        service.isActive
+                          ? "bg-green-100 text-green-800"
+                          : "bg-gray-100 text-gray-800"
+                      }`}
+                    >
+                      {service.isActive ? "Active" : "Inactive"}
+                    </span>
+                  </div>
+                </div>
+
+                {/* Service Content */}
+                <div className="p-5">
+                  <h3 className="text-lg font-semibold text-gray-800 mb-2">
+                    {service.name}
+                  </h3>
+                  <div
+                    className="text-gray-600 text-sm mb-4 line-clamp-2 prose prose-sm max-w-none"
+                    dangerouslySetInnerHTML={{
+                      __html: formatContentForDisplay(service.description || "", false),
+                    }}
                   />
-                ) : (
-                  <div className="w-full h-full flex items-center justify-center bg-blue-50">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      className="h-16 w-16 text-blue-300"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
+
+                  <div className="space-y-3 mb-4">
+                    <div className="flex items-center text-sm">
+                      <span className="text-gray-500 w-24">Category:</span>
+                      <span className="text-gray-800 capitalize">
+                        {service.category?.replace(/-/g, ' ') || 'Uncategorized'}
+                      </span>
+                    </div>
+                    <div className="flex items-center text-sm">
+                      <span className="text-gray-500 w-24">Price:</span>
+                      <span className="text-gray-800 font-medium">
+                        {formatCurrency(service.basePrice || service.price || 0)}
+                      </span>
+                    </div>
+                    <div className="flex items-center text-sm">
+                      <span className="text-gray-500 w-24">Duration:</span>
+                      <span className="text-gray-800">
+                        {service.duration >= 60
+                          ? `${Math.floor(service.duration / 60)} hr${
+                              service.duration % 60 > 0
+                                ? ` ${service.duration % 60} min`
+                                : ""
+                            }`
+                          : `${service.duration || 0} min`}
+                      </span>
+                    </div>
+                  </div>
+
+                  {service.features && service.features.length > 0 && (
+                    <div className="mt-4">
+                      <h4 className="text-sm font-medium text-gray-700 mb-2">
+                        Features:
+                      </h4>
+                      <ul className="space-y-1">
+                        {service.features.slice(0, 3).map((feature, index) => (
+                          <li key={index} className="flex items-start text-sm">
+                            <svg
+                              className="h-5 w-5 text-green-500 mr-2 flex-shrink-0"
+                              fill="none"
+                              viewBox="0 0 24 24"
+                              stroke="currentColor"
+                            >
+                              <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth="2"
+                                d="M5 13l4 4L19 7"
+                              />
+                            </svg>
+                            <span className="text-gray-600">{feature}</span>
+                          </li>
+                        ))}
+                        {service.features.length > 3 && (
+                          <li className="text-sm text-blue-600 pl-7">
+                            +{service.features.length - 3} more
+                          </li>
+                        )}
+                      </ul>
+                    </div>
+                  )}
+
+                  {/* YouTube Videos Count */}
+                  {service.youtubeVideos && service.youtubeVideos.length > 0 && (
+                    <div className="mt-3 flex items-center text-sm text-red-600">
+                      <svg
+                        className="h-4 w-4 mr-1"
+                        fill="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z" />
+                      </svg>
+                      <span>{service.youtubeVideos.length} video(s)</span>
+                    </div>
+                  )}
+
+                  {/* Action Buttons */}
+                  <div className="mt-5 pt-4 border-t border-gray-100 flex justify-between">
+                    <button
+                      onClick={() => openEditModal(service)}
+                      className="text-blue-600 hover:text-blue-800 transition-colors"
+                      title="Edit Service"
                     >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={1}
-                        d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"
-                      />
-                    </svg>
-                  </div>
-                )}
-                <div className="absolute top-4 right-4">
-                  <span
-                    className={`inline-flex px-2 py-1 text-xs font-medium rounded-full ${
-                      service.isActive
-                        ? "bg-green-100 text-green-800"
-                        : "bg-gray-100 text-gray-800"
-                    }`}
-                  >
-                    {service.isActive ? "Active" : "Inactive"}
-                  </span>
-                </div>
-              </div>
-
-              {/* Service Content */}
-              <div className="p-5">
-                <h3 className="text-lg font-semibold text-gray-800 mb-2">
-                  {service.name}
-                </h3>
-                <div
-                  className="text-gray-600 text-sm mb-4 line-clamp-2 prose prose-sm max-w-none"
-                  dangerouslySetInnerHTML={{
-                    __html: formatContentForDisplay(service.description, false),
-                  }}
-                />
-
-                <div className="space-y-3 mb-4">
-                  <div className="flex items-center text-sm">
-                    <span className="text-gray-500 w-24">Category:</span>
-                    <span className="text-gray-800 capitalize">
-                      {service.category}
-                    </span>
-                  </div>
-                  <div className="flex items-center text-sm">
-                    <span className="text-gray-500 w-24">Price:</span>
-                    <span className="text-gray-800 font-medium">
-                      {formatCurrency(service.basePrice || service.price)}
-                    </span>
-                  </div>
-                  <div className="flex items-center text-sm">
-                    <span className="text-gray-500 w-24">Duration:</span>
-                    <span className="text-gray-800">
-                      {service.duration >= 60
-                        ? `${Math.floor(service.duration / 60)} hr${
-                            service.duration % 60 > 0
-                              ? ` ${service.duration % 60} min`
-                              : ""
-                          }`
-                        : `${service.duration} min`}
-                    </span>
-                  </div>
-                </div>
-
-                {service.features && service.features.length > 0 && (
-                  <div className="mt-4">
-                    <h4 className="text-sm font-medium text-gray-700 mb-2">
-                      Features:
-                    </h4>
-                    <ul className="space-y-1">
-                      {service.features.slice(0, 3).map((feature, index) => (
-                        <li key={index} className="flex items-start text-sm">
-                          <svg
-                            className="h-5 w-5 text-green-500 mr-2 flex-shrink-0"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            stroke="currentColor"
-                          >
-                            <path
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                              strokeWidth="2"
-                              d="M5 13l4 4L19 7"
-                            />
-                          </svg>
-                          <span className="text-gray-600">{feature}</span>
-                        </li>
-                      ))}
-                      {service.features.length > 3 && (
-                        <li className="text-sm text-blue-600 pl-7">
-                          +{service.features.length - 3} more
-                        </li>
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="h-5 w-5"
+                        viewBox="0 0 20 20"
+                        fill="currentColor"
+                      >
+                        <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" />
+                      </svg>
+                    </button>
+                    <button
+                      onClick={() => toggleServiceActive(service)}
+                      className={`${
+                        service.isActive
+                          ? "text-amber-600 hover:text-amber-800"
+                          : "text-green-600 hover:text-green-800"
+                      } transition-colors`}
+                      title={
+                        service.isActive
+                          ? "Deactivate Service"
+                          : "Activate Service"
+                      }
+                    >
+                      {service.isActive ? (
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          className="h-5 w-5"
+                          viewBox="0 0 20 20"
+                          fill="currentColor"
+                        >
+                          <path
+                            fillRule="evenodd"
+                            d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                            clipRule="evenodd"
+                          />
+                        </svg>
+                      ) : (
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          className="h-5 w-5"
+                          viewBox="0 0 20 20"
+                          fill="currentColor"
+                        >
+                          <path
+                            fillRule="evenodd"
+                            d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                            clipRule="evenodd"
+                          />
+                        </svg>
                       )}
-                    </ul>
+                    </button>
+                    <button
+                      onClick={() => handleDelete(service._id)}
+                      className="text-red-600 hover:text-red-800 transition-colors"
+                      title="Delete Service"
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="h-5 w-5"
+                        viewBox="0 0 20 20"
+                        fill="currentColor"
+                      >
+                        <path
+                          fillRule="evenodd"
+                          d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z"
+                          clipRule="evenodd"
+                        />
+                      </svg>
+                    </button>
                   </div>
-                )}
-
-                {/* Action Buttons */}
-                <div className="mt-5 pt-4 border-t border-gray-100 flex justify-between">
-                  <button
-                    onClick={() => openEditModal(service)}
-                    className="text-blue-600 hover:text-blue-800 transition-colors"
-                    title="Edit Service"
-                  >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      className="h-5 w-5"
-                      viewBox="0 0 20 20"
-                      fill="currentColor"
-                    >
-                      <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" />
-                    </svg>
-                  </button>
-                  <button
-                    onClick={() => toggleServiceActive(service)}
-                    className={`${
-                      service.isActive
-                        ? "text-amber-600 hover:text-amber-800"
-                        : "text-green-600 hover:text-green-800"
-                    } transition-colors`}
-                    title={
-                      service.isActive
-                        ? "Deactivate Service"
-                        : "Activate Service"
-                    }
-                  >
-                    {service.isActive ? (
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        className="h-5 w-5"
-                        viewBox="0 0 20 20"
-                        fill="currentColor"
-                      >
-                        <path
-                          fillRule="evenodd"
-                          d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
-                          clipRule="evenodd"
-                        />
-                      </svg>
-                    ) : (
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        className="h-5 w-5"
-                        viewBox="0 0 20 20"
-                        fill="currentColor"
-                      >
-                        <path
-                          fillRule="evenodd"
-                          d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-                          clipRule="evenodd"
-                        />
-                      </svg>
-                    )}
-                  </button>
-                  <button
-                    onClick={() => handleDelete(service._id)}
-                    className="text-red-600 hover:text-red-800 transition-colors"
-                    title="Delete Service"
-                  >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      className="h-5 w-5"
-                      viewBox="0 0 20 20"
-                      fill="currentColor"
-                    >
-                      <path
-                        fillRule="evenodd"
-                        d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z"
-                        clipRule="evenodd"
-                      />
-                    </svg>
-                  </button>
                 </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       ) : (
         <div className="bg-white rounded-xl shadow-sm p-12 flex flex-col items-center justify-center text-center">
@@ -437,7 +473,7 @@ const ServiceManagement = () => {
               <path
                 strokeLinecap="round"
                 strokeLinejoin="round"
-                strokeWidth="1"
+                strokeWidth={1}
                 d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"
               />
             </svg>

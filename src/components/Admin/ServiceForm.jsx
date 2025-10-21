@@ -18,7 +18,7 @@ const ServiceForm = ({ mode, service, onSubmit, onCancel }) => {
     price: "",
     basePrice: "",
     duration: "15",
-    category: "residential",
+    category: "house-cleaning",
     isActive: true,
     images: [],
     youtubeVideos: [],
@@ -32,6 +32,7 @@ const ServiceForm = ({ mode, service, onSubmit, onCancel }) => {
   const [newYouTubeUrl, setNewYouTubeUrl] = useState("");
   const [descriptionMode, setDescriptionMode] = useState("rich");
   const [isUploading, setIsUploading] = useState(false);
+  const [formErrors, setFormErrors] = useState({});
   const fileInputRef = useRef(null);
 
   useEffect(() => {
@@ -48,8 +49,8 @@ const ServiceForm = ({ mode, service, onSubmit, onCancel }) => {
         description: formatContentForDisplay(service.description || "", false),
         price: service.price || service.basePrice || "",
         basePrice: service.basePrice || service.price || "",
-        duration: service.duration || "15",
-        category: service.category || "residential",
+        duration: service.duration?.toString() || "15",
+        category: service.category || "house-cleaning",
         isActive: service.isActive !== undefined ? service.isActive : true,
         images: serviceImages,
         youtubeVideos: service.youtubeVideos || [],
@@ -64,6 +65,11 @@ const ServiceForm = ({ mode, service, onSubmit, onCancel }) => {
       ...formData,
       description: htmlContent,
     });
+    
+    // Clear description error when user starts typing
+    if (formErrors.description) {
+      setFormErrors(prev => ({ ...prev, description: '' }));
+    }
   };
 
   const handleChange = (e) => {
@@ -72,6 +78,11 @@ const ServiceForm = ({ mode, service, onSubmit, onCancel }) => {
       ...formData,
       [name]: type === "checkbox" ? checked : value,
     });
+
+    // Clear field error when user starts typing
+    if (formErrors[name]) {
+      setFormErrors(prev => ({ ...prev, [name]: '' }));
+    }
   };
 
   const extractYouTubeVideoId = (url) => {
@@ -119,11 +130,18 @@ const ServiceForm = ({ mode, service, onSubmit, onCancel }) => {
 
   const addImage = () => {
     if (newImageUrl.trim()) {
+      // Basic URL validation
+      if (!newImageUrl.startsWith('http')) {
+        setFormErrors(prev => ({ ...prev, imageUrl: 'Please enter a valid URL starting with http:// or https://' }));
+        return;
+      }
+
       setFormData({
         ...formData,
         images: [...formData.images, newImageUrl.trim()],
       });
       setNewImageUrl("");
+      setFormErrors(prev => ({ ...prev, imageUrl: '' }));
     }
   };
 
@@ -184,19 +202,23 @@ const ServiceForm = ({ mode, service, onSubmit, onCancel }) => {
           ...formData,
           images: [...formData.images, response.data.url],
         });
-        alert("Image uploaded successfully!");
+        console.log("Image uploaded successfully to Cloudinary:", response.data.url);
       } else {
-        alert("Failed to upload image: " + response.message);
+        throw new Error(response.message || "Upload failed");
       }
     } catch (error) {
       console.error("Upload error:", error);
+      let errorMessage = "Error uploading image. Please try again.";
+      
       if (error.response?.status === 401) {
-        alert("Authentication failed. Please log in again and try uploading the image.");
-      } else if (error.response?.status === 404) {
-        alert("Upload service not available. Please use the URL option to add images for now.");
-      } else {
-        alert("Error uploading image. Please try using the URL option instead.");
+        errorMessage = "Authentication failed. Please log in again.";
+      } else if (error.response?.status === 413) {
+        errorMessage = "File too large. Maximum size is 5MB.";
+      } else if (error.message) {
+        errorMessage = error.message;
       }
+      
+      alert(errorMessage);
     } finally {
       setIsUploading(false);
       if (fileInputRef.current) {
@@ -219,6 +241,12 @@ const ServiceForm = ({ mode, service, onSubmit, onCancel }) => {
 
   const addYouTubeVideo = () => {
     if (newYouTubeUrl.trim()) {
+      // Basic YouTube URL validation
+      if (!newYouTubeUrl.includes('youtube') && !newYouTubeUrl.includes('youtu.be')) {
+        setFormErrors(prev => ({ ...prev, youtubeUrl: 'Please enter a valid YouTube URL' }));
+        return;
+      }
+
       const videoId = extractYouTubeVideoId(newYouTubeUrl.trim()) || "default_id";
       const videoData = {
         url: newYouTubeUrl.trim(),
@@ -233,6 +261,7 @@ const ServiceForm = ({ mode, service, onSubmit, onCancel }) => {
         youtubeVideos: [...formData.youtubeVideos, videoData],
       });
       setNewYouTubeUrl("");
+      setFormErrors(prev => ({ ...prev, youtubeUrl: '' }));
     }
   };
 
@@ -305,40 +334,61 @@ const ServiceForm = ({ mode, service, onSubmit, onCancel }) => {
     });
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  const validateForm = () => {
+    const errors = {};
 
     if (!formData.name?.trim()) {
-      alert("Please enter a service name");
-      return;
+      errors.name = "Service name is required";
     }
 
     if (!formData.description?.trim()) {
-      alert("Please enter a service description");
-      return;
+      errors.description = "Service description is required";
     }
 
     const duration = parseInt(formData.duration);
     if (isNaN(duration) || duration < 15) {
-      alert("Duration must be at least 15 minutes");
-      return;
+      errors.duration = "Duration must be at least 15 minutes";
     }
 
     if (!formData.category) {
-      alert("Please select a category");
-      return;
+      errors.category = "Please select a category";
     }
 
     const price = parseFloat(formData.price || formData.basePrice);
     if (isNaN(price) || price < 0) {
-      alert("Please enter a valid price");
+      errors.price = "Please enter a valid price";
+    }
+
+    // Validate that description has actual content (not just HTML tags)
+    const textContent = formData.description.replace(/<[^>]*>/g, '').trim();
+    if (!textContent) {
+      errors.description = "Description must contain actual text content";
+    }
+
+    setFormErrors(errors);
+    return Object.keys(errors).length === 0;
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    if (!validateForm()) {
+      // Scroll to first error
+      const firstErrorField = Object.keys(formErrors)[0];
+      const element = document.querySelector(`[name="${firstErrorField}"]`);
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        element.focus();
+      }
       return;
     }
+
+    const duration = parseInt(formData.duration);
+    const price = parseFloat(formData.price || formData.basePrice);
 
     const serviceData = {
       name: formData.name.trim(),
       description: formatContentForStorage(formData.description.trim(), true),
-      price: price,
       basePrice: price,
       duration: duration,
       category: formData.category,
@@ -358,23 +408,18 @@ const ServiceForm = ({ mode, service, onSubmit, onCancel }) => {
       console.log("Creating new service...");
       onSubmit(serviceData);
     } else {
-      const updateData = {
-        ...serviceData,
-        _id: service._id,
-      };
       console.log("Updating service with ID:", service._id);
-      console.log("Update data being sent:", updateData);
-      onSubmit(updateData);
+      onSubmit(serviceData);
     }
   };
 
   const categoryOptions = [
+    { value: "house-cleaning", label: "House Cleaning" },
     { value: "residential", label: "Residential" },
     { value: "commercial", label: "Commercial" },
     { value: "specialized", label: "Specialized" },
     { value: "move-in-out", label: "Move In/Out" },
     { value: "post-construction", label: "Post Construction" },
-    { value: "house-cleaning", label: "House Cleaning" },
   ];
 
   return (
@@ -425,9 +470,14 @@ const ServiceForm = ({ mode, service, onSubmit, onCancel }) => {
                 value={formData.name}
                 onChange={handleChange}
                 required
-                className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 text-sm"
+                className={`appearance-none block w-full px-3 py-2 border rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 text-sm ${
+                  formErrors.name ? 'border-red-300' : 'border-gray-300'
+                }`}
                 placeholder="e.g., Deep House Cleaning"
               />
+              {formErrors.name && (
+                <p className="mt-1 text-sm text-red-600">{formErrors.name}</p>
+              )}
             </div>
 
             {/* Description */}
@@ -451,7 +501,9 @@ const ServiceForm = ({ mode, service, onSubmit, onCancel }) => {
                 </button>
               </div>
 
-              <div className="relative">
+              <div className={`relative border rounded-md ${
+                formErrors.description ? 'border-red-300' : 'border-gray-300'
+              }`}>
                 {descriptionMode === "rich" ? (
                   <RichTextEditor
                     value={formData.description}
@@ -459,7 +511,7 @@ const ServiceForm = ({ mode, service, onSubmit, onCancel }) => {
                     placeholder="Describe the service in detail with rich formatting..."
                   />
                 ) : (
-                  <div className="border border-gray-300 rounded-md p-4 min-h-[300px] bg-white prose prose-sm max-w-none">
+                  <div className="p-4 min-h-[300px] bg-white prose prose-sm max-w-none">
                     <div
                       dangerouslySetInnerHTML={{
                         __html:
@@ -470,6 +522,9 @@ const ServiceForm = ({ mode, service, onSubmit, onCancel }) => {
                   </div>
                 )}
               </div>
+              {formErrors.description && (
+                <p className="mt-1 text-sm text-red-600">{formErrors.description}</p>
+              )}
 
               <div className="mt-2 text-xs text-gray-500">
                 <strong>Rich Text Editor:</strong> Use the toolbar above to
@@ -500,10 +555,15 @@ const ServiceForm = ({ mode, service, onSubmit, onCancel }) => {
                     min="0"
                     step="0.01"
                     required
-                    className="appearance-none block w-full pl-12 pr-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 text-sm"
+                    className={`appearance-none block w-full pl-12 pr-3 py-2 border rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 text-sm ${
+                      formErrors.price ? 'border-red-300' : 'border-gray-300'
+                    }`}
                     placeholder="0.00"
                   />
                 </div>
+                {formErrors.price && (
+                  <p className="mt-1 text-sm text-red-600">{formErrors.price}</p>
+                )}
               </div>
 
               <div>
@@ -523,13 +583,18 @@ const ServiceForm = ({ mode, service, onSubmit, onCancel }) => {
                     onChange={handleChange}
                     min="15"
                     required
-                    className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 text-sm"
+                    className={`appearance-none block w-full px-3 py-2 border rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 text-sm ${
+                      formErrors.duration ? 'border-red-300' : 'border-gray-300'
+                    }`}
                     placeholder="15"
                   />
                   <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
                     <span className="text-gray-500 sm:text-sm">min</span>
                   </div>
                 </div>
+                {formErrors.duration && (
+                  <p className="mt-1 text-sm text-red-600">{formErrors.duration}</p>
+                )}
               </div>
             </div>
 
@@ -547,7 +612,9 @@ const ServiceForm = ({ mode, service, onSubmit, onCancel }) => {
                 value={formData.category}
                 onChange={handleChange}
                 required
-                className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 text-sm"
+                className={`appearance-none block w-full px-3 py-2 border rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 text-sm ${
+                  formErrors.category ? 'border-red-300' : 'border-gray-300'
+                }`}
               >
                 {categoryOptions.map((option) => (
                   <option key={option.value} value={option.value}>
@@ -555,6 +622,9 @@ const ServiceForm = ({ mode, service, onSubmit, onCancel }) => {
                   </option>
                 ))}
               </select>
+              {formErrors.category && (
+                <p className="mt-1 text-sm text-red-600">{formErrors.category}</p>
+              )}
             </div>
 
             {/* Images Section */}
@@ -837,6 +907,9 @@ const ServiceForm = ({ mode, service, onSubmit, onCancel }) => {
                         Add Image
                       </button>
                     </div>
+                    {formErrors.imageUrl && (
+                      <p className="mt-1 text-sm text-red-600">{formErrors.imageUrl}</p>
+                    )}
                   </div>
 
                   {newImageUrl.trim() && (
@@ -1058,6 +1131,9 @@ const ServiceForm = ({ mode, service, onSubmit, onCancel }) => {
                         Add Video
                       </button>
                     </div>
+                    {formErrors.youtubeUrl && (
+                      <p className="mt-1 text-sm text-red-600">{formErrors.youtubeUrl}</p>
+                    )}
                   </div>
 
                   {newYouTubeUrl.trim() && (
