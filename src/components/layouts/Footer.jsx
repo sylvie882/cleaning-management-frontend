@@ -29,10 +29,10 @@ const Footer = () => {
   ];
 
   const socialLinks = [
-    { href: "https://web.facebook.com/sylvie.cleaning", icon: "fab fa-facebook-f", label: "Facebook", color: "#1877F2" },
-    { href: "https://www.instagram.com/sylviecleaning", icon: "fab fa-instagram", label: "Instagram", color: "#E1306C" },
-    { href: "https://x.com/sylviecleaning", icon: "fab fa-x-twitter", label: "X (Twitter)", color: "#000000" },
-    { href: "https://wa.me/254726933261", icon: "fab fa-whatsapp", label: "WhatsApp", color: "#25D366" },
+    { href: "https://web.facebook.com/sylvie.cleaning", icon: "fab fa-facebook-f", label: "Facebook", color: "#dc2626" },
+    { href: "https://www.instagram.com/sylviecleaning", icon: "fab fa-instagram", label: "Instagram", color: "#dc2626" },
+    { href: "https://x.com/sylviecleaning", icon: "fab fa-x-twitter", label: "X (Twitter)", color: "#dc2626" },
+    { href: "https://wa.me/254726933261", icon: "fab fa-whatsapp", label: "WhatsApp", color: "#dc2626" },
   ];
 
   return (
@@ -40,8 +40,8 @@ const Footer = () => {
       role="contentinfo"
       aria-label="Site footer"
       style={{
-        background: "linear-gradient(180deg, #0f172a 0%, #1e293b 100%)",
-        borderTop: "1px solid rgba(99,102,241,0.2)",
+        background: "#000000",
+        borderTop: "1px solid #dc2626",
         fontFamily: "'DM Sans', sans-serif",
       }}
     >
@@ -49,8 +49,8 @@ const Footer = () => {
       <div
         className="border-b"
         style={{
-          background: "linear-gradient(135deg, #1d4ed8, #2563eb)",
-          borderColor: "rgba(255,255,255,0.1)",
+          background: "#dc2626",
+          borderColor: "#991b1b",
         }}
       >
         <div className="container mx-auto px-4 lg:px-8 py-8 flex flex-col md:flex-row items-center justify-between gap-4">
@@ -58,13 +58,13 @@ const Footer = () => {
             <h2 className="text-white font-bold text-xl md:text-2xl mb-1" style={{ fontFamily: "'Playfair Display', Georgia, serif" }}>
               Ready for a Spotless Space?
             </h2>
-            <p className="text-blue-100 text-sm">Get a free quote today — we serve all Nairobi areas</p>
+            <p className="text-red-100 text-sm">Get a free quote today — we serve all Nairobi areas</p>
           </div>
           <div className="flex gap-3 flex-wrap justify-center">
             <a
               href="tel:+254726933261"
               aria-label="Call Sylvie Cleaning Services"
-              className="flex items-center gap-2 bg-white text-blue-700 font-bold px-6 py-3 rounded-full text-sm hover:bg-blue-50 transition-all hover:scale-105"
+              className="flex items-center gap-2 bg-white text-red-600 font-bold px-6 py-3 rounded-full text-sm hover:bg-gray-100 transition-all hover:scale-105"
               style={{ boxShadow: "0 4px 14px rgba(0,0,0,0.2)" }}
             >
               <Phone size={15} aria-hidden="true" />
@@ -73,7 +73,7 @@ const Footer = () => {
             <Link
               to="/book"
               aria-label="Book a cleaning service"
-              className="flex items-center gap-2 bg-yellow-400 text-gray-900 font-bold px-6 py-3 rounded-full text-sm hover:bg-yellow-300 transition-all hover:scale-105"
+              className="flex items-center gap-2 bg-black text-white font-bold px-6 py-3 rounded-full text-sm hover:bg-gray-900 transition-all hover:scale-105"
             >
               <i className="fas fa-calendar-check text-xs" aria-hidden="true" />
               Book Service
@@ -94,7 +94,7 @@ const Footer = () => {
               </div>
               <div>
                 <div className="text-white font-bold text-lg leading-tight" style={{ fontFamily: "'Playfair Display', Georgia, serif" }}>Sylvie Cleaning</div>
-                <div className="text-blue-300 text-xs font-semibold" style={{ letterSpacing: "0.08em", textTransform: "uppercase" }}>Services</div>
+                <div className="text-red-400 text-xs font-semibold" style={{ letterSpacing: "0.08em", textTransform: "uppercase" }}>Services</div>
               </div>
             </Link>
 
@@ -105,26 +105,26 @@ const Footer = () => {
             {/* Contact Details */}
             <address className="not-italic space-y-3">
               <a href="tel:+254726933261" aria-label="Call us" className="flex items-center gap-3 text-gray-400 hover:text-white transition-colors text-sm group">
-                <span className="w-8 h-8 rounded-lg flex items-center justify-center group-hover:bg-blue-600/30 transition-colors" style={{ background: "rgba(37,99,235,0.15)" }}>
-                  <Phone size={14} className="text-blue-400" aria-hidden="true" />
+                <span className="w-8 h-8 rounded-lg flex items-center justify-center group-hover:bg-red-600/30 transition-colors" style={{ background: "rgba(220,38,38,0.15)" }}>
+                  <Phone size={14} className="text-red-500" aria-hidden="true" />
                 </span>
                 +254 726 933 261
               </a>
-              <a href="mailto:info@sylviecleaningservices.com" aria-label="Email us" className="flex items-center gap-3 text-gray-400 hover:text-white transition-colors text-sm group">
-                <span className="w-8 h-8 rounded-lg flex items-center justify-center group-hover:bg-blue-600/30 transition-colors" style={{ background: "rgba(37,99,235,0.15)" }}>
-                  <Mail size={14} className="text-blue-400" aria-hidden="true" />
+              <a href="mailto:sylvieintercleaning@gmail.com" aria-label="Email us" className="flex items-center gap-3 text-gray-400 hover:text-white transition-colors text-sm group">
+                <span className="w-8 h-8 rounded-lg flex items-center justify-center group-hover:bg-red-600/30 transition-colors" style={{ background: "rgba(220,38,38,0.15)" }}>
+                  <Mail size={14} className="text-red-500" aria-hidden="true" />
                 </span>
-                info@sylviecleaningservices.com
+                sylvieintercleaning@gmail.com
               </a>
               <div className="flex items-start gap-3 text-gray-400 text-sm">
-                <span className="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5" style={{ background: "rgba(37,99,235,0.15)" }}>
-                  <MapPin size={14} className="text-blue-400" aria-hidden="true" />
+                <span className="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5" style={{ background: "rgba(220,38,38,0.15)" }}>
+                  <MapPin size={14} className="text-red-500" aria-hidden="true" />
                 </span>
                 <span>Dale House, Rhapta Road, Fox Close, Nairobi 00100</span>
               </div>
               <div className="flex items-center gap-3 text-gray-400 text-sm">
-                <span className="w-8 h-8 rounded-lg flex items-center justify-center" style={{ background: "rgba(37,99,235,0.15)" }}>
-                  <Clock size={14} className="text-blue-400" aria-hidden="true" />
+                <span className="w-8 h-8 rounded-lg flex items-center justify-center" style={{ background: "rgba(220,38,38,0.15)" }}>
+                  <Clock size={14} className="text-red-500" aria-hidden="true" />
                 </span>
                 <span>Mon–Fri 8am–8pm · Sat 9am–3pm</span>
               </div>
@@ -135,13 +135,13 @@ const Footer = () => {
           <nav aria-label="Footer services navigation">
             <h3 className="text-white font-bold text-base mb-5" style={{ fontFamily: "'Playfair Display', Georgia, serif" }}>
               Our Services
-              <span className="block w-8 h-0.5 mt-2 rounded-full" style={{ background: "linear-gradient(90deg,#2563eb,#06b6d4)" }} />
+              <span className="block w-8 h-0.5 mt-2 rounded-full bg-red-600" />
             </h3>
             <ul className="space-y-2.5">
               {services.map((service, idx) => (
                 <li key={idx}>
-                  <Link to={service.to} className="flex items-center gap-2 text-gray-400 hover:text-white text-sm transition-all duration-200 group">
-                    <ChevronRight size={13} className="text-blue-500 group-hover:translate-x-1 transition-transform" aria-hidden="true" />
+                  <Link to={service.to} className="flex items-center gap-2 text-gray-400 hover:text-red-500 text-sm transition-all duration-200 group">
+                    <ChevronRight size={13} className="text-red-500 group-hover:translate-x-1 transition-transform" aria-hidden="true" />
                     {service.label}
                   </Link>
                 </li>
@@ -153,13 +153,13 @@ const Footer = () => {
           <nav aria-label="Footer quick links">
             <h3 className="text-white font-bold text-base mb-5" style={{ fontFamily: "'Playfair Display', Georgia, serif" }}>
               Quick Links
-              <span className="block w-8 h-0.5 mt-2 rounded-full" style={{ background: "linear-gradient(90deg,#2563eb,#06b6d4)" }} />
+              <span className="block w-8 h-0.5 mt-2 rounded-full bg-red-600" />
             </h3>
             <ul className="space-y-2.5">
               {quickLinks.map((link, idx) => (
                 <li key={idx}>
-                  <Link to={link.to} className="flex items-center gap-2 text-gray-400 hover:text-white text-sm transition-all duration-200 group">
-                    <ChevronRight size={13} className="text-blue-500 group-hover:translate-x-1 transition-transform" aria-hidden="true" />
+                  <Link to={link.to} className="flex items-center gap-2 text-gray-400 hover:text-red-500 text-sm transition-all duration-200 group">
+                    <ChevronRight size={13} className="text-red-500 group-hover:translate-x-1 transition-transform" aria-hidden="true" />
                     {link.label}
                   </Link>
                 </li>
@@ -171,7 +171,7 @@ const Footer = () => {
           <div>
             <h3 className="text-white font-bold text-base mb-5" style={{ fontFamily: "'Playfair Display', Georgia, serif" }}>
               Areas We Serve
-              <span className="block w-8 h-0.5 mt-2 rounded-full" style={{ background: "linear-gradient(90deg,#2563eb,#06b6d4)" }} />
+              <span className="block w-8 h-0.5 mt-2 rounded-full bg-red-600" />
             </h3>
             <div className="flex flex-wrap gap-2" aria-label="Service areas in Nairobi">
               {areaLinks.map((area, idx) => (
@@ -183,7 +183,7 @@ const Footer = () => {
                   {area}
                 </span>
               ))}
-              <Link to="/areas" className="text-xs px-3 py-1 rounded-full text-blue-300 hover:text-blue-200 transition-colors" style={{ background: "rgba(37,99,235,0.15)", border: "1px solid rgba(37,99,235,0.3)" }}>
+              <Link to="/areas" className="text-xs px-3 py-1 rounded-full text-red-300 hover:text-red-200 transition-colors" style={{ background: "rgba(220,38,38,0.15)", border: "1px solid rgba(220,38,38,0.3)" }}>
                 +500 More Areas →
               </Link>
             </div>
@@ -215,7 +215,7 @@ const Footer = () => {
       </div>
 
       {/* Bottom Bar */}
-      <div className="border-t" style={{ borderColor: "rgba(255,255,255,0.06)" }}>
+      <div className="border-t" style={{ borderColor: "#dc2626" }}>
         <div className="container mx-auto px-4 lg:px-8 py-5 flex flex-col md:flex-row items-center justify-between gap-3">
           <p className="text-gray-500 text-sm">
             &copy; {currentYear}{" "}
@@ -228,7 +228,7 @@ const Footer = () => {
               { to: "/terms-of-service", label: "Terms of Service" },
               { to: "/sitemap", label: "Sitemap" },
             ].map((link, idx) => (
-              <Link key={idx} to={link.to} className="text-gray-500 hover:text-gray-300 text-xs transition-colors">
+              <Link key={idx} to={link.to} className="text-gray-500 hover:text-red-500 text-xs transition-colors">
                 {link.label}
               </Link>
             ))}

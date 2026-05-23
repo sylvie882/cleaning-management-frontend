@@ -94,7 +94,7 @@ const ContactPage = () => {
   // Business information
   const businessInfo = {
     address: ".DALE HOUSE, RHAPTA ROAD,Fox Close, Nairobi-Kenya.",
-    email: "info@sylviecleaningservices.com",
+    email: "sylvieintercleaning@gmail.com",
     phone: "0726 933261",
     alternatePhone: "0726 933261",
     workingHours: {
