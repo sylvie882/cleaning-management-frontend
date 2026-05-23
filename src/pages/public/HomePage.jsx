@@ -272,9 +272,7 @@ const HomePage = () => {
               style={{ backgroundImage: `linear-gradient(135deg, rgba(0,0,0,0.75) 0%, rgba(0,0,0,0.35) 100%), url(${slide.image})`, backgroundSize: "cover", backgroundPosition: "center", backgroundAttachment: "fixed" }}
             />
           ))}
-        </div>
-
-        
+        </div>        
 
         <div className="container relative z-10 mx-auto h-full px-4 sm:px-6 flex items-center justify-center">
          <div className="text-center max-w-5xl w-full pt-[200px] lg:pt-[180px]">
