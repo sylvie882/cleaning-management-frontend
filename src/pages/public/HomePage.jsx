@@ -274,6 +274,8 @@ const HomePage = () => {
           ))}
         </div>
 
+        
+
         <div className="container relative z-10 mx-auto h-full px-4 sm:px-6 flex items-center justify-center">
          <div className="text-center max-w-5xl w-full pt-[200px] lg:pt-[180px]">
             <div className={`transition-all duration-700 ease-out ${isVisible.hero ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}>
