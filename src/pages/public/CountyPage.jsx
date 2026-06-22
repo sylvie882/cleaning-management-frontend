@@ -104,94 +104,121 @@ const CountyPage = ({ countyName }) => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // SEO Metadata with county-specific optimization
+  // ── SEO Metadata: county-specific, keyword-first titles ──────────────────
+  const countySlug = countyName.toLowerCase().replace(/\s+/g, '-').replace(/'/g, '');
+  const canonicalUrl = `https://www.sylviecleaningservices.com/${countySlug}`;
   const seoData = {
-    title: `Professional Cleaning Services in ${countyName} | Sylvie Cleaning Services`,
-    description: `Top-rated cleaning services in ${countyName} for homes and offices. Experience spotless spaces with our professional cleaners. Book online today with satisfaction guarantee!`,
-    canonicalUrl: `https://www.sylviecleaningservices.com/${countyName.toLowerCase().replace(/\s+/g, '-')}`,
+    title: `Cleaning Services in ${countyName} | Professional Cleaners | Sylvie Cleaning Services`,
+    description: `Professional cleaning services in ${countyName} — house cleaning, office cleaning, carpet cleaning, deep cleaning & post-construction cleaning. ★4.9 rated, insured cleaners. Call 0726 933 261 for a free quote.`,
+    canonicalUrl,
     siteName: "Sylvie Cleaning Services",
     twitterHandle: "@sylviecleaning",
-    socialImage: heroImage,
-    businessInfo: {
-      name: "Sylvie Cleaning Services",
-      url: "https://www.sylviecleaningservices.com",
-      logo: "https://www.sylviecleaningservices.com/logo.png",
-      phone: "+254726933261",
-      address: {
-        street: "Dale House, Rhapta Road,Fox Close",
-        city: countyName,
-        state: countyName,
-        zip: "00100",
-        country: "KE"
-      },
-      openingHours: "Mo-Fr 08:00-20:00, Sa 09:00-15:00",
-      priceRange: "$$",
-      sameAs: [
-        "https://web.facebook.com/sylvie.cleaning",
-        "https://www.instagram.com/sylviecleaning",
-        "https://x.com/sylviecleaning"
-      ],
-      areasServed: [
-        countyName, "Main towns", "Urban centers", "Residential areas"
-      ],
-      services: ["Residential Cleaning", "Commercial Cleaning", "Deep Cleaning", "Move-In/Move-Out Cleaning"]
-    }
+    socialImage: "https://www.sylviecleaningservices.com/og-image.jpg",
+    keywords: `cleaning services ${countyName}, house cleaning ${countyName}, office cleaning ${countyName}, professional cleaners ${countyName} Kenya, deep cleaning ${countyName}, carpet cleaning ${countyName}, post construction cleaning ${countyName}, Sylvie Cleaning Services ${countyName}`,
   };
 
-  // Enhanced Structured Data for SEO
+  // ── Enhanced LocalBusiness schema for county page ─────────────────────────
+  const coords = countyCoordinates[countyName] || { lat: "-1.2921", lng: "36.8219" };
   const structuredData = {
     "@context": "https://schema.org",
-    "@type": "ProfessionalService",
-    "name": seoData.businessInfo.name,
-    "image": seoData.socialImage,
-    "@id": seoData.canonicalUrl,
-    "url": seoData.canonicalUrl,
-    "telephone": seoData.businessInfo.phone,
-    "priceRange": seoData.businessInfo.priceRange,
+    "@type": ["LocalBusiness", "ProfessionalService"],
+    "@id": canonicalUrl,
+    "name": `Sylvie Cleaning Services — ${countyName}`,
+    "image": ["https://www.sylviecleaningservices.com/og-image.jpg", "https://www.sylviecleaningservices.com/logo.png"],
+    "url": canonicalUrl,
+    "telephone": "+254726933261",
+    "email": "info@sylviecleaningservices.com",
+    "priceRange": "KES 1,500 – 50,000",
+    "currenciesAccepted": "KES",
+    "paymentAccepted": "Cash, M-Pesa, Bank Transfer",
+    "description": `Professional cleaning services in ${countyName}, Kenya. Sylvie Cleaning Services offers house cleaning, office cleaning, deep cleaning, carpet & sofa cleaning, post-construction cleaning, and move-in/out cleaning in ${countyName}. Insured, vetted cleaners. Book online or call 0726 933 261.`,
     "address": {
       "@type": "PostalAddress",
-      "streetAddress": seoData.businessInfo.address.street,
-      "addressLocality": seoData.businessInfo.address.city,
-      "addressRegion": seoData.businessInfo.address.state,
-      "postalCode": seoData.businessInfo.address.zip,
-      "addressCountry": seoData.businessInfo.address.country
+      "streetAddress": "Dale House, Rhapta Road, Fox Close",
+      "addressLocality": "Nairobi",
+      "addressRegion": countyName,
+      "postalCode": "00100",
+      "addressCountry": "KE"
     },
     "geo": {
       "@type": "GeoCoordinates",
-      "latitude": countyCoordinates[countyName].lat,
-      "longitude": countyCoordinates[countyName].lng
+      "latitude": coords.lat,
+      "longitude": coords.lng
     },
-    "openingHoursSpecification": {
-      "@type": "OpeningHoursSpecification",
-      "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
-      "opens": "08:00",
-      "closes": "20:00"
-    },
-    "sameAs": seoData.businessInfo.sameAs,
-    "areaServed": {
-      "@type": "GeoCircle",
-      "geoMidpoint": {
-        "@type": "GeoCoordinates",
-        "latitude": countyCoordinates[countyName].lat,
-        "longitude": countyCoordinates[countyName].lng
+    "openingHoursSpecification": [
+      {
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday"],
+        "opens": "08:00",
+        "closes": "20:00"
       },
-      "geoRadius": "50000"  // 50km radius from county center
+      {
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": ["Saturday"],
+        "opens": "09:00",
+        "closes": "15:00"
+      }
+    ],
+    "sameAs": [
+      "https://web.facebook.com/sylvie.cleaning",
+      "https://www.instagram.com/sylviecleaning",
+      "https://x.com/sylviecleaning"
+    ],
+    "areaServed": [
+      { "@type": "AdministrativeArea", "name": `${countyName} County` },
+      { "@type": "Country", "name": "Kenya" }
+    ],
+    "aggregateRating": {
+      "@type": "AggregateRating",
+      "ratingValue": "4.9",
+      "reviewCount": "312",
+      "bestRating": "5"
     },
     "hasOfferCatalog": {
       "@type": "OfferCatalog",
-      "name": "Cleaning Services",
-      "itemListElement": seoData.businessInfo.services.map((service, index) => ({
-        "@type": "OfferCatalog",
-        "name": service,
-        "itemListElement": {
-          "@type": "Offer",
-          "itemOffered": {
-            "@type": "Service",
-            "name": service
-          }
-        }
-      }))
+      "name": `Cleaning Services in ${countyName}`,
+      "itemListElement": [
+        { "@type": "Offer", "itemOffered": { "@type": "Service", "name": `House Cleaning ${countyName}`, "areaServed": countyName }, "priceCurrency": "KES", "price": "1500" },
+        { "@type": "Offer", "itemOffered": { "@type": "Service", "name": `Office Cleaning ${countyName}`, "areaServed": countyName }, "priceCurrency": "KES", "price": "3000" },
+        { "@type": "Offer", "itemOffered": { "@type": "Service", "name": `Deep Cleaning ${countyName}`, "areaServed": countyName }, "priceCurrency": "KES", "price": "4000" },
+        { "@type": "Offer", "itemOffered": { "@type": "Service", "name": `Carpet Cleaning ${countyName}`, "areaServed": countyName }, "priceCurrency": "KES", "price": "1000" },
+        { "@type": "Offer", "itemOffered": { "@type": "Service", "name": `Post Construction Cleaning ${countyName}`, "areaServed": countyName }, "priceCurrency": "KES", "price": "5000" },
+      ]
     }
+  };
+
+  // ── County page FAQ schema ─────────────────────────────────────────────────
+  const countyFAQSchema = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": `Does Sylvie Cleaning Services operate in ${countyName}?`,
+        "acceptedAnswer": { "@type": "Answer", "text": `Yes! Sylvie Cleaning Services provides professional cleaning services across ${countyName} and all 47 counties in Kenya. We offer house cleaning, office cleaning, deep cleaning, carpet and sofa cleaning, post-construction cleaning, and more. Call or WhatsApp us at +254726933261 to book.` }
+      },
+      {
+        "@type": "Question",
+        "name": `How much does cleaning cost in ${countyName}?`,
+        "acceptedAnswer": { "@type": "Answer", "text": `Cleaning services in ${countyName} start from KES 1,500 for house cleaning, KES 3,000 for office cleaning, and KES 4,000 for deep cleaning. Carpet cleaning starts from KES 1,000/room and sofa cleaning from KES 800/seat. Contact us for a free custom quote.` }
+      },
+      {
+        "@type": "Question",
+        "name": `How do I book cleaning services in ${countyName}?`,
+        "acceptedAnswer": { "@type": "Answer", "text": `You can book cleaning services in ${countyName} online at sylviecleaningservices.com, by calling +254726933261, or via WhatsApp. We offer flexible scheduling 7 days a week.` }
+      }
+    ]
+  };
+
+  // ── Breadcrumb schema ──────────────────────────────────────────────────────
+  const breadcrumbSchema = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://www.sylviecleaningservices.com" },
+      { "@type": "ListItem", "position": 2, "name": "Cleaning Services Kenya", "item": "https://www.sylviecleaningservices.com/services" },
+      { "@type": "ListItem", "position": 3, "name": `Cleaning Services in ${countyName}`, "item": canonicalUrl }
+    ]
   };
 
   // Carousel data with county-specific content
@@ -459,43 +486,46 @@ const CountyPage = ({ countyName }) => {
     <div className="w-full overflow-x-hidden">
       {/* Enhanced SEO Meta Tags */}
       <Helmet>
+        {/* ── Keyword-first title: service + location ── */}
         <title>{seoData.title}</title>
         <meta name="description" content={seoData.description} />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <meta name="robots" content="index, follow" />
+        <meta name="keywords" content={seoData.keywords} />
+        <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
         <link rel="canonical" href={seoData.canonicalUrl} />
-        
-        {/* Open Graph / Facebook */}
+
+        {/* ── Geo signals — county-specific ── */}
+        <meta name="geo.region" content="KE" />
+        <meta name="geo.placename" content={`${countyName}, Kenya`} />
+        <meta name="geo.position" content={`${coords.lat};${coords.lng}`} />
+        <meta name="ICBM" content={`${coords.lat}, ${coords.lng}`} />
+
+        {/* ── Open Graph ── */}
         <meta property="og:type" content="website" />
+        <meta property="og:site_name" content="Sylvie Cleaning Services" />
         <meta property="og:url" content={seoData.canonicalUrl} />
-        <meta property="og:title" content={seoData.title} />
-        <meta property="og:description" content={seoData.description} />
+        <meta property="og:title" content={`Cleaning Services in ${countyName} | Sylvie Cleaning Services ★4.9`} />
+        <meta property="og:description" content={`Professional house cleaning, office cleaning, carpet cleaning & deep cleaning in ${countyName}. Insured, vetted cleaners. Call 0726 933 261 for a free quote!`} />
         <meta property="og:image" content={seoData.socialImage} />
-        <meta property="og:site_name" content={seoData.siteName} />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
         <meta property="og:locale" content="en_KE" />
-        
-        {/* Twitter */}
+
+        {/* ── Twitter ── */}
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:url" content={seoData.canonicalUrl} />
-        <meta name="twitter:title" content={seoData.title} />
-        <meta name="twitter:description" content={seoData.description} />
+        <meta name="twitter:site" content="@sylviecleaning" />
+        <meta name="twitter:creator" content="@sylviecleaning" />
+        <meta name="twitter:title" content={`Cleaning Services ${countyName} | Sylvie Cleaning Services`} />
+        <meta name="twitter:description" content={`House, office, carpet & deep cleaning in ${countyName}. ★4.9 rated. Book now!`} />
         <meta name="twitter:image" content={seoData.socialImage} />
-        <meta name="twitter:creator" content={seoData.twitterHandle} />
-        
-        {/* Structured Data */}
-        <script type="application/ld+json">
-          {JSON.stringify(structuredData)}
-        </script>
-        
-        {/* Favicon */}
-        <link rel="icon" href="/favicon.ico" />
+
+        {/* ── Structured Data: LocalBusiness + FAQ + Breadcrumb ── */}
+        <script type="application/ld+json">{JSON.stringify(structuredData)}</script>
+        <script type="application/ld+json">{JSON.stringify(countyFAQSchema)}</script>
+        <script type="application/ld+json">{JSON.stringify(breadcrumbSchema)}</script>
+
+        {/* ── Icons ── */}
+        <link rel="icon" href="/favicon.png" />
         <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
-        
-        {/* Geo Tags for Local SEO */}
-        <meta name="geo.region" content="KE-110" />
-        <meta name="geo.placename" content={countyName} />
-        <meta name="geo.position" content={`${countyCoordinates[countyName].lat};${countyCoordinates[countyName].lng}`} />
-        <meta name="ICBM" content={`${countyCoordinates[countyName].lat}, ${countyCoordinates[countyName].lng}`} />
       </Helmet>
 
       {/* Hero Section with Enhanced Animations */}

@@ -267,55 +267,61 @@ const ServicesPage = () => {
 
   return (
     <div className="bg-gradient-to-br from-gray-50 to-white min-h-screen">
-      {/* SEO Meta Tags */}
+      {/* ── SEO Meta Tags — Services Page ── */}
       <Helmet>
-        <title>{seoData.title}</title>
-        <meta name="description" content={seoData.description} />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <meta name="robots" content="index, follow" />
+        <title>Cleaning Services Nairobi | House, Office, Carpet & Deep Cleaning | Sylvie</title>
+        <meta name="description" content="All professional cleaning services in Nairobi: house cleaning from KES 1,500, office cleaning, carpet cleaning, sofa cleaning, deep cleaning & post-construction cleaning. ★4.9 rated. Book online or call 0726 933 261." />
+        <meta name="keywords" content="cleaning services Nairobi, house cleaning Nairobi, office cleaning Nairobi, carpet cleaning Nairobi, sofa cleaning Nairobi, deep cleaning Nairobi, post construction cleaning Nairobi, move in cleaning Nairobi, specialized cleaning Kenya, professional cleaners Nairobi Kenya" />
+        <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
         <link rel="canonical" href={seoData.canonicalUrl} />
-        
-        {/* Open Graph / Facebook */}
+
+        {/* Geo signals */}
+        <meta name="geo.region" content="KE-30" />
+        <meta name="geo.placename" content="Nairobi, Kenya" />
+        <meta name="geo.position" content="-1.2921;36.8219" />
+        <meta name="ICBM" content="-1.2921, 36.8219" />
+
+        {/* Open Graph */}
         <meta property="og:type" content="website" />
+        <meta property="og:site_name" content="Sylvie Cleaning Services" />
         <meta property="og:url" content={seoData.canonicalUrl} />
-        <meta property="og:title" content={seoData.title} />
-        <meta property="og:description" content={seoData.description} />
+        <meta property="og:title" content="All Cleaning Services in Nairobi | Sylvie Cleaning Services ★4.9" />
+        <meta property="og:description" content="House cleaning from KES 1,500 | Office, carpet, sofa, deep & post-construction cleaning in Nairobi. Trusted by 5,000+ clients. Book online!" />
         <meta property="og:image" content={seoData.socialImage} />
-        <meta property="og:site_name" content={seoData.siteName} />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
         <meta property="og:locale" content="en_KE" />
-        
+
         {/* Twitter */}
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:url" content={seoData.canonicalUrl} />
-        <meta name="twitter:title" content={seoData.title} />
-        <meta name="twitter:description" content={seoData.description} />
+        <meta name="twitter:site" content="@sylviecleaning" />
+        <meta name="twitter:creator" content="@sylviecleaning" />
+        <meta name="twitter:title" content="Cleaning Services Nairobi | Sylvie Cleaning Services" />
+        <meta name="twitter:description" content="House, office, carpet, sofa, deep & post-construction cleaning in Nairobi. ★4.9 rated. Book now!" />
         <meta name="twitter:image" content={seoData.socialImage} />
-        <meta name="twitter:creator" content={seoData.twitterHandle} />
-        
+
         {/* Structured Data */}
-        <script type="application/ld+json">
-          {JSON.stringify(structuredData)}
-        </script>
-        <script type="application/ld+json">
-          {JSON.stringify(localBusinessStructuredData)}
-        </script>
-        
-        {/* Breadcrumb Schema */}
+        <script type="application/ld+json">{JSON.stringify(structuredData)}</script>
+        <script type="application/ld+json">{JSON.stringify(localBusinessStructuredData)}</script>
         <script type="application/ld+json">
           {JSON.stringify({
             "@context": "https://schema.org",
             "@type": "BreadcrumbList",
-            "itemListElement": [{
-              "@type": "ListItem",
-              "position": 1,
-              "name": "Home",
-              "item": "https://www.sylviecleaningservices.com"
-            },{
-              "@type": "ListItem",
-              "position": 2,
-              "name": "Services",
-              "item": seoData.canonicalUrl
-            }]
+            "itemListElement": [
+              { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://www.sylviecleaningservices.com" },
+              { "@type": "ListItem", "position": 2, "name": "Cleaning Services Nairobi", "item": seoData.canonicalUrl }
+            ]
+          })}
+        </script>
+        <script type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            "mainEntity": [
+              { "@type": "Question", "name": "How much does cleaning cost in Nairobi?", "acceptedAnswer": { "@type": "Answer", "text": "House cleaning starts from KES 1,500 for a studio, KES 2,500 for 1-bedroom, and KES 3,500–5,000 for 2–3 bedroom homes. Carpet cleaning is from KES 1,000/room, sofa cleaning from KES 800/seat, and deep cleaning from KES 4,000. Contact us for a free quote." } },
+              { "@type": "Question", "name": "Do you offer same-day cleaning services in Nairobi?", "acceptedAnswer": { "@type": "Answer", "text": "Yes! Sylvie Cleaning Services offers same-day and emergency cleaning services across Nairobi, subject to availability. Call or WhatsApp us at +254726933261 to check availability and book." } },
+              { "@type": "Question", "name": "What is included in deep cleaning services in Nairobi?", "acceptedAnswer": { "@type": "Answer", "text": "Our deep cleaning service includes thorough cleaning of all rooms, inside cupboards, behind appliances, ceiling fans, light fixtures, baseboards, grout scrubbing, sanitizing bathrooms and kitchen, carpet and upholstery cleaning, and window interiors." } }
+            ]
           })}
         </script>
       </Helmet>

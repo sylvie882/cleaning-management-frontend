@@ -1,4 +1,36 @@
+# Sylvie Cleaning Services — robots.txt
+# https://www.sylviecleaningservices.com
+
 User-agent: *
 Allow: /
 
+# Block internal/auth pages from indexing
+Disallow: /login
+Disallow: /admin/
+Disallow: /accountant/
+Disallow: /cleaner/
+Disallow: /manager/
+Disallow: /head-of-cleaning/
+Disallow: /user-profile
+Disallow: /user-settings
+Disallow: /booking/success
+Disallow: /payment/
+
+# Allow all public/SEO pages
+Allow: /services/
+Allow: /blog/
+Allow: /about
+Allow: /contact
+Allow: /book
+Allow: /nairobi
+Allow: /mombasa
+Allow: /kisumu
+Allow: /nakuru
+Allow: /eldoret
+Allow: /kiambu
+
+# Crawl delay to be polite
+Crawl-delay: 2
+
+# Sitemap location
 Sitemap: https://www.sylviecleaningservices.com/sitemap.xml
