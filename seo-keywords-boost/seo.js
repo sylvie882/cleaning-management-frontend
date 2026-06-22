@@ -22,7 +22,7 @@ export const BUSINESS_INFO = {
   phone: "+254726933261",
   phoneDisplay: "0726 933 261",
   whatsapp: "https://wa.me/254726933261",
-  email: "info@sylviecleaningservices.com",
+  email: "sylvieintercleaning@gmail.com",
   yearsInBusiness: 7,
   reviewCount: 500,
   ratingValue: 4.9,

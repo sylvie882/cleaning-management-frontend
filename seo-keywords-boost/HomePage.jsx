@@ -109,9 +109,10 @@ const HomePage = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [animatingText, setAnimatingText] = useState(false);
   const [showScrollTop, setShowScrollTop] = useState(false);
+  const [expandedRegions, setExpandedRegions] = useState({});
   const [isVisible, setIsVisible] = useState({
     hero: false, services: false, whyChoose: false, howItWorks: false,
-    videos: false, projects: false, testimonials: false, cta: false, trust: false,
+    videos: false, projects: false, testimonials: false, cta: false, trust: false, areas: false,
   });
 
   const scrollToTop = () => window.scrollTo({ top: 0, behavior: "smooth" });
@@ -616,16 +617,67 @@ const HomePage = () => {
         </div>
       </section>
 
-      {/* ── SEO-ONLY AREAS SECTION (hidden visually but indexable) ── */}
-      <div aria-hidden="true" style={{ position: "absolute", width: "1px", height: "1px", overflow: "hidden", clip: "rect(0,0,0,0)", whiteSpace: "nowrap" }}>
-        <h2>Cleaning Services Available In All Nairobi Areas</h2>
-        {Object.entries(marketingAreas).map(([region, areas]) => (
-          <div key={region}>
-            <h3>{region}</h3>
-            <p>Professional cleaning services available in: {areas.join(", ")}</p>
+      {/* ── AREAS WE SERVE ── */}
+      <section className="py-20 sm:py-28 bg-white" data-section="areas" aria-labelledby="areas-heading">
+        <div className="container mx-auto px-4 sm:px-6">
+          <div className={`text-center mb-14 transition-all duration-1000 ${isVisible.areas ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}>
+            <span className="text-blue-600 font-semibold text-sm uppercase tracking-widest">Where We Work</span>
+            <h2 id="areas-heading" className="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-900 mt-3 mb-5" style={{ fontFamily: "'Playfair Display', Georgia, serif" }}>
+              Areas We Serve Across Nairobi
+            </h2>
+            <p className="text-lg text-gray-600 max-w-3xl mx-auto leading-relaxed">
+              From Karen to Kasarani, our vetted cleaning teams cover every major Nairobi neighborhood. Browse your region below to see the estates and roads we serve.
+            </p>
           </div>
-        ))}
-      </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {Object.entries(marketingAreas).map(([region, areas], index) => {
+              const isExpanded = !!expandedRegions[region];
+              const previewCount = 8;
+              const visibleAreas = isExpanded ? areas : areas.slice(0, previewCount);
+              const remaining = areas.length - previewCount;
+
+              return (
+                <div
+                  key={region}
+                  className={`bg-gray-50 rounded-2xl border border-gray-100 p-6 transition-all duration-500 ${isVisible.areas ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}
+                  style={{ transitionDelay: `${index * 80}ms` }}
+                >
+                  <h3 className="text-base font-bold text-gray-800 mb-3 flex items-center gap-2">
+                    <MapPin size={16} className="text-blue-600 flex-shrink-0" aria-hidden="true" />
+                    {region}
+                  </h3>
+                  <ul className="flex flex-wrap gap-2" aria-label={`Areas served in ${region}`}>
+                    {visibleAreas.map((area) => (
+                      <li key={area} className="text-xs font-medium text-gray-600 bg-white border border-gray-200 px-3 py-1.5 rounded-full">
+                        {area}
+                      </li>
+                    ))}
+                  </ul>
+                  {remaining > 0 && (
+                    <button
+                      type="button"
+                      onClick={() => setExpandedRegions((prev) => ({ ...prev, [region]: !prev[region] }))}
+                      aria-expanded={isExpanded}
+                      className="mt-3 text-xs font-semibold text-blue-600 hover:text-blue-800 transition-colors"
+                    >
+                      {isExpanded ? "Show less" : `+${remaining} more areas`}
+                    </button>
+                  )}
+                </div>
+              );
+            })}
+          </div>
+
+          <p className="text-center text-gray-500 text-sm mt-10">
+            Don&apos;t see your area listed?{" "}
+            <Link to="/book" className="text-blue-600 font-semibold hover:text-blue-800">
+              Get in touch
+            </Link>{" "}
+            — we likely still cover it.
+          </p>
+        </div>
+      </section>
 
       {/* Scroll to Top */}
       <button
