@@ -7,6 +7,20 @@ import { Helmet } from "react-helmet";
 import { getServices } from "../../features/services/servicesSlice";
 import { formatContentForDisplay } from "../../utils/markdownUtils";
 
+// ─── Color Palette ──────────────────────────────────────────────
+const colors = {
+  primary: "#1E5AA8",      // Blue - trust, professionalism
+  primaryDark: "#16447D",  // Darker blue
+  primaryLight: "#E8EEF7", // Light blue background
+  primaryHover: "#153D6B", // Hover state
+  accent: "#D62828",       // Red - CTAs, energy
+  accentDark: "#B71C1C",   // Darker red
+  accentLight: "#FDE8E8",  // Light red background
+  white: "#FFFFFF",
+  gray: "#F7F8FA",
+  text: "#1A1A2E",
+};
+
 const ServicesPage = () => {
   const dispatch = useDispatch();
   const location = useLocation();
@@ -22,7 +36,7 @@ const ServicesPage = () => {
     cta: false,
   });
   const [currentPage, setCurrentPage] = useState(1);
-  const [servicesPerPage] = useState(10);
+  const [servicesPerPage] = useState(12); // Changed from 10 to 12
 
   // SEO Metadata for services page
   const seoData = {
@@ -306,9 +320,10 @@ const ServicesPage = () => {
         </script>
       </Helmet>
 
-      {/* Hero Banner - Fixed spacing to push below navbar */}
+      {/* Hero Banner - Using Blue Primary */}
       <div
-        className="relative bg-gradient-to-r from-blue-600 via-blue-700 to-indigo-800 h-80 md:h-96 w-full overflow-hidden shadow-xl pt-32"
+        className="relative h-80 md:h-96 w-full overflow-hidden shadow-xl pt-32"
+        style={{ background: `linear-gradient(135deg, ${colors.primary} 0%, ${colors.primaryDark} 100%)` }}
         data-section="hero"
       >
         {/* Animated background icons */}
@@ -350,14 +365,13 @@ const ServicesPage = () => {
           }`}
         >
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight drop-shadow-xl">
-            Our Professional{" "}
-            <span className="block text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 to-blue-200">
-             Cleaning Services
+            Our{" "}
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-200 to-cyan-300">
+              Cleaning Services
             </span>
           </h1>
           <p className="text-xl md:text-2xl text-blue-100 max-w-3xl mx-auto leading-relaxed">
-            {/* Comprehensive cleaning solutions designed to meet your specific
-            needs with the highest standards of quality and professionalism */}
+            Professional cleaning solutions for every need
           </p>
         </div>
       </div>
@@ -373,11 +387,10 @@ const ServicesPage = () => {
             }`}
           >
             <h2 className="text-3xl md:text-4xl font-bold text-gray-800 mb-4">
-              Choose Your Service Category
+              Choose Your Service
             </h2>
             <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-              Select from our comprehensive range of professional cleaning
-              services
+              Select from our comprehensive range of professional cleaning services
             </p>
           </div>
           <div className="flex flex-wrap justify-center gap-3 md:gap-4">
@@ -386,10 +399,14 @@ const ServicesPage = () => {
                 key={category.id}
                 className={`group px-6 py-4 md:px-8 md:py-4 rounded-2xl font-semibold text-sm md:text-base transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl ${
                   activeCategory === category.id
-                    ? "bg-gradient-to-r from-blue-600 to-cyan-600 text-white shadow-blue-500/25"
+                    ? "text-white"
                     : "bg-white text-gray-700 hover:bg-blue-50 border border-gray-200 hover:border-blue-300"
                 }`}
-                style={{ transitionDelay: `${index * 100}ms` }}
+                style={{
+                  background: activeCategory === category.id ? colors.primary : "white",
+                  boxShadow: activeCategory === category.id ? `0 10px 25px ${colors.primary}40` : undefined,
+                  transitionDelay: `${index * 100}ms`
+                }}
                 onClick={() => handleCategoryChange(category.id)}
               >
                 <div className="flex items-center space-x-3">
@@ -411,13 +428,13 @@ const ServicesPage = () => {
         {!isLoading && filteredServices.length > 0 && (
           <div className="mb-8 flex flex-col sm:flex-row justify-between items-center gap-4 bg-white rounded-2xl p-6 shadow-lg animate-fade-in">
             <div className="text-gray-700 text-center sm:text-left">
-              <span className="font-semibold text-blue-600">
+              <span className="font-semibold" style={{ color: colors.primary }}>
                 {indexOfFirstService + 1}-
                 {Math.min(indexOfLastService, totalServices)}
               </span>{" "}
               of <span className="font-semibold">{totalServices}</span> services
               {activeCategory !== "all" && (
-                <span className="text-blue-600 font-medium ml-2">
+                <span className="font-medium ml-2" style={{ color: colors.primary }}>
                   in {categories.find((cat) => cat.id === activeCategory)?.name}
                 </span>
               )}
@@ -447,9 +464,9 @@ const ServicesPage = () => {
           </div>
         ) : currentServices.length > 0 ? (
           <>
-            {/* Services List */}
+            {/* Services List - Grid with 12 cards per page */}
             <div
-              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16"
+              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 md:gap-8 mb-16"
               data-section="services"
             >
               {currentServices.map((service, index) => {
@@ -467,7 +484,7 @@ const ServicesPage = () => {
                     itemType="https://schema.org/Service"
                   >
                     {/* Service Media (Video or Image) */}
-                    <div className="h-56 relative overflow-hidden">
+                    <div className="h-48 relative overflow-hidden">
                       {media.type === "video" ? (
                         <div className="w-full h-full relative group">
                           <iframe
@@ -478,20 +495,19 @@ const ServicesPage = () => {
                             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                             allowFullScreen
                             onLoad={(e) => {
-                              // Ensure video loops properly
                               const iframe = e.target;
                               iframe.contentWindow.postMessage('{"event":"command","func":"loopVideo","args":""}', '*');
                             }}
                           ></iframe>
-                          <div className="absolute top-4 right-4 bg-gradient-to-r from-red-600 to-red-700 text-white text-xs px-3 py-2 rounded-full flex items-center gap-2 shadow-lg animate-fade-in">
+                          <div className="absolute top-3 right-3 text-white text-[10px] px-2 py-1.5 rounded-full flex items-center gap-1.5 shadow-lg animate-fade-in" style={{ background: colors.accent }}>
                             <svg
-                              className="w-4 h-4"
+                              className="w-3 h-3"
                               fill="currentColor"
                               viewBox="0 0 24 24"
                             >
                               <path d="M8 5v14l11-7z" />
                             </svg>
-                            <span className="font-semibold">Video Demo</span>
+                            <span className="font-semibold">Video</span>
                           </div>
                           <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent pointer-events-none"></div>
                         </div>
@@ -501,9 +517,9 @@ const ServicesPage = () => {
                           style={{ backgroundImage: `url(${media.url})` }}
                         >
                           <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
-                          <div className="absolute top-4 right-4 bg-gradient-to-r from-blue-600 to-cyan-600 text-white text-xs px-3 py-2 rounded-full flex items-center gap-2 shadow-lg animate-fade-in">
+                          <div className="absolute top-3 right-3 text-white text-[10px] px-2 py-1.5 rounded-full flex items-center gap-1.5 shadow-lg animate-fade-in" style={{ background: colors.primary }}>
                             <svg
-                              className="w-4 h-4"
+                              className="w-3 h-3"
                               fill="currentColor"
                               viewBox="0 0 24 24"
                             >
@@ -519,22 +535,22 @@ const ServicesPage = () => {
                       )}
                     </div>
                     {/* Service Content */}
-                    <div className="p-8">
-                      <div className="flex items-start justify-between mb-4">
-                        <h2 className="text-2xl font-bold text-gray-800 flex-1 group-hover:text-blue-600 transition-colors duration-300" itemProp="name">
+                    <div className="p-5">
+                      <div className="flex items-start justify-between mb-3">
+                        <h2 className="text-lg font-bold text-gray-800 flex-1 group-hover transition-colors duration-300 leading-tight" style={{ color: colors.primary }} itemProp="name">
                           {service.name}
                         </h2>
                         {media.type === "video" && (
-                          <div className="ml-2 bg-red-100 text-red-600 text-xs px-2 py-1 rounded-full font-semibold animate-pulse">
+                          <div className="ml-2 text-red-600 text-[10px] px-2 py-0.5 rounded-full font-semibold animate-pulse flex-shrink-0" style={{ background: colors.accentLight }}>
                             VIDEO
                           </div>
                         )}
                       </div>
                       <div
-                        className="text-gray-600 mb-6 leading-relaxed animate-fade-in prose prose-sm max-w-none"
+                        className="text-gray-600 mb-4 leading-relaxed animate-fade-in prose prose-sm max-w-none text-sm"
                         style={{
                           display: "-webkit-box",
-                          WebkitLineClamp: 4,
+                          WebkitLineClamp: 3,
                           WebkitBoxOrient: "vertical",
                           overflow: "hidden",
                         }}
@@ -548,30 +564,44 @@ const ServicesPage = () => {
                       />
                       {service.youtubeVideos &&
                         service.youtubeVideos.length > 1 && (
-                          <div className="mb-6">
-                            <span className="inline-flex items-center text-sm text-gray-600 bg-gray-100 px-3 py-2 rounded-full animate-fade-in">
-                              <i className="fas fa-video mr-2 text-blue-600"></i>
-                              +{service.youtubeVideos.length - 1} more video
-                              {service.youtubeVideos.length > 2 ? "s" : ""}
+                          <div className="mb-4">
+                            <span className="inline-flex items-center text-xs text-gray-600 bg-gray-100 px-2 py-1 rounded-full animate-fade-in">
+                              <i className="fas fa-video mr-1.5" style={{ color: colors.primary }}></i>
+                              +{service.youtubeVideos.length - 1} more
                             </span>
                           </div>
                         )}
-                      <div className="flex flex-col sm:flex-row space-y-3 sm:space-y-0 sm:space-x-4">
+                      <div className="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-2">
                         <Link
                           to={`/book?service=${service._id}`}
-                          className="flex-1 bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700 text-white text-center px-6 py-3 rounded-xl font-semibold transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl hover:shadow-blue-500/25 group animate-fade-in"
+                          className="flex-1 text-white text-center px-4 py-2.5 rounded-xl font-semibold text-sm transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl group animate-fade-in"
+                          style={{ 
+                            background: colors.accent,
+                            boxShadow: `0 8px 20px ${colors.accent}40`
+                          }}
+                          onMouseEnter={(e) => e.currentTarget.style.background = colors.accentDark}
+                          onMouseLeave={(e) => e.currentTarget.style.background = colors.accent}
                         >
                           <span className="flex items-center justify-center space-x-2">
-                            <i className="fas fa-calendar-check"></i>
+                            <i className="fas fa-calendar-check text-xs"></i>
                             <span>Book Now</span>
                           </span>
                         </Link>
                         <Link
                           to={`/services/${service._id}`}
-                          className="flex-1 border-2 border-gray-300 hover:border-blue-400 hover:bg-blue-50 text-gray-700 text-center px-6 py-3 rounded-xl font-semibold transition-all duration-300 transform hover:scale-105 flex items-center justify-center space-x-2 animate-fade-in"
+                          className="flex-1 text-gray-700 text-center px-4 py-2.5 rounded-xl font-semibold text-sm transition-all duration-300 transform hover:scale-105 flex items-center justify-center space-x-2 animate-fade-in border-2"
+                          style={{ borderColor: colors.primary }}
+                          onMouseEnter={(e) => {
+                            e.currentTarget.style.background = colors.primaryLight;
+                            e.currentTarget.style.borderColor = colors.primaryDark;
+                          }}
+                          onMouseLeave={(e) => {
+                            e.currentTarget.style.background = "transparent";
+                            e.currentTarget.style.borderColor = colors.primary;
+                          }}
                         >
-                          <i className="fas fa-info-circle"></i>
-                          <span>Learn More</span>
+                          <i className="fas fa-info-circle text-xs"></i>
+                          <span>Details</span>
                         </Link>
                       </div>
                     </div>
@@ -591,6 +621,7 @@ const ServicesPage = () => {
                         ? "bg-gray-100 text-gray-400 cursor-not-allowed"
                         : "bg-white text-gray-700 hover:bg-blue-50 border-2 border-gray-300 hover:border-blue-400 transform hover:scale-105"
                     }`}
+                    style={{ borderColor: currentPage === 1 ? undefined : colors.primary }}
                   >
                     <svg
                       className="h-5 w-5"
@@ -616,11 +647,15 @@ const ServicesPage = () => {
                       disabled={pageNumber === "..."}
                       className={`px-4 py-3 rounded-xl text-sm font-semibold transition-all duration-300 flex-shrink-0 ${
                         pageNumber === currentPage
-                          ? "bg-gradient-to-r from-blue-600 to-cyan-600 text-white shadow-lg"
+                          ? "text-white shadow-lg"
                           : pageNumber === "..."
                           ? "bg-transparent text-gray-400 cursor-default"
                           : "bg-white text-gray-700 hover:bg-blue-50 border-2 border-gray-300 hover:border-blue-400 transform hover:scale-105"
                       }`}
+                      style={{
+                        background: pageNumber === currentPage ? colors.primary : "white",
+                        borderColor: pageNumber === currentPage ? colors.primary : undefined,
+                      }}
                     >
                       {pageNumber}
                     </button>
@@ -633,6 +668,7 @@ const ServicesPage = () => {
                         ? "bg-gray-100 text-gray-400 cursor-not-allowed"
                         : "bg-white text-gray-700 hover:bg-blue-50 border-2 border-gray-300 hover:border-blue-400 transform hover:scale-105"
                     }`}
+                    style={{ borderColor: currentPage === totalPages ? undefined : colors.primary }}
                   >
                     <svg
                       className="h-5 w-5"
@@ -651,15 +687,15 @@ const ServicesPage = () => {
                 </div>
                 <div className="text-sm text-gray-600 text-center">
                   Showing{" "}
-                  <span className="font-semibold text-blue-600">
+                  <span className="font-semibold" style={{ color: colors.primary }}>
                     {indexOfFirstService + 1}
                   </span>{" "}
                   to{" "}
-                  <span className="font-semibold text-blue-600">
+                  <span className="font-semibold" style={{ color: colors.primary }}>
                     {Math.min(indexOfLastService, totalServices)}
                   </span>{" "}
                   of{" "}
-                  <span className="font-semibold text-blue-600">
+                  <span className="font-semibold" style={{ color: colors.primary }}>
                     {totalServices}
                   </span>{" "}
                   results
@@ -681,6 +717,7 @@ const ServicesPage = () => {
                         }
                       }}
                       className="w-20 px-3 py-2 border-2 border-gray-300 rounded-xl text-center focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                      style={{ focusRing: colors.primary }}
                     />
                     <span className="text-gray-600 font-medium">
                       of {totalPages}
@@ -692,9 +729,10 @@ const ServicesPage = () => {
           </>
         ) : (
           <div className="bg-white rounded-2xl shadow-xl p-12 text-center animate-fade-in">
-            <div className="w-24 h-24 bg-gradient-to-r from-blue-100 to-cyan-100 rounded-full flex items-center justify-center mx-auto mb-6">
+            <div className="w-24 h-24 rounded-full flex items-center justify-center mx-auto mb-6" style={{ background: colors.primaryLight }}>
               <svg
-                className="h-12 w-12 text-blue-600"
+                className="h-12 w-12"
+                style={{ color: colors.primary }}
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor"
@@ -719,7 +757,13 @@ const ServicesPage = () => {
             </p>
             <Link
               to="/contact"
-              className="inline-flex items-center bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700 text-white px-8 py-4 rounded-xl font-semibold transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl"
+              className="inline-flex items-center text-white px-8 py-4 rounded-xl font-semibold transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl"
+              style={{
+                background: colors.primary,
+                boxShadow: `0 10px 25px ${colors.primary}40`
+              }}
+              onMouseEnter={(e) => e.currentTarget.style.background = colors.primaryDark}
+              onMouseLeave={(e) => e.currentTarget.style.background = colors.primary}
             >
               <i className="fas fa-envelope mr-2"></i>
               Contact Us

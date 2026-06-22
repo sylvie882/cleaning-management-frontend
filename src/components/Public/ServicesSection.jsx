@@ -109,7 +109,7 @@ const ServicesSection = ({ featured = false, limit = 4 }) => {
 
         {featured && services.length > limit && (
           <div className="view-all-services">
-            <Link to="/services" className="btn-primary">
+            <Link to="/services" className="btn-danger">
               View All Services
             </Link>
           </div>

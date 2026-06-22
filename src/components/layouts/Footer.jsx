@@ -2,6 +2,17 @@ import { Link } from "react-router-dom";
 import { Phone, Mail, MapPin, Clock, ChevronRight } from "lucide-react";
 import logo from "../../assets/images/logo.png";
 
+// ─── Color Palette ──────────────────────────────────────────────
+const colors = {
+  primary: "#0A2647",      // Dark navy - professional, clean
+  primaryDark: "#051830",  // Even darker navy
+  primaryLight: "#1A3A5C", // Lighter navy for hover
+  accent: "#D62828",       // Red - CTAs
+  accentDark: "#B71C1C",   // Darker red
+  accentLight: "#FDE8E8",  // Light red background
+  white: "#FFFFFF",
+};
+
 const Footer = () => {
   const currentYear = new Date().getFullYear();
 
@@ -29,10 +40,10 @@ const Footer = () => {
   ];
 
   const socialLinks = [
-    { href: "https://web.facebook.com/sylvie.cleaning", icon: "fab fa-facebook-f", label: "Facebook", color: "#dc2626" },
-    { href: "https://www.instagram.com/sylviecleaning", icon: "fab fa-instagram", label: "Instagram", color: "#dc2626" },
-    { href: "https://x.com/sylviecleaning", icon: "fab fa-x-twitter", label: "X (Twitter)", color: "#dc2626" },
-    { href: "https://wa.me/254726933261", icon: "fab fa-whatsapp", label: "WhatsApp", color: "#dc2626" },
+    { href: "https://web.facebook.com/sylvie.cleaning", icon: "fab fa-facebook-f", label: "Facebook" },
+    { href: "https://www.instagram.com/sylviecleaning", icon: "fab fa-instagram", label: "Instagram" },
+    { href: "https://x.com/sylviecleaning", icon: "fab fa-x-twitter", label: "X (Twitter)" },
+    { href: "https://wa.me/254726933261", icon: "fab fa-whatsapp", label: "WhatsApp" },
   ];
 
   return (
@@ -40,17 +51,17 @@ const Footer = () => {
       role="contentinfo"
       aria-label="Site footer"
       style={{
-        background: "#000000",
-        borderTop: "1px solid #dc2626",
+        background: colors.primary,
+        borderTop: `3px solid ${colors.accent}`,
         fontFamily: "'DM Sans', sans-serif",
       }}
     >
-      {/* Top CTA Bar */}
+      {/* Top CTA Bar - Red Accent */}
       <div
         className="border-b"
         style={{
-          background: "#dc2626",
-          borderColor: "#991b1b",
+          background: colors.accent,
+          borderColor: colors.accentDark,
         }}
       >
         <div className="container mx-auto px-4 lg:px-8 py-8 flex flex-col md:flex-row items-center justify-between gap-4">
@@ -64,8 +75,8 @@ const Footer = () => {
             <a
               href="tel:+254726933261"
               aria-label="Call Sylvie Cleaning Services"
-              className="flex items-center gap-2 bg-white text-red-600 font-bold px-6 py-3 rounded-full text-sm hover:bg-gray-100 transition-all hover:scale-105"
-              style={{ boxShadow: "0 4px 14px rgba(0,0,0,0.2)" }}
+              className="flex items-center gap-2 bg-white font-bold px-6 py-3 rounded-full text-sm hover:bg-gray-100 transition-all hover:scale-105"
+              style={{ color: colors.accent }}
             >
               <Phone size={15} aria-hidden="true" />
               0726 933 261
@@ -73,7 +84,10 @@ const Footer = () => {
             <Link
               to="/book"
               aria-label="Book a cleaning service"
-              className="flex items-center gap-2 bg-black text-white font-bold px-6 py-3 rounded-full text-sm hover:bg-gray-900 transition-all hover:scale-105"
+              className="flex items-center gap-2 text-white font-bold px-6 py-3 rounded-full text-sm hover:scale-105 transition-all"
+              style={{ background: colors.primary }}
+              onMouseEnter={(e) => e.currentTarget.style.background = colors.primaryDark}
+              onMouseLeave={(e) => e.currentTarget.style.background = colors.primary}
             >
               <i className="fas fa-calendar-check text-xs" aria-hidden="true" />
               Book Service
@@ -89,7 +103,7 @@ const Footer = () => {
           {/* Brand Column */}
           <div className="lg:col-span-1">
             <Link to="/" aria-label="Sylvie Cleaning Services — Home" className="flex items-center gap-3 mb-5">
-              <div className="rounded-xl p-2 bg-white/10">
+              <div className="rounded-xl p-2" style={{ background: "rgba(255,255,255,0.08)" }}>
                 <img src={logo} alt="Sylvie Cleaning Services" className="h-10 w-auto" />
               </div>
               <div>
@@ -98,33 +112,33 @@ const Footer = () => {
               </div>
             </Link>
 
-            <p className="text-gray-400 text-sm leading-relaxed mb-6">
+            <p className="text-gray-300 text-sm leading-relaxed mb-6">
               Nairobi's most trusted professional cleaning company. Reliable, eco-friendly cleaning for homes and offices across all neighborhoods.
             </p>
 
             {/* Contact Details */}
             <address className="not-italic space-y-3">
-              <a href="tel:+254726933261" aria-label="Call us" className="flex items-center gap-3 text-gray-400 hover:text-white transition-colors text-sm group">
-                <span className="w-8 h-8 rounded-lg flex items-center justify-center group-hover:bg-red-600/30 transition-colors" style={{ background: "rgba(220,38,38,0.15)" }}>
-                  <Phone size={14} className="text-red-500" aria-hidden="true" />
+              <a href="tel:+254726933261" aria-label="Call us" className="flex items-center gap-3 text-gray-300 hover:text-white transition-colors text-sm group">
+                <span className="w-8 h-8 rounded-lg flex items-center justify-center group-hover:bg-white/10 transition-colors" style={{ background: "rgba(255,255,255,0.05)" }}>
+                  <Phone size={14} className="text-red-400" aria-hidden="true" />
                 </span>
                 +254 726 933 261
               </a>
-              <a href="mailto:sylvieintercleaning@gmail.com" aria-label="Email us" className="flex items-center gap-3 text-gray-400 hover:text-white transition-colors text-sm group">
-                <span className="w-8 h-8 rounded-lg flex items-center justify-center group-hover:bg-red-600/30 transition-colors" style={{ background: "rgba(220,38,38,0.15)" }}>
-                  <Mail size={14} className="text-red-500" aria-hidden="true" />
+              <a href="mailto:sylvieintercleaning@gmail.com" aria-label="Email us" className="flex items-center gap-3 text-gray-300 hover:text-white transition-colors text-sm group">
+                <span className="w-8 h-8 rounded-lg flex items-center justify-center group-hover:bg-white/10 transition-colors" style={{ background: "rgba(255,255,255,0.05)" }}>
+                  <Mail size={14} className="text-red-400" aria-hidden="true" />
                 </span>
                 sylvieintercleaning@gmail.com
               </a>
-              <div className="flex items-start gap-3 text-gray-400 text-sm">
-                <span className="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5" style={{ background: "rgba(220,38,38,0.15)" }}>
-                  <MapPin size={14} className="text-red-500" aria-hidden="true" />
+              <div className="flex items-start gap-3 text-gray-300 text-sm">
+                <span className="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5" style={{ background: "rgba(255,255,255,0.05)" }}>
+                  <MapPin size={14} className="text-red-400" aria-hidden="true" />
                 </span>
                 <span>Dale House, Rhapta Road, Fox Close, Nairobi 00100</span>
               </div>
-              <div className="flex items-center gap-3 text-gray-400 text-sm">
-                <span className="w-8 h-8 rounded-lg flex items-center justify-center" style={{ background: "rgba(220,38,38,0.15)" }}>
-                  <Clock size={14} className="text-red-500" aria-hidden="true" />
+              <div className="flex items-center gap-3 text-gray-300 text-sm">
+                <span className="w-8 h-8 rounded-lg flex items-center justify-center" style={{ background: "rgba(255,255,255,0.05)" }}>
+                  <Clock size={14} className="text-red-400" aria-hidden="true" />
                 </span>
                 <span>Mon–Fri 8am–8pm · Sat 9am–3pm</span>
               </div>
@@ -135,13 +149,13 @@ const Footer = () => {
           <nav aria-label="Footer services navigation">
             <h3 className="text-white font-bold text-base mb-5" style={{ fontFamily: "'Playfair Display', Georgia, serif" }}>
               Our Services
-              <span className="block w-8 h-0.5 mt-2 rounded-full bg-red-600" />
+              <span className="block w-8 h-0.5 mt-2 rounded-full" style={{ background: colors.accent }} />
             </h3>
             <ul className="space-y-2.5">
               {services.map((service, idx) => (
                 <li key={idx}>
-                  <Link to={service.to} className="flex items-center gap-2 text-gray-400 hover:text-red-500 text-sm transition-all duration-200 group">
-                    <ChevronRight size={13} className="text-red-500 group-hover:translate-x-1 transition-transform" aria-hidden="true" />
+                  <Link to={service.to} className="flex items-center gap-2 text-gray-300 hover:text-white text-sm transition-all duration-200 group">
+                    <ChevronRight size={13} className="text-red-400 group-hover:translate-x-1 transition-transform" aria-hidden="true" />
                     {service.label}
                   </Link>
                 </li>
@@ -153,13 +167,13 @@ const Footer = () => {
           <nav aria-label="Footer quick links">
             <h3 className="text-white font-bold text-base mb-5" style={{ fontFamily: "'Playfair Display', Georgia, serif" }}>
               Quick Links
-              <span className="block w-8 h-0.5 mt-2 rounded-full bg-red-600" />
+              <span className="block w-8 h-0.5 mt-2 rounded-full" style={{ background: colors.accent }} />
             </h3>
             <ul className="space-y-2.5">
               {quickLinks.map((link, idx) => (
                 <li key={idx}>
-                  <Link to={link.to} className="flex items-center gap-2 text-gray-400 hover:text-red-500 text-sm transition-all duration-200 group">
-                    <ChevronRight size={13} className="text-red-500 group-hover:translate-x-1 transition-transform" aria-hidden="true" />
+                  <Link to={link.to} className="flex items-center gap-2 text-gray-300 hover:text-white text-sm transition-all duration-200 group">
+                    <ChevronRight size={13} className="text-red-400 group-hover:translate-x-1 transition-transform" aria-hidden="true" />
                     {link.label}
                   </Link>
                 </li>
@@ -167,23 +181,23 @@ const Footer = () => {
             </ul>
           </nav>
 
-          {/* Areas Served — SEO Critical */}
+          {/* Areas Served */}
           <div>
             <h3 className="text-white font-bold text-base mb-5" style={{ fontFamily: "'Playfair Display', Georgia, serif" }}>
               Areas We Serve
-              <span className="block w-8 h-0.5 mt-2 rounded-full bg-red-600" />
+              <span className="block w-8 h-0.5 mt-2 rounded-full" style={{ background: colors.accent }} />
             </h3>
             <div className="flex flex-wrap gap-2" aria-label="Service areas in Nairobi">
               {areaLinks.map((area, idx) => (
                 <span
                   key={idx}
                   className="text-xs px-3 py-1 rounded-full text-gray-300 hover:text-white cursor-default transition-colors"
-                  style={{ background: "rgba(255,255,255,0.07)", border: "1px solid rgba(255,255,255,0.08)" }}
+                  style={{ background: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.06)" }}
                 >
                   {area}
                 </span>
               ))}
-              <Link to="/areas" className="text-xs px-3 py-1 rounded-full text-red-300 hover:text-red-200 transition-colors" style={{ background: "rgba(220,38,38,0.15)", border: "1px solid rgba(220,38,38,0.3)" }}>
+              <Link to="#" className="text-xs px-3 py-1 rounded-full text-red-300 hover:text-white transition-colors" style={{ background: "rgba(214,40,40,0.15)", border: `1px solid ${colors.accent}44` }}>
                 +500 More Areas →
               </Link>
             </div>
@@ -200,10 +214,16 @@ const Footer = () => {
                     rel="noopener noreferrer"
                     aria-label={`Follow us on ${social.label}`}
                     role="listitem"
-                    className="w-9 h-9 rounded-xl flex items-center justify-center text-white text-sm transition-all duration-200 hover:scale-110"
-                    style={{ background: `${social.color}22`, border: `1px solid ${social.color}44` }}
-                    onMouseEnter={(e) => e.currentTarget.style.background = `${social.color}44`}
-                    onMouseLeave={(e) => e.currentTarget.style.background = `${social.color}22`}
+                    className="w-9 h-9 rounded-xl flex items-center justify-center text-gray-400 text-sm transition-all duration-200 hover:scale-110 hover:text-white"
+                    style={{ background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.06)" }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.background = colors.accent;
+                      e.currentTarget.style.borderColor = colors.accent;
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.background = "rgba(255,255,255,0.05)";
+                      e.currentTarget.style.borderColor = "rgba(255,255,255,0.06)";
+                    }}
                   >
                     <i className={social.icon} aria-hidden="true" />
                   </a>
@@ -215,11 +235,11 @@ const Footer = () => {
       </div>
 
       {/* Bottom Bar */}
-      <div className="border-t" style={{ borderColor: "#dc2626" }}>
+      <div className="border-t" style={{ borderColor: "rgba(255,255,255,0.06)" }}>
         <div className="container mx-auto px-4 lg:px-8 py-5 flex flex-col md:flex-row items-center justify-between gap-3">
-          <p className="text-gray-500 text-sm">
+          <p className="text-gray-400 text-sm">
             &copy; {currentYear}{" "}
-            <span className="text-gray-400 font-medium">Sylvie Intercleaning Company Limited</span>
+            <span className="text-gray-300 font-medium">Sylvie Intercleaning Company Limited</span>
             . All rights reserved.
           </p>
           <nav aria-label="Footer legal links" className="flex gap-5">
@@ -228,7 +248,7 @@ const Footer = () => {
               { to: "/terms-of-service", label: "Terms of Service" },
               { to: "/sitemap", label: "Sitemap" },
             ].map((link, idx) => (
-              <Link key={idx} to={link.to} className="text-gray-500 hover:text-red-500 text-xs transition-colors">
+              <Link key={idx} to={link.to} className="text-gray-400 hover:text-white text-xs transition-colors">
                 {link.label}
               </Link>
             ))}

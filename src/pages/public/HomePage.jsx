@@ -14,13 +14,27 @@ import { ArrowUp, Star, MapPin, Shield, Clock, Leaf, Award, CreditCard, Play, X 
 import { buildLocalBusinessSchema, buildBreadcrumbSchema, BUSINESS_INFO, BASE_KEYWORDS } from "../../utils/seo";
 import serviceService from "../../services/serviceService";
 
+// ─── Color Palette ──────────────────────────────────────────────
+const colors = {
+  primary: "#1E5AA8",      // Blue - trust, professionalism
+  primaryDark: "#16447D",  // Darker blue
+  primaryLight: "#E8EEF7", // Light blue background
+  primaryHover: "#153D6B", // Hover state
+  accent: "#D62828",       // Red - CTAs, energy
+  accentDark: "#B71C1C",   // Darker red
+  accentLight: "#FDE8E8",  // Light red background
+  white: "#FFFFFF",
+  gray: "#F7F8FA",
+  text: "#1A1A2E",
+};
+
 // ─── All Nairobi marketing areas (SEO-only, hidden from view) ───
 const marketingAreas = {
   "Karen & Langata Region": ["Karen Road","Karen C Road","Karen Greens Estate","Karen Ridge Estate","Karen Brooks Estate","Langata Road","Langata Forest View Estate","Amani Ridge Karen","Nandi Road Karen","Bogani Karen","Sandalwood Estate Karen","Ololua Ridge","Marula Lane","Acacia Drive","Windy Ridge","Pepo Lane","Rhino Park Road","Elgeyo Marakwet Road","Safaripark Avenue","USIU Road","Kenyatta Road","Mokoyeti South Road","Mokoyeti West Road","Silanga Road","Giraffe Center","Bogani Rd","Park Place","Simba Hill","Saifee Park","Kipevu"],
   "Westlands & Parklands": ["Westlands","Parklands Road","Parklands","1st Parklands","2nd Parklands","3rd Parklands","4th Parklands","5th Parklands","6th Parklands","Loresho Lane","Loresho Ridge","Kyuna Road","Kyuna Crescent","Spring Valley","Muthangari Road","Lower Kabete Road","Upper Kabete Road","Dennis Pritt Road","Wood Avenue","General Mathenge Road","Eldama Ravine Road","Ojijo Road","Wambugu Road","Mwanzi Road","Runda Estate","Runda Road","Runda Grove","Runda Mumwe","Runda Riviera","Ridgeways","Ridgeways Drive","Rosslyn Green Close","Rosslyn Green Crescent","Thigiri Ridge","Thigiri Lane","Thigiri Valley"],
   "Kilimani & Kileleshwa": ["Kilimani Estate","Kileleshwa","Argwings Kodhek Road","Lenana Road","Ring Road Kilimani","Woodley Estate","Jamhuri Estate","Muthithi Road","Mpaka Road","Mogotio Road","Gitanga Road","Ngong Road","Valley Arcade","Braeside Gardens","Chania Avenue","Kirichwa Road"],
   "Lavington & Surrounding": ["Lavington","James Gichuru Road","Muthithi Gardens","Mugumo Crescent","Mbaazi Avenue","Msanduku Lane","Othaya Road","Kolloh Road","Cotton Road","Kayawe Road","Galana Road"],
-  "Ngong & Surrounding Areas": ["Ngong Road","Ngong Forest View","Ngong View Road","Forest Line Road","Kiserian","Isinya","Tuala","Kisaju","Magadi Road","Amboseli Road","Olepolos","Maasai Road","Mbagathi Way","Narok","Naivasha","Nakuru County"],
+  "Ngong & Surrounding Areas": ["Ngong Road","Ngong Forest View","Ngong View Road","Forest Line Road","Kiserian","Isinya","Tuala","Kisaju","Magadi Road","Amboseli Road","Olepolos","Maasai Road","Mbagathi Way","Olepolos","Narok","Naivasha","Nakuru County"],
   "Eastlands & Embakasi": ["Eastleigh Estate","California Estate","South C","South End Estate","Uhuru Gardens Estate","Highview Estate","Popo Road","Jogoo Road","Buruburu Phase 5","Kayole Road","Nasra Estate","Spine Road","Airport North Road","Syokimau","EPZ Road","Athi River","Mombasa Road","Katani Road"],
   "Kiambu & Thika Road Corridor": ["Kiambu Road","Thika Road","Ruaka","Ruiru","Juja","Garden Estate","Thome Estate","Ridgeways","Mangu Road","Kamiti Road","Kahawa West","Kahawa Sukari","Muthiga","Kinoo","Uthiru","Kikuyu Road","Dagoretti Road"],
   "Upperhill & City Center": ["Upper Hill","Museum Hill","University Way","Haile Selassie","Mamlaka Road","Nyerere Road","Parliament Road","Koinange Street","Moi Avenue","Kenyatta Avenue","Tom Mboya Street"],
@@ -281,7 +295,7 @@ const HomePage = () => {
                 style={{ fontFamily: "'Playfair Display', Georgia, serif", textShadow: "0 2px 20px rgba(0,0,0,0.3)" }}>
                 {carouselData[currentSlide].title}
               </h1>
-              <h2 className={`text-xl sm:text-2xl md:text-3xl font-light text-red-200 mb-6 transition-all duration-500 ${animatingText ? "opacity-0 translate-y-10" : "opacity-100 translate-y-0"}`}>
+              <h2 className={`text-xl sm:text-2xl md:text-3xl font-light text-blue-200 mb-6 transition-all duration-500 ${animatingText ? "opacity-0 translate-y-10" : "opacity-100 translate-y-0"}`}>
                 {carouselData[currentSlide].subtitle}
               </h2>
               <p className={`text-base sm:text-lg md:text-xl text-gray-200 mb-10 max-w-3xl mx-auto leading-relaxed transition-all duration-500 ${animatingText ? "opacity-0 translate-y-10" : "opacity-100 translate-y-0"}`}>
@@ -290,12 +304,18 @@ const HomePage = () => {
 
               <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
                 <Link to="/book" aria-label={`Book ${carouselData[currentSlide].serviceType}`}
-                  className="inline-flex items-center bg-red-600 hover:bg-red-700 text-white font-bold py-4 px-8 rounded-full transition-all duration-300 shadow-2xl text-base sm:text-lg">
+                  className="inline-flex items-center text-white font-bold py-4 px-8 rounded-full transition-all duration-300 shadow-2xl text-base sm:text-lg hover:scale-105"
+                  style={{ background: colors.accent }}
+                  onMouseEnter={(e) => e.currentTarget.style.background = colors.accentDark}
+                  onMouseLeave={(e) => e.currentTarget.style.background = colors.accent}>
                   <i className="fas fa-calendar-check mr-3" aria-hidden="true" />
                   Book {carouselData[currentSlide].serviceType}
                 </Link>
                 <a href="tel:+254726933261" aria-label="Call us now"
-                  className="inline-flex items-center bg-black hover:bg-gray-900 text-white font-semibold py-4 px-8 rounded-full transition-all duration-300 text-base sm:text-lg">
+                  className="inline-flex items-center text-white font-semibold py-4 px-8 rounded-full transition-all duration-300 text-base sm:text-lg hover:scale-105"
+                  style={{ background: colors.primary }}
+                  onMouseEnter={(e) => e.currentTarget.style.background = colors.primaryDark}
+                  onMouseLeave={(e) => e.currentTarget.style.background = colors.primary}>
                   <i className="fas fa-phone mr-3" aria-hidden="true" />
                   Call Now
                 </a>
@@ -307,7 +327,8 @@ const HomePage = () => {
               {carouselData.map((_, index) => (
                 <button key={index} role="tab" aria-selected={currentSlide === index} aria-label={`Go to slide ${index + 1}`}
                   onClick={() => { setAnimatingText(true); setTimeout(() => { setCurrentSlide(index); setTimeout(() => setAnimatingText(false), 100); }, 500); }}
-                  className={`transition-all duration-300 rounded-full ${currentSlide === index ? "bg-red-600 w-10 h-3 shadow-lg" : "bg-white/30 w-3 h-3 hover:bg-white/50"}`}
+                  className={`transition-all duration-300 rounded-full ${currentSlide === index ? "w-10 h-3 shadow-lg" : "w-3 h-3 bg-white/30 hover:bg-white/50"}`}
+                  style={{ background: currentSlide === index ? colors.accent : "rgba(255,255,255,0.3)" }}
                 />
               ))}
             </div>
@@ -321,19 +342,19 @@ const HomePage = () => {
         </div>
       </section>
 
-      {/* ── PROFESSIONAL SERVICES SECTION ── */}
+      {/* ── OUR SERVICES ── */}
       <section className="py-16 bg-gray-50" data-section="services" aria-labelledby="services-heading">
         <div className="container mx-auto px-4 sm:px-6">
           <div className="text-center mb-12">
-            <h2 id="services-heading" className="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-900 mb-4" style={{ fontFamily: "'Playfair Display', Georgia, serif" }}>
-              Professional Cleaning Services Across Nairobi
+            <h2 id="services-heading" className="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-900 mb-3" style={{ fontFamily: "'Playfair Display', Georgia, serif" }}>
+              Our Services
             </h2>
-            <p className="text-lg text-gray-600 max-w-3xl mx-auto">Comprehensive cleaning solutions designed for your specific needs, delivered with the highest standards of quality across every Nairobi neighborhood.</p>
+            <p className="text-lg text-gray-600 max-w-3xl mx-auto">Professional cleaning solutions for every need, delivered across Nairobi</p>
           </div>
 
           {loadingServices ? (
             <div className="flex justify-center items-center py-20">
-              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-red-600"></div>
+              <div className="animate-spin rounded-full h-12 w-12 border-b-2" style={{ borderColor: colors.accent }}></div>
             </div>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -362,14 +383,17 @@ const HomePage = () => {
                     )}
                     
                     <div className="p-6">
-                      <h3 className="text-xl font-bold text-gray-800 mb-2 group-hover:text-red-600 transition-colors duration-300">{service.name || service.title}</h3>
+                      <h3 className="text-xl font-bold text-gray-800 mb-2 group-hover transition-colors duration-300" style={{ color: colors.primary }}>{service.name || service.title}</h3>
                       <p className="text-gray-500 mb-4 leading-relaxed text-sm">
                         {service.description && service.description.length > 120 
                           ? `${service.description.substring(0, 120)}...` 
                           : service.description || "Professional cleaning service tailored to your needs."}
                       </p>
                       <Link to={`/services/${service.slug || service._id}`} aria-label={`Learn more about ${service.name || service.title}`}
-                        className="inline-flex items-center text-red-600 hover:text-red-800 font-semibold text-sm group-hover:translate-x-1 transition-all duration-300">
+                        className="inline-flex items-center font-semibold text-sm group-hover:translate-x-1 transition-all duration-300"
+                        style={{ color: colors.primary }}
+                        onMouseEnter={(e) => e.currentTarget.style.color = colors.primaryDark}
+                        onMouseLeave={(e) => e.currentTarget.style.color = colors.primary}>
                         Learn More
                         <svg className="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
                       </Link>
@@ -381,7 +405,11 @@ const HomePage = () => {
           )}
 
           <div className="text-center mt-12">
-            <Link to="/services" aria-label="View all cleaning services" className="inline-flex items-center gap-2 bg-red-600 hover:bg-red-700 text-white font-bold py-3.5 px-8 rounded-full transition-all hover:scale-105 shadow-lg">
+            <Link to="/services" aria-label="View all cleaning services" 
+              className="inline-flex items-center gap-2 text-white font-bold py-3.5 px-8 rounded-full transition-all hover:scale-105 shadow-lg"
+              style={{ background: colors.primary }}
+              onMouseEnter={(e) => e.currentTarget.style.background = colors.primaryDark}
+              onMouseLeave={(e) => e.currentTarget.style.background = colors.primary}>
               <i className="fas fa-th-list" aria-hidden="true" />
               View All Services
             </Link>
@@ -389,28 +417,28 @@ const HomePage = () => {
         </div>
       </section>
 
-      {/* ── WHY CHOOSE US ── */}
+      {/* ── WHY US ── */}
       <section className="py-16 bg-white" data-section="whyChoose" aria-labelledby="why-heading">
         <div className="container mx-auto px-4 sm:px-6">
           <div className="text-center mb-12">
-            <h2 id="why-heading" className="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-900 mb-4" style={{ fontFamily: "'Playfair Display', Georgia, serif" }}>
-              Why Customers Trust Us Across Nairobi
+            <h2 id="why-heading" className="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-900 mb-3" style={{ fontFamily: "'Playfair Display', Georgia, serif" }}>
+              Why Us
             </h2>
-            <p className="text-lg text-gray-600 max-w-3xl mx-auto">Backed by years of expertise, our commitment to excellence makes us Nairobi's most trusted cleaning company.</p>
+            <p className="text-lg text-gray-600 max-w-3xl mx-auto">The trusted choice for cleaning across Nairobi</p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
             {chooseBenefits.map((benefit, index) => (
               <div key={index}
                 className={`bg-white rounded-2xl p-7 shadow-md hover:shadow-xl transition-all duration-500 transform hover:-translate-y-2 ${isVisible.whyChoose ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}
-                style={{ transitionDelay: `${index * 100}ms`, borderLeft: "4px solid #dc2626" }}>
+                style={{ transitionDelay: `${index * 100}ms`, borderLeft: `4px solid ${colors.accent}` }}>
                 <div className="flex items-start mb-5">
-                  <div className="bg-red-600 p-3 rounded-2xl mr-4 shadow-md flex-shrink-0" aria-hidden="true">
+                  <div className="p-3 rounded-2xl mr-4 shadow-md flex-shrink-0" style={{ background: colors.accent }}>
                     <i className={`${benefit.icon} text-white text-xl`} />
                   </div>
                   <div>
                     <h3 className="text-lg font-bold text-gray-800 mb-1">{benefit.title}</h3>
-                    <span className="bg-red-50 text-red-700 px-3 py-0.5 rounded-full text-xs font-semibold">{benefit.stat}</span>
+                    <span className="text-red-700 px-3 py-0.5 rounded-full text-xs font-semibold" style={{ background: colors.accentLight }}>{benefit.stat}</span>
                   </div>
                 </div>
                 <p className="text-gray-500 leading-relaxed text-sm">{benefit.description}</p>
@@ -421,13 +449,13 @@ const HomePage = () => {
       </section>
 
       {/* ── HOW IT WORKS ── */}
-      <section className="py-16 bg-gray-50" data-section="howItWorks" aria-labelledby="how-heading">
+      <section className="py-16" data-section="howItWorks" aria-labelledby="how-heading" style={{ background: colors.primaryLight }}>
         <div className="container mx-auto px-4 sm:px-6">
           <div className="text-center mb-12">
-            <h2 id="how-heading" className="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-900 mb-4" style={{ fontFamily: "'Playfair Display', Georgia, serif" }}>
-              How Our Cleaning Service Works
+            <h2 id="how-heading" className="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-900 mb-3" style={{ fontFamily: "'Playfair Display', Georgia, serif" }}>
+              How It Works
             </h2>
-            <p className="text-lg text-gray-600 max-w-3xl mx-auto">Simple steps to get your space professionally cleaned across all Nairobi areas</p>
+            <p className="text-lg text-gray-600 max-w-3xl mx-auto">Simple steps to a cleaner space</p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
@@ -441,11 +469,13 @@ const HomePage = () => {
                 className={`relative text-center transition-all duration-500 ${isVisible.howItWorks ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}
                 style={{ transitionDelay: `${index * 200}ms` }}>
                 <div className="relative mb-8">
-                  <div className="w-20 h-20 bg-red-600 rounded-full flex items-center justify-center text-white text-2xl font-bold mx-auto shadow-xl" aria-hidden="true">{step.step}</div>
+                  <div className="w-20 h-20 rounded-full flex items-center justify-center text-white text-2xl font-bold mx-auto shadow-xl" style={{ background: colors.primary }}>
+                    {step.step}
+                  </div>
                   <div className="absolute -top-2 -right-2 w-8 h-8 bg-black rounded-full flex items-center justify-center" aria-hidden="true">
                     <i className={`${step.icon} text-white text-sm`} />
                   </div>
-                  {index < 3 && <div className="hidden lg:block absolute top-10 left-full w-full h-0.5 bg-red-200" aria-hidden="true" />}
+                  {index < 3 && <div className="hidden lg:block absolute top-10 left-full w-full h-0.5" style={{ background: colors.primaryLight }} aria-hidden="true" />}
                 </div>
                 <h3 className="text-xl font-bold text-gray-800 mb-3">{step.title}</h3>
                 <p className="text-gray-500 leading-relaxed text-sm">{step.description}</p>
@@ -455,14 +485,14 @@ const HomePage = () => {
         </div>
       </section>
 
-      {/* ── VIDEOS ── */}
+      {/* ── WATCH US ── */}
       <section className="py-16 bg-white" data-section="videos" aria-labelledby="videos-heading">
         <div className="container mx-auto px-4 sm:px-6">
           <div className="text-center mb-12">
-            <h2 id="videos-heading" className="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-900 mb-4" style={{ fontFamily: "'Playfair Display', Georgia, serif" }}>
-              Watch Our Team Clean Across Nairobi
+            <h2 id="videos-heading" className="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-900 mb-3" style={{ fontFamily: "'Playfair Display', Georgia, serif" }}>
+              Watch Us
             </h2>
-            <p className="text-lg text-gray-600 max-w-3xl mx-auto">Professional cleaning experts delivering exceptional results in various Nairobi neighborhoods</p>
+            <p className="text-lg text-gray-600 max-w-3xl mx-auto">See our team in action across Nairobi</p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -483,7 +513,7 @@ const HomePage = () => {
                       allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                       allowFullScreen
                     />
-                    <span className="absolute top-4 right-4 bg-red-600 text-white px-3 py-1 rounded-full text-xs font-semibold z-10">{video.category}</span>
+                    <span className="absolute top-4 right-4 text-white px-3 py-1 rounded-full text-xs font-semibold z-10" style={{ background: colors.accent }}>{video.category}</span>
                   </div>
                   <div className="p-6">
                     <h3 className="text-lg font-bold text-gray-800 mb-2">{video.title}</h3>
@@ -496,14 +526,14 @@ const HomePage = () => {
         </div>
       </section>
 
-      {/* ── PROJECTS ── */}
-      <section className="py-16 bg-gray-50" data-section="projects" aria-labelledby="projects-heading">
+      {/* ── RECENT WORK ── */}
+      <section className="py-16" data-section="projects" aria-labelledby="projects-heading" style={{ background: colors.primaryLight }}>
         <div className="container mx-auto px-4 sm:px-6">
           <div className="text-center mb-12">
-            <h2 id="projects-heading" className="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-900 mb-4" style={{ fontFamily: "'Playfair Display', Georgia, serif" }}>
-              Recent Projects Across Nairobi
+            <h2 id="projects-heading" className="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-900 mb-3" style={{ fontFamily: "'Playfair Display', Georgia, serif" }}>
+              Recent Work
             </h2>
-            <p className="text-lg text-gray-600 max-w-3xl mx-auto">See the transformation our professional cleaning services deliver across different Nairobi neighborhoods</p>
+            <p className="text-lg text-gray-600 max-w-3xl mx-auto">See the transformation we deliver</p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
@@ -534,10 +564,10 @@ const HomePage = () => {
                       />
                     )}
                     <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" aria-hidden="true" />
-                    <span className="absolute bottom-3 left-3 bg-red-600 text-white px-2.5 py-1 rounded-full text-xs font-semibold">{project.category}</span>
+                    <span className="absolute bottom-3 left-3 text-white px-2.5 py-1 rounded-full text-xs font-semibold" style={{ background: colors.accent }}>{project.category}</span>
                   </div>
                   <div className="p-5">
-                    <h3 className="text-base font-bold text-gray-800 mb-2 group-hover:text-red-600 transition-colors">{project.title}</h3>
+                    <h3 className="text-base font-bold text-gray-800 mb-2 group-hover transition-colors" style={{ color: colors.primary }}>{project.title}</h3>
                     <p className="text-gray-500 text-xs mb-4 leading-relaxed">{project.description}</p>
                     <div className="flex gap-2 mb-4 flex-wrap">
                       {Object.entries(project.stats).map(([key, val]) => (
@@ -545,7 +575,11 @@ const HomePage = () => {
                       ))}
                     </div>
                     {!project.videoId && (
-                      <Link to="/projects" aria-label={`View ${project.title} project details`} className="inline-flex items-center text-red-600 hover:text-red-800 font-semibold text-xs group-hover:translate-x-1 transition-all duration-300">
+                      <Link to="/projects" aria-label={`View ${project.title} project details`} 
+                        className="inline-flex items-center font-semibold text-xs group-hover:translate-x-1 transition-all duration-300"
+                        style={{ color: colors.primary }}
+                        onMouseEnter={(e) => e.currentTarget.style.color = colors.primaryDark}
+                        onMouseLeave={(e) => e.currentTarget.style.color = colors.primary}>
                         View Project
                         <svg className="w-3 h-3 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
                       </Link>
@@ -557,7 +591,11 @@ const HomePage = () => {
           </div>
 
           <div className="text-center mt-12">
-            <Link to="/projects" aria-label="View all cleaning projects" className="inline-flex items-center gap-2 bg-red-600 hover:bg-red-700 text-white font-bold py-3.5 px-8 rounded-full transition-all hover:scale-105 shadow-lg">
+            <Link to="/projects" aria-label="View all cleaning projects" 
+              className="inline-flex items-center gap-2 text-white font-bold py-3.5 px-8 rounded-full transition-all hover:scale-105 shadow-lg"
+              style={{ background: colors.primary }}
+              onMouseEnter={(e) => e.currentTarget.style.background = colors.primaryDark}
+              onMouseLeave={(e) => e.currentTarget.style.background = colors.primary}>
               <i className="fas fa-images" aria-hidden="true" />
               View All Projects
             </Link>
@@ -570,14 +608,15 @@ const HomePage = () => {
         <section className="py-16 bg-white" data-section="testimonials" aria-labelledby="testimonials-heading">
           <div className="container mx-auto px-4 sm:px-6">
             <div className="text-center mb-12">
-              <h2 id="testimonials-heading" className="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-900 mb-4" style={{ fontFamily: "'Playfair Display', Georgia, serif" }}>
-                What Our Clients Say
+              <h2 id="testimonials-heading" className="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-900 mb-3" style={{ fontFamily: "'Playfair Display', Georgia, serif" }}>
+                What Clients Say
               </h2>
+              <p className="text-lg text-gray-600 max-w-3xl mx-auto">Real reviews from real customers</p>
             </div>
             <div className="max-w-4xl mx-auto">
               <blockquote className={`bg-white rounded-3xl shadow-xl p-8 md:p-12 relative overflow-hidden transition-all duration-1000 ${isVisible.testimonials ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}
-                style={{ border: "1px solid #e5e7eb" }}>
-                <div className="absolute top-0 left-0 w-full h-1 bg-red-600" aria-hidden="true" />
+                style={{ border: `1px solid ${colors.primaryLight}` }}>
+                <div className="absolute top-0 left-0 w-full h-1" style={{ background: colors.accent }} aria-hidden="true" />
                 <div className="flex mb-6" aria-label={`${testimonials[currentTestimonial]?.rating} out of 5 stars`} role="img">
                   {[...Array(5)].map((_, i) => (
                     <Star key={i} size={22} className={i < testimonials[currentTestimonial]?.rating ? "text-yellow-400 fill-yellow-400" : "text-gray-200 fill-gray-200"} aria-hidden="true" />
@@ -586,13 +625,13 @@ const HomePage = () => {
                 <p className="text-xl md:text-2xl font-light text-gray-700 italic mb-8 leading-relaxed">"{testimonials[currentTestimonial]?.comment}"</p>
                 <footer className="flex flex-col sm:flex-row items-center justify-between gap-4">
                   <div className="flex items-center">
-                    <div className="w-14 h-14 bg-red-600 rounded-full flex items-center justify-center text-white text-xl font-bold shadow-lg" aria-hidden="true">
+                    <div className="w-14 h-14 rounded-full flex items-center justify-center text-white text-xl font-bold shadow-lg" style={{ background: colors.primary }}>
                       {testimonials[currentTestimonial]?.name.charAt(0)}
                     </div>
                     <div className="ml-4">
                       <cite className="not-italic font-bold text-gray-800">{testimonials[currentTestimonial]?.name}</cite>
                       <p className="text-gray-500 text-sm">{testimonials[currentTestimonial]?.serviceType}</p>
-                      <p className="text-red-600 text-xs font-medium flex items-center gap-1">
+                      <p className="text-xs font-medium flex items-center gap-1" style={{ color: colors.primary }}>
                         <MapPin size={10} aria-hidden="true" />{testimonials[currentTestimonial]?.area || "Nairobi"}
                       </p>
                     </div>
@@ -601,7 +640,8 @@ const HomePage = () => {
                     {testimonials.map((_, index) => (
                       <button key={index} role="tab" aria-selected={currentTestimonial === index} aria-label={`View testimonial ${index + 1}`}
                         onClick={() => setCurrentTestimonial(index)}
-                        className={`rounded-full transition-all duration-300 ${currentTestimonial === index ? "bg-red-600 w-8 h-3" : "bg-gray-300 w-3 h-3 hover:bg-gray-400"}`} />
+                        className={`rounded-full transition-all duration-300 ${currentTestimonial === index ? "w-8 h-3" : "bg-gray-300 w-3 h-3 hover:bg-gray-400"}`}
+                        style={{ background: currentTestimonial === index ? colors.accent : undefined }} />
                     ))}
                   </div>
                 </footer>
@@ -611,27 +651,27 @@ const HomePage = () => {
         </section>
       )}
 
-      {/* ── TRUST FEATURES ── */}
-      <section className="py-16 bg-gray-50" aria-labelledby="features-heading">
+      {/* ── OUR COMMITMENT ── */}
+      <section className="py-16" aria-labelledby="features-heading" style={{ background: colors.primaryLight }}>
         <div className="container mx-auto px-4 sm:px-6">
           <div className="text-center mb-12">
-            <h2 id="features-heading" className="text-3xl sm:text-4xl font-bold text-gray-900 mb-4" style={{ fontFamily: "'Playfair Display', Georgia, serif" }}>
-              Our Commitment to You
+            <h2 id="features-heading" className="text-3xl sm:text-4xl font-bold text-gray-900 mb-3" style={{ fontFamily: "'Playfair Display', Georgia, serif" }}>
+              Our Commitment
             </h2>
-            <p className="text-gray-600 max-w-2xl mx-auto">What makes our cleaning services stand out in every Nairobi neighborhood</p>
+            <p className="text-gray-600 max-w-2xl mx-auto">What makes us different</p>
           </div>
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
             {[
-              { Icon: Shield, title: "Fully Insured", color: "#dc2626" },
-              { Icon: Clock, title: "Always Punctual", color: "#dc2626" },
-              { Icon: Leaf, title: "Eco-Friendly", color: "#dc2626" },
-              { Icon: Award, title: "Vetted Staff", color: "#dc2626" },
-              { Icon: Star, title: "100% Guarantee", color: "#dc2626" },
-              { Icon: CreditCard, title: "Flexible Payment", color: "#dc2626" },
-            ].map(({ Icon, title, color }, index) => (
+              { Icon: Shield, title: "Fully Insured" },
+              { Icon: Clock, title: "Always Punctual" },
+              { Icon: Leaf, title: "Eco-Friendly" },
+              { Icon: Award, title: "Vetted Staff" },
+              { Icon: Star, title: "100% Guarantee" },
+              { Icon: CreditCard, title: "Flexible Payment" },
+            ].map(({ Icon, title }, index) => (
               <div key={index} className="bg-white rounded-2xl p-5 text-center hover:shadow-lg transition-all duration-300 hover:-translate-y-1 border border-gray-100">
-                <div className="w-12 h-12 rounded-xl flex items-center justify-center mx-auto mb-3" style={{ background: `${color}15` }}>
-                  <Icon size={22} style={{ color }} aria-hidden="true" />
+                <div className="w-12 h-12 rounded-xl flex items-center justify-center mx-auto mb-3" style={{ background: `${colors.primary}15` }}>
+                  <Icon size={22} style={{ color: colors.primary }} aria-hidden="true" />
                 </div>
                 <h3 className="text-sm font-bold text-gray-800">{title}</h3>
               </div>
@@ -640,24 +680,28 @@ const HomePage = () => {
         </div>
       </section>
 
-      {/* ── CTA ── */}
-      <section className="py-16 relative overflow-hidden" data-section="cta" aria-labelledby="cta-heading" style={{ background: "#dc2626" }}>
+      {/* ── GET STARTED ── */}
+      <section className="py-16 relative overflow-hidden" data-section="cta" aria-labelledby="cta-heading" style={{ background: colors.accent }}>
         <div className="container relative z-10 mx-auto px-4 sm:px-6 text-center">
           <div className={`transition-all duration-1000 ${isVisible.cta ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}>
             <h2 id="cta-heading" className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6 leading-tight" style={{ fontFamily: "'Playfair Display', Georgia, serif" }}>
-              Ready for a Spotless Space in Your Area?
+              Ready to Get Started?
             </h2>
-            <p className="text-lg sm:text-xl text-red-100 mb-10 max-w-3xl mx-auto">Book today and enjoy a cleaner, healthier environment — guaranteed across all Nairobi neighborhoods.</p>
+            <p className="text-lg sm:text-xl text-red-100 mb-10 max-w-3xl mx-auto">Book today and enjoy a cleaner, healthier space — guaranteed across all Nairobi neighborhoods.</p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
               <Link to="/book" aria-label="Book a cleaning service now"
-                className="inline-flex items-center bg-white hover:bg-gray-50 text-red-600 font-bold py-4 px-10 rounded-full transition-all hover:scale-105 shadow-2xl text-lg gap-3">
+                className="inline-flex items-center bg-white hover:bg-gray-50 text-red-600 font-bold py-4 px-10 rounded-full transition-all hover:scale-105 shadow-2xl text-lg gap-3"
+                style={{ color: colors.accent }}>
                 <i className="fas fa-calendar-check" aria-hidden="true" />
-                Book Service Now
+                Book Now
               </Link>
               <a href="tel:+254726933261" aria-label="Call our office"
-                className="inline-flex items-center bg-black hover:bg-gray-900 text-white font-bold py-4 px-10 rounded-full transition-all text-lg gap-3">
+                className="inline-flex items-center text-white font-bold py-4 px-10 rounded-full transition-all text-lg gap-3 hover:scale-105"
+                style={{ background: colors.primary }}
+                onMouseEnter={(e) => e.currentTarget.style.background = colors.primaryDark}
+                onMouseLeave={(e) => e.currentTarget.style.background = colors.primary}>
                 <i className="fas fa-phone" aria-hidden="true" />
-                0726 933 261
+                Call Us
               </a>
             </div>
             <p className="text-red-100 text-sm mt-8 flex items-center justify-center gap-2">
@@ -682,7 +726,7 @@ const HomePage = () => {
       {/* Scroll to Top */}
       <button
         className={`fixed bottom-28 right-4 sm:right-8 w-12 h-12 sm:w-14 sm:h-14 text-white rounded-full shadow-2xl flex items-center justify-center transition-all duration-300 z-50 hover:scale-110 ${showScrollTop ? "opacity-100 scale-100" : "opacity-0 scale-0"}`}
-        style={{ background: "#dc2626" }}
+        style={{ background: colors.accent }}
         onClick={scrollToTop}
         aria-label="Scroll to top of page"
       >

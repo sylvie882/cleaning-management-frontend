@@ -88,7 +88,7 @@ const extractCleanDescription = (description, title) => {
   
   // Remove any remaining markdown artifacts
   cleaned = cleaned
-    .replace(/^[\d\-\*•]+/gm, '') // Remove bullet points
+    .replace(/^[\d\-\\*•]+/gm, '') // Remove bullet points
     .replace(/\s+/g, ' ')
     .trim();
   
