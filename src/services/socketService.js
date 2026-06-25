@@ -21,7 +21,7 @@ const initSocketConnection = () => {
 
   // Connect to the socket server
   socket = io(
-    import.meta.env.VITE_API_URL || "https://cleaning-management-backend.onrender.com",
+    import.meta.env.VITE_API_URL || "https://api.sylviecleaningservices.com",
     {
       auth: { token },
       transports: ["websocket"],

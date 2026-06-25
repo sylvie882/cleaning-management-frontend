@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 import axios from "axios";
 
-const API_URL = "https://cleaning-management-backend.onrender.com/api/v1/services";
+const API_URL = "https://api.sylviecleaningservices.com/api/v1/services";
 // const LOCAL_API_URL = "http://localhost:8000/api/v1/services";
 
 // Helper function to clean HTML, markdown, and format text properly

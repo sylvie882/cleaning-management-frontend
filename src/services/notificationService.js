@@ -1,7 +1,7 @@
 // src/services/notificationService.js
 import axios from "axios";
 
-const API_URL = "https://cleaning-management-backend.onrender.com/api/notifications/";
+const API_URL = "https://api.sylviecleaningservices.com/api/notifications/";
 
 // Create notification (public or can be secured based on requirements)
 const createNotification = async (notificationData) => {

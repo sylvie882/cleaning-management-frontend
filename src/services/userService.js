@@ -1,12 +1,11 @@
 // src/services/userService.js
 import axios from "axios";
 
-const API_URL = "https://cleaning-management-backend.onrender.com/api/auth/register";
-const GET_UERS_URL = "https://cleaning-management-backend.onrender.com/api/auth/users";
+const API_URL = "https://api.sylviecleaningservices.com/api/auth/register";
+const GET_UERS_URL = "https://api.sylviecleaningservices.com/api/auth/users";
 const GET_USER_BY_ROLE =
-  "https://cleaning-management-backend.onrender.com/api/auth/users/role/";
-const BASE_URL = "https://cleaning-management-backend.onrender.com/api/auth/users";
-
+  "https://api.sylviecleaningservices.com/api/auth/users/role/";
+const BASE_URL = "https://api.sylviecleaningservices.com/api/auth/users";
 // Get all users
 const getUsers = async () => {
   const token = JSON.parse(localStorage.getItem("user")).token;

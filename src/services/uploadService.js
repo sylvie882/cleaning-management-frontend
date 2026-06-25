@@ -1,7 +1,7 @@
 // services/uploadService.js
 import axios from "axios";
 
-const API_URL = "https://cleaning-management-backend.onrender.com";
+const API_URL = "https://api.sylviecleaningservices.com";
 
 // Get auth token from localStorage
 const getAuthToken = () => {

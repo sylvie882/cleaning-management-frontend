@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_URL = "https://cleaning-management-backend.onrender.com/api/auth/";
+const API_URL = "https://api.sylviecleaningservices.com/api/auth/";
 
 // Login user
 const login = async (email, password) => {
