@@ -394,36 +394,55 @@ const PublicNavbar = () => {
               </Link>
             </div>
 
-            {/* MOBILE TOGGLE */}
-            <button
-              className="lg:hidden mobile-toggle-btn flex flex-col justify-center items-center w-10 h-10 rounded-lg z-50 relative"
-              onClick={() => setIsMenuOpen(!isMenuOpen)}
-              aria-label="Toggle menu"
-            >
-              <span
-                className="block w-5 h-0.5 rounded-full transition-all duration-300"
-                style={{
-                  backgroundColor: isMenuOpen ? colors.accent : colors.primary,
-                  marginBottom: "4px",
-                  transform: isMenuOpen ? "rotate(45deg) translate(3px,3px)" : "none",
+            {/* MOBILE RIGHT SECTION - Book Now + Toggle Button */}
+            <div className="lg:hidden flex items-center gap-2">
+              {/* Mobile Book Now Button */}
+              <Link
+                to="/book"
+                className="flex items-center gap-1.5 px-4 py-2 rounded-full text-xs font-bold text-white transition-all duration-300 hover:scale-105 shadow-md"
+                style={{ background: colors.accent }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.background = colors.accentDark;
                 }}
-              />
-              <span
-                className="block w-5 h-0.5 rounded-full transition-all duration-300"
-                style={{
-                  backgroundColor: isMenuOpen ? colors.accent : colors.primary,
-                  marginBottom: "4px",
-                  transform: isMenuOpen ? "scaleX(0)" : "none",
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.background = colors.accent;
                 }}
-              />
-              <span
-                className="block w-5 h-0.5 rounded-full transition-all duration-300"
-                style={{
-                  backgroundColor: isMenuOpen ? colors.accent : colors.primary,
-                  transform: isMenuOpen ? "rotate(-45deg) translate(3px,-3px)" : "none",
-                }}
-              />
-            </button>
+              >
+                <i className="fas fa-calendar-check text-xs" />
+                <span>Book Now</span>
+              </Link>
+
+              {/* MOBILE TOGGLE */}
+              <button
+                className="mobile-toggle-btn flex flex-col justify-center items-center w-10 h-10 rounded-lg z-50 relative"
+                onClick={() => setIsMenuOpen(!isMenuOpen)}
+                aria-label="Toggle menu"
+              >
+                <span
+                  className="block w-5 h-0.5 rounded-full transition-all duration-300"
+                  style={{
+                    backgroundColor: isMenuOpen ? colors.accent : colors.primary,
+                    marginBottom: "4px",
+                    transform: isMenuOpen ? "rotate(45deg) translate(3px,3px)" : "none",
+                  }}
+                />
+                <span
+                  className="block w-5 h-0.5 rounded-full transition-all duration-300"
+                  style={{
+                    backgroundColor: isMenuOpen ? colors.accent : colors.primary,
+                    marginBottom: "4px",
+                    transform: isMenuOpen ? "scaleX(0)" : "none",
+                  }}
+                />
+                <span
+                  className="block w-5 h-0.5 rounded-full transition-all duration-300"
+                  style={{
+                    backgroundColor: isMenuOpen ? colors.accent : colors.primary,
+                    transform: isMenuOpen ? "rotate(-45deg) translate(3px,-3px)" : "none",
+                  }}
+                />
+              </button>
+            </div>
           </div>
 
           {/* OVERLAY */}
@@ -568,21 +587,8 @@ const PublicNavbar = () => {
 
                 <div className="my-4 pt-2 border-t border-gray-100"></div>
 
-                {/* Mobile Book Link */}
-                <Link
-                  to="/book"
-                  onClick={() => setIsMenuOpen(false)}
-                  className="flex items-center justify-center gap-2 w-full py-3.5 rounded-xl text-sm font-bold text-white transition-all duration-300 hover:scale-105"
-                  style={{ background: colors.accent }}
-                  onMouseEnter={(e) => e.currentTarget.style.background = colors.accentDark}
-                  onMouseLeave={(e) => e.currentTarget.style.background = colors.accent}
-                >
-                  <i className="fas fa-calendar-check" />
-                  <span>Book Your Cleaning Service</span>
-                </Link>
-
                 {/* Contact Info */}
-                <div className="mt-6 pt-4 border-t border-gray-100">
+                <div className="mt-2 pt-4 border-t border-gray-100">
                   <h4 className="text-xs font-semibold mb-3 uppercase tracking-wider" style={{ color: colors.primary }}>
                     Contact Us
                   </h4>
