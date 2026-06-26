@@ -1,9 +1,9 @@
-// src/pages/Public/AboutPage.jsx
+// src/features/about/AboutPage.jsx
 import { Link } from "react-router-dom";
 import { Helmet } from "react-helmet";
 import aboutImage from "../../assets/images/newSlider6.jpg";
 import { Eye, Zap, Star, HeartHandshake } from "lucide-react";
-// ✅ FIX: Correct import path - going up to root, then into seo-keywords-boost
+// ✅ FIX: Correct import path from src/features/about to root seo-keywords-boost
 import { 
   BUSINESS_INFO, 
   buildLocalBusinessSchema, 
@@ -203,7 +203,7 @@ const AboutPage = () => {
             <p className="text-gray-600 max-w-2xl mx-auto">The principles that guide everything we do at Sylvie Cleaning Services</p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {foundationItems.map(({ title, desc, color, bg }, index) => (
+            {foundationItems.map(({ Icon, title, desc, color, bg }, index) => (
               <div 
                 key={index} 
                 className="rounded-2xl p-7 text-center hover:shadow-lg transition-all duration-300 hover:-translate-y-1" 

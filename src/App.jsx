@@ -14,7 +14,7 @@ import "./styles/protect.css";
 
 // Public Pages
 import HomePage from "./pages/public/HomePage";
-import AboutPage from "./pages/public/AboutPage.jsx";
+import AboutPage from "./features/about/AboutPage";
 import ServicesPage from "./pages/public/ServicesPage";
 import ContactPage from "./pages/public/ContactPage";
 import BookingForm from "./pages/public/BookingForm.jsx";
