@@ -1,49 +1,53 @@
 /* eslint-disable no-unused-vars */
-// src/pages/public/ServicesPage.jsx — Enhanced UI + Deep SEO
+// src/pages/public/ServicesPage.jsx — Enhanced UI + Deep SEO (Competitor-Gap Edition)
 import { useState, useEffect, useRef } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { Helmet } from "react-helmet";
 import { getServices } from "../../features/services/servicesSlice";
 import { formatContentForDisplay } from "../../utils/markdownUtils";
-import { BUSINESS_INFO, buildBreadcrumbSchema, buildLocalBusinessSchema,
-  ALL_KEYWORDS, SERVICE_KEYWORDS, AREA_KEYWORDS, PRIMARY_KEYWORDS,
-  WEBSITE_SCHEMA, ORGANIZATION_SCHEMA } from "../../utils/seo";
+import { BUSINESS_INFO, buildBreadcrumbSchema, buildLocalBusinessSchema, buildFAQSchema,
+  ALL_KEYWORDS, SERVICE_KEYWORDS, AREA_KEYWORDS, PRIMARY_KEYWORDS, PRICING_KEYWORDS,
+  MASTER_FAQS, WEBSITE_SCHEMA, ORGANIZATION_SCHEMA } from "../../utils/seo";
 import { Search, ChevronLeft, ChevronRight, Star, MapPin, Phone, X, SlidersHorizontal } from "lucide-react";
 
-// ─── Static service highlights shown when DB is empty ─────────────────────────
+// ─── Static service highlights ────────────────────────────────────────────────
+// Updated with competitor-gap services identified from SERP analysis
+// (GM Cleaning, Titossy, Safitime, Jasban, Dulytec all rank for these)
 const STATIC_HIGHLIGHTS = [
   { title: "House Cleaning", icon: "fas fa-home", color: "#2563eb", bg: "#eff6ff", desc: "Regular or one-off cleaning for homes and apartments across all Nairobi estates." },
-  { title: "Office Cleaning", icon: "fas fa-building", color: "#7c3aed", bg: "#f5f3ff", desc: "Daily, weekly or contract commercial cleaning for offices and corporate spaces." },
+  { title: "Office Cleaning", icon: "fas fa-building", color: "#7c3aed", bg: "#f5f3ff", desc: "Daily, weekly or contractual commercial cleaning for offices and corporate spaces." },
   { title: "Deep Cleaning", icon: "fas fa-broom", color: "#16a34a", bg: "#f0fdf4", desc: "Intensive top-to-bottom cleaning that removes allergens and deep-seated grime." },
-  { title: "Carpet Cleaning", icon: "fas fa-rug", color: "#d97706", bg: "#fffbeb", desc: "Steam and dry carpet cleaning that restores texture and removes stubborn stains." },
+  { title: "Carpet Cleaning", icon: "fas fa-rug", color: "#d97706", bg: "#fffbeb", desc: "Steam and hot-water extraction carpet cleaning that restores texture and removes stubborn stains." },
   { title: "Post-Construction", icon: "fas fa-hammer", color: "#db2777", bg: "#fdf2f8", desc: "Complete debris removal and finishing clean after renovation or construction." },
   { title: "Sofa Cleaning", icon: "fas fa-couch", color: "#0891b2", bg: "#ecfeff", desc: "Professional upholstery cleaning for sofas, chairs and fabric furniture." },
+  // Competitor-gap services below — GM, Safitime, Jasban, KingGen rank for all of these
+  { title: "Vehicle Interior Cleaning", icon: "fas fa-car", color: "#0f766e", bg: "#f0fdfa", desc: "Professional car interior cleaning: seats, carpets, dashboard and hard-to-reach areas." },
+  { title: "Swimming Pool Cleaning", icon: "fas fa-swimming-pool", color: "#0284c7", bg: "#e0f2fe", desc: "Swimming pool vacuuming, tile scrubbing, chemical balancing and filter maintenance in Nairobi." },
+  { title: "Fumigation & Pest Control", icon: "fas fa-bug", color: "#b45309", bg: "#fef3c7", desc: "Professional fumigation and pest control for cockroaches, bed bugs, ants, and rodents." },
+  { title: "Housekeeping Services", icon: "fas fa-concierge-bell", color: "#6d28d9", bg: "#f3e8ff", desc: "Daily, weekly or monthly housekeeping services for homes and apartments across Nairobi." },
+  { title: "High-Access Cleaning", icon: "fas fa-window-maximize", color: "#0369a1", bg: "#e0f2fe", desc: "High-rise and high-access window cleaning for commercial buildings across Nairobi." },
+  { title: "Floor Care & Buffing", icon: "fas fa-layer-group", color: "#374151", bg: "#f9fafb", desc: "Hard floor cleaning, buffing, stripping and sealing for offices and commercial properties." },
 ];
 
-const FAQS = [
-  { q: "What areas in Nairobi do you serve?", a: "We cover all Nairobi neighborhoods including Karen, Westlands, Runda, Kilimani, Lavington, Kileleshwa, Parklands, Muthaiga, Spring Valley, South C, Upperhill, CBD and 500+ more estates." },
-  { q: "How do I book a cleaning service?", a: "Book online via our website, call +254 726 933 261, or WhatsApp us. We'll confirm within 30 minutes and schedule at your convenience." },
-  { q: "Are your cleaners background-checked?", a: "Yes — all staff are thoroughly vetted, professionally trained, uniformed and fully insured for your complete peace of mind." },
-  { q: "Do you use eco-friendly products?", a: "Absolutely. We use non-toxic, eco-safe cleaning products that are safe for children, pets and the environment in every Nairobi home we clean." },
-  { q: "Do you offer a satisfaction guarantee?", a: "Yes — 100%. If you're not satisfied with our cleaning, we will return and re-clean the area at no extra cost." },
-  { q: "Can I get a regular cleaning schedule?", a: "Yes — we offer daily, weekly, bi-weekly and monthly cleaning plans tailored to your needs and location across Nairobi." },
-];
+// ─── All FAQs — pulled from master bank, full 16-question set for services page ──
+const SERVICES_FAQS = MASTER_FAQS; // all 16 FAQs: areas, pricing, gap services, booking
 
 const PROCESS_STEPS = [
-  { icon: "fas fa-calendar-plus", title: "Book Online or Call", desc: "Choose your service, pick a date and submit your booking. We confirm within 30 minutes." },
-  { icon: "fas fa-clipboard-list", title: "Pre-Visit Assessment", desc: "Our head of cleaning visits your property to assess scope and provide a detailed quote." },
-  { icon: "fas fa-broom", title: "Expert Cleaning", desc: "Our vetted, uniformed team arrives on time and cleans to our rigorous standards." },
-  { icon: "fas fa-star", title: "Quality Sign-Off", desc: "We inspect the results before leaving. Not happy? We re-clean free of charge." },
+  { icon: "fas fa-calendar-plus", title: "Book Online or Call", desc: "Choose your service, pick a date and submit your booking or call/WhatsApp 0726 933 261. We confirm within 30 minutes. Same-day bookings available." },
+  { icon: "fas fa-clipboard-list", title: "Pre-Visit Assessment", desc: "Our head of cleaning visits your property to assess scope and provide a detailed, no-hidden-fee quote." },
+  { icon: "fas fa-broom", title: "Expert Cleaning", desc: "Our vetted, uniformed team arrives on time and cleans to our rigorous standards using eco-safe products." },
+  { icon: "fas fa-star", title: "Quality Sign-Off", desc: "We inspect the results before leaving. Not happy? We re-clean free of charge — 100% satisfaction guaranteed." },
 ];
 
 const TRUST_BADGES = [
   { icon: "fas fa-shield-alt", label: "Fully Insured", color: "#16a34a" },
   { icon: "fas fa-user-check", label: "Vetted Staff", color: "#2563eb" },
   { icon: "fas fa-leaf", label: "Eco-Friendly", color: "#16a34a" },
-  { icon: "fas fa-clock", label: "Always On Time", color: "#d97706" },
+  { icon: "fas fa-bolt", label: "Same-Day Booking", color: "#d97706" },
   { icon: "fas fa-medal", label: "100% Guarantee", color: "#7c3aed" },
   { icon: "fas fa-map-marker-alt", label: "500+ Areas", color: "#db2777" },
+  { icon: "fas fa-money-bill-wave", label: "M-Pesa Accepted", color: "#059669" },  // gap — payment signal
 ];
 
 // ─── SEO schemas ──────────────────────────────────────────────────────────────
@@ -52,8 +56,8 @@ const PAGE_URL = `${BUSINESS_INFO.url}/services`;
 const serviceListSchema = (services) => ({
   "@context": "https://schema.org",
   "@type": "ItemList",
-  name: "Professional Cleaning Services in Nairobi",
-  description: "Expert residential, commercial and specialized cleaning services across all Nairobi areas.",
+  name: "Professional Best Cleaning Services in Nairobi Kenya",
+  description: "Expert residential, commercial and specialized cleaning services — house cleaning, office cleaning, carpet cleaning, sofa cleaning, vehicle interior, swimming pool, fumigation and pest control across all Nairobi areas and Kiambu.",
   url: PAGE_URL,
   numberOfItems: services.length || STATIC_HIGHLIGHTS.length,
   itemListElement: (services.length ? services.slice(0, 12) : STATIC_HIGHLIGHTS).map((s, i) => ({
@@ -65,21 +69,22 @@ const serviceListSchema = (services) => ({
       description: s.description
         ? s.description.replace(/<[^>]*>/g, "").substring(0, 200)
         : s.desc,
-      provider: { "@type": "Organization", name: BUSINESS_INFO.name },
+      provider: {
+        "@type": "Organization",
+        name: BUSINESS_INFO.name,
+        telephone: BUSINESS_INFO.phone,
+        url: BUSINESS_INFO.url,
+      },
       areaServed: "Nairobi, Kenya",
+      offers: {
+        "@type": "Offer",
+        priceCurrency: "KES",
+        priceRange: "From KES 1,500",
+        availability: "https://schema.org/InStock",
+      },
     },
   })),
 });
-
-const faqSchema = {
-  "@context": "https://schema.org",
-  "@type": "FAQPage",
-  mainEntity: FAQS.map((f) => ({
-    "@type": "Question",
-    name: f.q,
-    acceptedAnswer: { "@type": "Answer", text: f.a },
-  })),
-};
 
 // ─── Component ────────────────────────────────────────────────────────────────
 const ServicesPage = () => {
@@ -100,13 +105,11 @@ const ServicesPage = () => {
 
   useEffect(() => { dispatch(getServices()); }, [dispatch]);
 
-  // Sync category from URL query param
   useEffect(() => {
     const cat = new URLSearchParams(location.search).get("category");
     if (cat) setActiveCategory(cat);
   }, [location.search]);
 
-  // Intersection observer for section reveals
   useEffect(() => {
     const obs = new IntersectionObserver(
       (entries) => entries.forEach((e) => {
@@ -118,7 +121,6 @@ const ServicesPage = () => {
     return () => obs.disconnect();
   }, []);
 
-  // Filter + sort logic
   useEffect(() => {
     if (!Array.isArray(services)) { setFilteredServices([]); return; }
     let list = [...services].sort((a, b) => {
@@ -175,6 +177,7 @@ const ServicesPage = () => {
     { id: "residential", label: "Residential", icon: "fas fa-home" },
     { id: "commercial", label: "Commercial", icon: "fas fa-building" },
     { id: "post-construction", label: "Post-Construction", icon: "fas fa-hammer" },
+    { id: "specialized", label: "Specialized", icon: "fas fa-star" },
     { id: "house-cleaning", label: "House Cleaning", icon: "fas fa-broom" },
   ];
 
@@ -185,27 +188,52 @@ const ServicesPage = () => {
 
       {/* ── SEO HEAD ────────────────────────────────────────────────────────── */}
       <Helmet>
-        {/* Primary keyword first → "Cleaning Services in Nairobi" + long modifiers */}
-        <title>Cleaning Services in Nairobi Kenya | House, Office, Carpet, Sofa &amp; Deep Cleaning | Sylvie</title>
+        {/*
+          TITLE STRATEGY (updated):
+          - "2026" added — GM Cleaning uses this pattern and ranks well
+          - Kilimani added — strongest local-intent cluster after "cleaning services Nairobi"
+          - Vehicle interior + pool + fumigation added to signal gap service coverage
+          - Pricing anchor "From KES 1,500" added — targets pricing-intent keywords
+        */}
+        <title>Cleaning Services in Nairobi Kenya (2026) | House, Office, Carpet, Sofa, Vehicle, Pool &amp; Fumigation | Sylvie</title>
 
-        {/* 155-char description — phone number + area names = local intent */}
-        <meta name="description" content="Best cleaning services in Nairobi Kenya — house cleaning, office cleaning, carpet cleaning, sofa set cleaning, deep cleaning &amp; post-construction. Vetted &amp; insured. 5,000+ clients. Call 0726 933 261." />
+        {/* 155-char description — phone + pricing + same-day + gap services */}
+        <meta name="description" content="Best cleaning services in Nairobi Kenya — house, office, carpet, sofa, vehicle interior, swimming pool, fumigation &amp; pest control. From KES 1,500. Same-day bookings. Kilimani, Karen, Westlands &amp; 500+ areas. Call 0726 933 261." />
 
-        {/* Full keyword bank — primary + service + area long-tails */}
+        {/* Full keyword bank */}
         <meta name="keywords" content={[
           ...PRIMARY_KEYWORDS,
           ...SERVICE_KEYWORDS,
           ...AREA_KEYWORDS,
-          "sofa set cleaning Nairobi Kenya",
-          "mattress cleaning Nairobi",
-          "post construction cleaning Kenya",
-          "cleaning services near me",
-          "cleaners near me Nairobi",
-          "house cleaning services in Nairobi Kenya",
-          "office cleaning services in Nairobi Kenya",
-          "airbnb cleaning Nairobi",
-          "end of tenancy cleaning Nairobi",
-          "sanitary bins services Nairobi",
+          ...PRICING_KEYWORDS,
+          // Services page-specific extras
+          "vehicle interior cleaning Nairobi Kenya",
+          "car interior cleaning services Nairobi",
+          "swimming pool cleaning Nairobi Kenya",
+          "pool maintenance services Nairobi",
+          "fumigation services Nairobi Kenya",
+          "pest control Nairobi Kenya",
+          "housekeeping services Nairobi Kenya",
+          "janitorial services Nairobi Kenya",
+          "floor cleaning services Nairobi Kenya",
+          "floor buffing Nairobi",
+          "high access window cleaning Nairobi",
+          "high rise window cleaning Nairobi",
+          "sanitary bins collection Nairobi",
+          "garbage collection Nairobi Kenya",
+          "gardening services Nairobi Kenya",
+          "disinfection services Nairobi Kenya",
+          "after party cleaning Nairobi",
+          "event cleanup Nairobi",
+          "industrial cleaning Nairobi",
+          "one off cleaning services Nairobi",
+          "contract cleaning services Nairobi",
+          "same day cleaning services Nairobi",
+          "cleaning services Kiambu Kenya",
+          "cleaning services Machakos Kenya",
+          "cleaning services near Kilimani Nairobi",
+          "eco friendly cleaning Nairobi Kenya",
+          "best cleaning company Kenya 2026",
         ].join(", ")} />
 
         <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -217,8 +245,8 @@ const ServicesPage = () => {
         {/* Open Graph */}
         <meta property="og:type" content="website" />
         <meta property="og:url" content={PAGE_URL} />
-        <meta property="og:title" content="Cleaning Services in Nairobi Kenya | House, Office, Carpet &amp; Sofa Cleaning" />
-        <meta property="og:description" content="House cleaning, office cleaning, carpet cleaning, sofa set cleaning &amp; deep cleaning across Karen, Westlands, Runda, Kilimani &amp; 500+ Nairobi areas. Book online or call 0726 933 261." />
+        <meta property="og:title" content="Cleaning Services in Nairobi Kenya (2026) | House, Office, Carpet, Sofa, Vehicle &amp; Pool Cleaning" />
+        <meta property="og:description" content="House cleaning, office cleaning, carpet cleaning, sofa cleaning, vehicle interior, swimming pool, fumigation &amp; pest control across Kilimani, Karen, Westlands &amp; all Nairobi areas. From KES 1,500. Call 0726 933 261." />
         <meta property="og:image" content={`${BUSINESS_INFO.url}/og-services.jpg`} />
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="630" />
@@ -229,8 +257,8 @@ const ServicesPage = () => {
         {/* Twitter */}
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:site" content="@sylviecleaning" />
-        <meta name="twitter:title" content="Cleaning Services Nairobi | House, Office, Carpet &amp; Sofa Cleaning" />
-        <meta name="twitter:description" content="Professional cleaning across Karen, Westlands, Runda &amp; all Nairobi areas. Book online or call 0726 933 261." />
+        <meta name="twitter:title" content="Cleaning Services Nairobi (2026) | House, Office, Carpet, Sofa, Vehicle &amp; Pool Cleaning" />
+        <meta name="twitter:description" content="Professional cleaning near Kilimani, Karen, Westlands &amp; all Nairobi areas. From KES 1,500. Same-day bookings. Call 0726 933 261." />
         <meta name="twitter:image" content={`${BUSINESS_INFO.url}/og-services.jpg`} />
         <meta name="twitter:image:alt" content="Sylvie Cleaning Services — Nairobi's Best" />
 
@@ -244,11 +272,11 @@ const ServicesPage = () => {
         <meta name="country" content="Kenya" />
         <meta name="language" content="English" />
         <meta name="distribution" content="local" />
-        <meta name="coverage" content="Nairobi, Kenya" />
+        <meta name="coverage" content="Nairobi, Kiambu, Machakos, Kenya" />
 
-        {/* 5 schemas — LocalBusiness, FAQ, ItemList, Breadcrumb, WebSite */}
+        {/* 5 schemas — covers all SERP features */}
         <script type="application/ld+json">{JSON.stringify(serviceListSchema(services))}</script>
-        <script type="application/ld+json">{JSON.stringify(faqSchema)}</script>
+        <script type="application/ld+json">{JSON.stringify(buildFAQSchema(SERVICES_FAQS))}</script>
         <script type="application/ld+json">{JSON.stringify(buildLocalBusinessSchema())}</script>
         <script type="application/ld+json">{JSON.stringify(buildBreadcrumbSchema([{ name: "Home", path: "/" }, { name: "Services", path: "/services" }]))}</script>
         <script type="application/ld+json">{JSON.stringify(WEBSITE_SCHEMA)}</script>
@@ -262,18 +290,12 @@ const ServicesPage = () => {
       <header
         data-section="hero"
         className="relative overflow-hidden"
-        style={{
-          paddingTop: "128px",
-          paddingBottom: "72px",
-          background: "linear-gradient(135deg, #0f172a 0%, #1e3a8a 55%, #1d4ed8 100%)",
-        }}
+        style={{ paddingTop: "128px", paddingBottom: "72px", background: "linear-gradient(135deg, #0f172a 0%, #1e3a8a 55%, #1d4ed8 100%)" }}
         aria-label="Services hero section"
       >
-        {/* Decorative circles */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
           <div style={{ position: "absolute", top: "-80px", right: "-80px", width: "400px", height: "400px", borderRadius: "50%", background: "rgba(99,102,241,0.12)" }} />
           <div style={{ position: "absolute", bottom: "-60px", left: "-60px", width: "300px", height: "300px", borderRadius: "50%", background: "rgba(6,182,212,0.08)" }} />
-          {/* Floating icons */}
           {["fa-broom", "fa-spray-can", "fa-sparkles", "fa-home", "fa-building", "fa-leaf"].map((ic, i) => (
             <div key={i} className="absolute text-white/10" style={{ left: `${10 + i * 15}%`, top: `${20 + (i % 3) * 25}%`, fontSize: `${22 + i * 4}px`, animation: `svcFloat ${5 + i}s ease-in-out infinite`, animationDelay: `${i * 0.6}s` }}>
               <i className={`fas ${ic}`} />
@@ -282,7 +304,6 @@ const ServicesPage = () => {
         </div>
 
         <div className="container mx-auto px-4 sm:px-8 relative z-10">
-          {/* Breadcrumb */}
           <nav aria-label="Breadcrumb" className="mb-6">
             <ol className="flex items-center gap-2 text-sm text-blue-200/80">
               <li><Link to="/" className="hover:text-white transition-colors">Home</Link></li>
@@ -293,7 +314,7 @@ const ServicesPage = () => {
 
           <div className="max-w-3xl">
             <span className="inline-block bg-blue-500/20 border border-blue-400/30 text-blue-200 text-xs font-bold px-4 py-1.5 rounded-full uppercase tracking-widest mb-5">
-              What We Offer
+              What We Offer — From KES 1,500
             </span>
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white leading-tight mb-5" style={{ fontFamily: "'Playfair Display', Georgia, serif" }}>
               Professional Cleaning<br />
@@ -302,10 +323,9 @@ const ServicesPage = () => {
               </span>
             </h1>
             <p className="text-lg text-blue-100/90 leading-relaxed max-w-2xl mb-8">
-              Residential, commercial and specialized cleaning across Karen, Westlands, Runda, Kilimani and 500+ Nairobi neighborhoods — delivered by vetted, insured professionals.
+              House cleaning, office cleaning, carpet cleaning, sofa cleaning, vehicle interior, swimming pool, fumigation, pest control and more — across Kilimani, Karen, Westlands, Runda and 500+ Nairobi neighborhoods. Also serving Kiambu and Machakos. Same-day bookings available.
             </p>
 
-            {/* Hero CTAs */}
             <div className="flex flex-wrap gap-4">
               <Link to="/book" aria-label="Book a cleaning service now"
                 className="inline-flex items-center gap-2 font-bold py-3.5 px-8 rounded-full text-sm transition-all hover:scale-105"
@@ -322,7 +342,6 @@ const ServicesPage = () => {
             </div>
           </div>
 
-          {/* Trust badges row */}
           <div className="flex flex-wrap gap-3 mt-10" aria-label="Trust indicators">
             {TRUST_BADGES.map(({ icon, label, color }, i) => (
               <span key={i} className="inline-flex items-center gap-2 text-xs font-semibold text-white/80 px-3 py-1.5 rounded-full" style={{ background: "rgba(255,255,255,0.08)", border: "1px solid rgba(255,255,255,0.12)" }}>
@@ -334,14 +353,14 @@ const ServicesPage = () => {
         </div>
       </header>
 
-      {/* ── SERVICE HIGHLIGHTS (always visible, SEO-rich) ──────────────────── */}
+      {/* ── SERVICE HIGHLIGHTS — now 12 cards including gap services ───────── */}
       <section data-section="highlights" className="py-16 bg-white" aria-labelledby="highlights-heading">
         <div className="container mx-auto px-4 sm:px-8">
           <div className={`text-center mb-10 transition-all duration-700 ${isVisible.highlights ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
             <h2 id="highlights-heading" className="text-2xl sm:text-3xl font-bold text-gray-900" style={{ fontFamily: "'Playfair Display', Georgia, serif" }}>
-              Our Core Cleaning Services
+              Our Core Cleaning Services in Nairobi
             </h2>
-            <p className="text-gray-500 mt-2 text-sm">Available across all Nairobi neighborhoods</p>
+            <p className="text-gray-500 mt-2 text-sm">Available across all Nairobi neighborhoods, Kiambu and Machakos</p>
           </div>
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
             {STATIC_HIGHLIGHTS.map(({ title, icon, color, bg, desc }, i) => (
@@ -363,15 +382,13 @@ const ServicesPage = () => {
       <section className="py-16" data-section="services" aria-labelledby="services-grid-heading">
         <div className="container mx-auto px-4 sm:px-8">
 
-          {/* Section header */}
           <div className={`flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 mb-10 transition-all duration-700 ${isVisible.services ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
             <div>
               <span className="text-blue-600 font-bold text-xs uppercase tracking-widest">Browse</span>
               <h2 id="services-grid-heading" className="text-2xl sm:text-3xl font-bold text-gray-900 mt-1" style={{ fontFamily: "'Playfair Display', Georgia, serif" }}>
-                All Cleaning Services
+                All Cleaning Services in Nairobi
               </h2>
             </div>
-            {/* Search bar */}
             <div className="relative w-full sm:w-72">
               <Search size={15} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" aria-hidden="true" />
               <input
@@ -391,7 +408,6 @@ const ServicesPage = () => {
             </div>
           </div>
 
-          {/* Category filters */}
           <div className={`mb-8 transition-all duration-700 ${isVisible.services ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`} role="tablist" aria-label="Filter services by category">
             <div className="flex flex-wrap gap-2">
               {categories.map(({ id, label, icon }, idx) => {
@@ -422,7 +438,6 @@ const ServicesPage = () => {
             </div>
           </div>
 
-          {/* Results count bar */}
           {!isLoading && filteredServices.length > 0 && (
             <div className="mb-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 px-4 py-3 rounded-xl bg-white border border-gray-100 shadow-sm text-sm">
               <span className="text-gray-500">
@@ -437,7 +452,6 @@ const ServicesPage = () => {
             </div>
           )}
 
-          {/* ── Grid ── */}
           {isLoading ? (
             <div className="flex flex-col items-center justify-center py-24 gap-4" role="status" aria-label="Loading services">
               <div className="relative w-14 h-14">
@@ -460,7 +474,6 @@ const ServicesPage = () => {
                       className="group bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-400 hover:-translate-y-1 border border-gray-100"
                       style={{ animationDelay: `${i * 60}ms` }}
                     >
-                      {/* Media */}
                       <div className="relative h-52 overflow-hidden bg-gray-100">
                         {media.type === "video" ? (
                           <>
@@ -485,16 +498,13 @@ const ServicesPage = () => {
                             aria-label={`${service.name} cleaning service`}
                           />
                         )}
-                        {/* Category chip */}
                         <span className="absolute top-3 right-3 text-xs font-bold text-white px-3 py-1 rounded-full capitalize" style={{ background: "rgba(15,23,42,0.7)", backdropFilter: "blur(6px)" }}>
                           {service.category?.replace(/-/g, " ") || "Cleaning"}
                         </span>
                         <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" aria-hidden="true" />
                       </div>
 
-                      {/* Content */}
                       <div className="p-6">
-                        {/* Extra video count */}
                         {service.youtubeVideos?.length > 1 && (
                           <span className="inline-flex items-center gap-1 text-xs text-gray-500 bg-gray-100 px-2.5 py-1 rounded-full mb-3">
                             <i className="fas fa-film text-blue-500 text-xs" aria-hidden="true" />
@@ -515,7 +525,6 @@ const ServicesPage = () => {
                         <meta itemProp="provider" content={BUSINESS_INFO.name} />
                         <meta itemProp="areaServed" content="Nairobi, Kenya" />
 
-                        {/* CTAs */}
                         <div className="flex gap-3">
                           <Link
                             to={`/book?service=${service._id}`}
@@ -542,23 +551,16 @@ const ServicesPage = () => {
                 })}
               </div>
 
-              {/* Pagination */}
               {totalPages > 1 && (
                 <nav className="flex flex-col items-center gap-4 mt-12" aria-label="Services pagination">
                   <div className="flex items-center gap-2 flex-wrap justify-center">
-                    <button
-                      onClick={() => paginate(currentPage - 1)}
-                      disabled={currentPage === 1}
-                      aria-label="Previous page"
+                    <button onClick={() => paginate(currentPage - 1)} disabled={currentPage === 1} aria-label="Previous page"
                       className="w-10 h-10 rounded-xl flex items-center justify-center transition-all disabled:opacity-40 disabled:cursor-not-allowed"
-                      style={{ background: currentPage === 1 ? "#f3f4f6" : "#fff", border: "1.5px solid #e5e7eb" }}
-                    >
+                      style={{ background: currentPage === 1 ? "#f3f4f6" : "#fff", border: "1.5px solid #e5e7eb" }}>
                       <ChevronLeft size={16} />
                     </button>
                     {paginationPages().map((p, i) => (
-                      <button
-                        key={i}
-                        onClick={() => typeof p === "number" && paginate(p)}
+                      <button key={i} onClick={() => typeof p === "number" && paginate(p)}
                         aria-label={typeof p === "number" ? `Go to page ${p}` : undefined}
                         aria-current={p === currentPage ? "page" : undefined}
                         className="w-10 h-10 rounded-xl flex items-center justify-center text-sm font-semibold transition-all"
@@ -566,18 +568,13 @@ const ServicesPage = () => {
                           ? { background: "linear-gradient(135deg,#1d4ed8,#2563eb)", color: "#fff", boxShadow: "0 4px 12px rgba(37,99,235,0.3)" }
                           : p === "…"
                           ? { background: "transparent", color: "#9ca3af", cursor: "default" }
-                          : { background: "#fff", color: "#374151", border: "1.5px solid #e5e7eb" }}
-                      >
+                          : { background: "#fff", color: "#374151", border: "1.5px solid #e5e7eb" }}>
                         {p}
                       </button>
                     ))}
-                    <button
-                      onClick={() => paginate(currentPage + 1)}
-                      disabled={currentPage === totalPages}
-                      aria-label="Next page"
+                    <button onClick={() => paginate(currentPage + 1)} disabled={currentPage === totalPages} aria-label="Next page"
                       className="w-10 h-10 rounded-xl flex items-center justify-center transition-all disabled:opacity-40 disabled:cursor-not-allowed"
-                      style={{ background: currentPage === totalPages ? "#f3f4f6" : "#fff", border: "1.5px solid #e5e7eb" }}
-                    >
+                      style={{ background: currentPage === totalPages ? "#f3f4f6" : "#fff", border: "1.5px solid #e5e7eb" }}>
                       <ChevronRight size={16} />
                     </button>
                   </div>
@@ -588,7 +585,6 @@ const ServicesPage = () => {
               )}
             </>
           ) : (
-            /* Empty state */
             <div className="flex flex-col items-center justify-center py-24 text-center">
               <div className="w-20 h-20 rounded-full flex items-center justify-center mb-6" style={{ background: "#eff6ff" }}>
                 <i className="fas fa-search text-3xl text-blue-300" aria-hidden="true" />
@@ -620,16 +616,11 @@ const ServicesPage = () => {
             <h2 id="process-heading" className="text-2xl sm:text-3xl font-bold text-gray-900 mt-2" style={{ fontFamily: "'Playfair Display', Georgia, serif" }}>
               How Our Cleaning Service Works
             </h2>
-            <p className="text-gray-500 mt-3 max-w-xl mx-auto text-sm">Four easy steps to a spotless home or office anywhere in Nairobi</p>
+            <p className="text-gray-500 mt-3 max-w-xl mx-auto text-sm">Four easy steps to a spotless home or office anywhere in Nairobi, Kiambu or Machakos</p>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
             {PROCESS_STEPS.map(({ icon, title, desc }, i) => (
-              <div
-                key={i}
-                className={`relative text-center transition-all duration-500 ${isVisible.process ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}
-                style={{ transitionDelay: `${i * 120}ms` }}
-              >
-                {/* Step number */}
+              <div key={i} className={`relative text-center transition-all duration-500 ${isVisible.process ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`} style={{ transitionDelay: `${i * 120}ms` }}>
                 <div className="relative inline-block mb-6">
                   <div className="w-16 h-16 rounded-full flex items-center justify-center text-white text-xl font-bold mx-auto" style={{ background: "linear-gradient(135deg,#1d4ed8,#06b6d4)", boxShadow: "0 8px 24px rgba(37,99,235,0.3)" }}>
                     {i + 1}
@@ -653,7 +644,7 @@ const ServicesPage = () => {
         </div>
       </section>
 
-      {/* ── FAQ ─────────────────────────────────────────────────────────────── */}
+      {/* ── FAQ — full 16-question set including pricing + gap services ──────── */}
       <section data-section="faq" className="py-20" style={{ background: "#f8fafc" }} aria-labelledby="faq-heading">
         <div className="container mx-auto px-4 sm:px-8 max-w-3xl">
           <div className={`text-center mb-12 transition-all duration-700 ${isVisible.faq ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
@@ -661,14 +652,14 @@ const ServicesPage = () => {
             <h2 id="faq-heading" className="text-2xl sm:text-3xl font-bold text-gray-900 mt-2" style={{ fontFamily: "'Playfair Display', Georgia, serif" }}>
               Frequently Asked Questions
             </h2>
-            <p className="text-gray-500 mt-3 text-sm">Everything you need to know about our Nairobi cleaning services</p>
+            <p className="text-gray-500 mt-3 text-sm">Everything you need to know about our Nairobi cleaning services — including pricing, areas and specialist services</p>
           </div>
           <div className="space-y-3">
-            {FAQS.map(({ q, a }, i) => (
+            {SERVICES_FAQS.map(({ question, answer }, i) => (
               <div
                 key={i}
                 className={`bg-white rounded-2xl shadow-sm border overflow-hidden transition-all duration-500 ${isVisible.faq ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}
-                style={{ borderColor: activeFAQ === i ? "#bfdbfe" : "#e5e7eb", transitionDelay: `${i * 60}ms` }}
+                style={{ borderColor: activeFAQ === i ? "#bfdbfe" : "#e5e7eb", transitionDelay: `${i * 40}ms` }}
               >
                 <button
                   onClick={() => setActiveFAQ(activeFAQ === i ? null : i)}
@@ -676,7 +667,7 @@ const ServicesPage = () => {
                   aria-controls={`faq-answer-${i}`}
                   className="w-full text-left flex items-center justify-between gap-4 px-6 py-5 font-semibold text-gray-800 hover:text-blue-600 transition-colors text-sm"
                 >
-                  <span>{q}</span>
+                  <span>{question}</span>
                   <span className="flex-shrink-0 w-7 h-7 rounded-full flex items-center justify-center transition-all duration-300"
                     style={{ background: activeFAQ === i ? "#eff6ff" : "#f9fafb", transform: activeFAQ === i ? "rotate(180deg)" : "none" }}>
                     <i className="fas fa-chevron-down text-xs text-blue-500" aria-hidden="true" />
@@ -686,9 +677,9 @@ const ServicesPage = () => {
                   id={`faq-answer-${i}`}
                   role="region"
                   className="overflow-hidden transition-all duration-300"
-                  style={{ maxHeight: activeFAQ === i ? "200px" : "0", opacity: activeFAQ === i ? 1 : 0 }}
+                  style={{ maxHeight: activeFAQ === i ? "300px" : "0", opacity: activeFAQ === i ? 1 : 0 }}
                 >
-                  <p className="px-6 pb-5 text-gray-500 text-sm leading-relaxed">{a}</p>
+                  <p className="px-6 pb-5 text-gray-500 text-sm leading-relaxed">{answer}</p>
                 </div>
               </div>
             ))}
@@ -712,7 +703,7 @@ const ServicesPage = () => {
               Ready to Book Your Cleaning?
             </h2>
             <p className="text-blue-100 mb-8 text-base">
-              Get a free quote today. We serve Karen, Westlands, Runda, Kilimani and 500+ Nairobi locations.
+              Get a free quote today. From KES 1,500. We serve Kilimani, Karen, Westlands, Runda and 500+ Nairobi locations — also Kiambu and Machakos.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link to="/book" aria-label="Book a cleaning service now"
@@ -730,7 +721,7 @@ const ServicesPage = () => {
             </div>
             <p className="text-blue-200/70 text-xs mt-6 flex items-center justify-center gap-2">
               <MapPin size={12} aria-hidden="true" />
-              Serving all Nairobi areas — Karen, Westlands, Runda, Kilimani, Lavington &amp; 500+ more
+              Serving all Nairobi areas — Kilimani, Karen, Westlands, Runda, Lavington &amp; 500+ more — plus Kiambu &amp; Machakos
             </p>
           </div>
         </div>

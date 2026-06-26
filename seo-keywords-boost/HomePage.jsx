@@ -12,9 +12,10 @@ import { useEffect, useState, useCallback } from "react";
 import { getTestimonials } from "../../features/testimonial/testimonialSlice";
 import { ArrowUp, Star, MapPin, Shield, Clock, Leaf, Award, CreditCard } from "lucide-react";
 import {
-  buildLocalBusinessSchema, buildBreadcrumbSchema,
+  buildLocalBusinessSchema, buildBreadcrumbSchema, buildFAQSchema,
   BUSINESS_INFO, ALL_KEYWORDS, PRIMARY_KEYWORDS, SERVICE_KEYWORDS,
-  AREA_KEYWORDS, WEBSITE_SCHEMA, ORGANIZATION_SCHEMA,
+  AREA_KEYWORDS, PRICING_KEYWORDS, COMPETITOR_KEYWORDS, MASTER_FAQS,
+  WEBSITE_SCHEMA, ORGANIZATION_SCHEMA,
 } from "../../utils/seo";
 
 // ─── All Nairobi marketing areas (SEO-only, hidden from view) ───
@@ -27,28 +28,30 @@ const marketingAreas = {
   "Eastlands & Embakasi": ["Eastleigh Estate","California Estate","South C","South End Estate","Uhuru Gardens Estate","Highview Estate","Popo Road","Jogoo Road","Buruburu Phase 5","Kayole Road","Nasra Estate","Spine Road","Airport North Road","Syokimau","EPZ Road","Athi River","Mombasa Road","Katani Road"],
   "Kiambu & Thika Road Corridor": ["Kiambu Road","Thika Road","Ruaka","Ruiru","Juja","Garden Estate","Thome Estate","Ridgeways","Mangu Road","Kamiti Road","Kahawa West","Kahawa Sukari","Muthiga","Kinoo","Uthiru","Kikuyu Road","Dagoretti Road"],
   "Upperhill & City Center": ["Upper Hill","Museum Hill","University Way","Haile Selassie","Mamlaka Road","Nyerere Road","Parliament Road","Koinange Street","Moi Avenue","Kenyatta Avenue","Tom Mboya Street"],
+  // NEW: Machakos corridor — competitor gap (GM Cleaning ranks for Kiambu & Machakos)
+  "Machakos & Athi River Corridor": ["Machakos Town","Athi River","Mavoko","Mlolongo","Kitengela","Syokimau","Athi River Export Processing Zone","Katani","Lukenya","Kamulu","Joska"],
 };
 
 const carouselData = [
-  { image: cleaner1, title: "Professional Cleaning Services Across Nairobi", subtitle: "Serving Karen, Westlands, Runda, Kilimani & All Nairobi Areas", description: "Expert cleaning for homes and offices across all Nairobi neighborhoods. Carpet cleaning, sofa cleaning, deep cleaning at affordable prices.", serviceType: "Nairobi-Wide Cleaning", accent: "from-blue-500 to-cyan-500" },
+  { image: cleaner1, title: "Professional Cleaning Services Across Nairobi", subtitle: "Serving Karen, Westlands, Runda, Kilimani & All Nairobi Areas", description: "Expert cleaning for homes and offices across all Nairobi neighborhoods. Carpet cleaning, sofa cleaning, deep cleaning at affordable prices from KES 1,500.", serviceType: "Nairobi-Wide Cleaning", accent: "from-blue-500 to-cyan-500" },
   { image: cleaner2, title: "House Cleaning Services | All Nairobi Estates Covered", subtitle: "Professional Residential Cleaning Across Nairobi", description: "Expert house cleaning for all estates in Karen, Lavington, Kileleshwa, Westlands, and surrounding areas. Deep cleaning, regular maintenance, move-in/out cleaning.", serviceType: "Estate Cleaning", accent: "from-green-500 to-emerald-500" },
-  { image: cleaner3, title: "Office & Commercial Cleaning | Nairobi Business Districts", subtitle: "Trusted by 500+ Businesses Across Nairobi", description: "Commercial cleaning for offices and corporate spaces in Westlands, Upperhill, CBD, and beyond. Post-construction cleaning, carpet cleaning, and more.", serviceType: "Commercial Cleaning", accent: "from-purple-500 to-indigo-500" },
+  { image: cleaner3, title: "Office & Commercial Cleaning | Nairobi Business Districts", subtitle: "Trusted by 500+ Businesses Across Nairobi", description: "Commercial cleaning for offices and corporate spaces in Westlands, Upperhill, CBD, Kilimani and beyond. Post-construction cleaning, carpet cleaning, and more.", serviceType: "Commercial Cleaning", accent: "from-purple-500 to-indigo-500" },
 ];
 
 const services = [
-  { title: "House Cleaning", description: "Professional residential cleaning for homes and apartments across all Nairobi neighborhoods.", icon: "fas fa-home", features: ["Regular Maintenance Cleaning", "Deep Cleaning Services", "Move-in/out Cleaning", "Custom Cleaning Schedules"], color: "from-blue-500 to-cyan-500", slug: "residential" },
-  { title: "Office Cleaning", description: "Commercial cleaning solutions for offices, retail spaces, and businesses in Nairobi.", icon: "fas fa-building", features: ["Office Cleaning", "Retail Space Cleaning", "Industrial Cleaning", "24/7 Cleaning Service"], color: "from-purple-500 to-indigo-500", slug: "commercial" },
-  { title: "Deep Cleaning", description: "Intensive cleaning to remove deep-seated dirt, allergens, and bacteria for all property types.", icon: "fas fa-broom", features: ["Allergen Removal", "Sanitization Services", "Hard-to-reach Areas", "Eco-friendly Cleaning"], color: "from-green-500 to-emerald-500", slug: "deep-cleaning" },
-  { title: "Specialized Cleaning", description: "Carpet, upholstery, windows, and post-construction cleaning across Nairobi.", icon: "fas fa-sparkles", features: ["Carpet Cleaning", "Sofa Cleaning", "Post-construction Cleaning", "Event Cleanup Services"], color: "from-orange-500 to-red-500", slug: "specialized" },
+  { title: "House Cleaning", description: "Professional residential cleaning for homes and apartments across all Nairobi neighborhoods. From KES 1,500.", icon: "fas fa-home", features: ["Regular Maintenance Cleaning", "Deep Cleaning Services", "Move-in/out Cleaning", "Custom Cleaning Schedules"], color: "from-blue-500 to-cyan-500", slug: "residential" },
+  { title: "Office Cleaning", description: "Commercial cleaning solutions for offices, retail spaces, and businesses in Nairobi, Kiambu and Machakos.", icon: "fas fa-building", features: ["Office & Janitorial Cleaning", "Retail Space Cleaning", "Industrial Cleaning", "Executive Office Cleaning"], color: "from-purple-500 to-indigo-500", slug: "commercial" },
+  { title: "Deep Cleaning", description: "Intensive cleaning to remove deep-seated dirt, allergens, and bacteria for all property types in Nairobi.", icon: "fas fa-broom", features: ["Allergen Removal", "Sanitization & Disinfection", "Hard-to-reach Areas", "Eco-friendly Cleaning"], color: "from-green-500 to-emerald-500", slug: "deep-cleaning" },
+  { title: "Specialized Cleaning", description: "Carpet, upholstery, vehicle interior, swimming pool, windows, and post-construction cleaning across Nairobi.", icon: "fas fa-sparkles", features: ["Carpet & Sofa Cleaning", "Vehicle Interior Cleaning", "Swimming Pool Cleaning", "Post-construction Cleaning"], color: "from-orange-500 to-red-500", slug: "specialized" },
 ];
 
 const chooseBenefits = [
-  { title: "Nairobi-Wide Coverage", description: "We serve all areas: Karen, Westlands, Runda, Kilimani, Lavington, and 500+ more neighborhoods.", icon: "fas fa-map-marker-alt", stat: "500+ Areas Served" },
-  { title: "Custom Cleaning Plans", description: "Personalized plans tailored to your specific needs and your location's requirements.", icon: "fas fa-sliders-h", stat: "100% Custom" },
-  { title: "Satisfaction Guarantee", description: "Not satisfied? We'll re-clean at no cost. Your happiness is our commitment.", icon: "fas fa-medal", stat: "100% Guarantee" },
-  { title: "Local Area Experts", description: "Our teams know every Nairobi neighborhood and understand local cleaning requirements.", icon: "fas fa-users", stat: "Local Knowledge" },
-  { title: "Flexible Scheduling", description: "One-time, weekly, bi-weekly, or monthly — book any time across all areas.", icon: "fas fa-calendar-alt", stat: "24/7 Booking" },
-  { title: "Transparent Pricing", description: "No hidden fees. Clear, upfront pricing for all cleaning services in all areas.", icon: "fas fa-tag", stat: "No Hidden Fees" },
+  { title: "Nairobi-Wide Coverage", description: "We serve all areas: Karen, Westlands, Runda, Kilimani, Lavington, Kiambu, Machakos and 500+ more neighborhoods.", icon: "fas fa-map-marker-alt", stat: "500+ Areas Served" },
+  { title: "Custom Cleaning Plans", description: "Personalized plans tailored to your specific needs — one-off or contractual, daily, weekly or monthly.", icon: "fas fa-sliders-h", stat: "100% Custom" },
+  { title: "Satisfaction Guarantee", description: "Not satisfied? We'll re-clean at no cost. Your happiness is our commitment, every time.", icon: "fas fa-medal", stat: "100% Guarantee" },
+  { title: "Local Area Experts", description: "Our teams know every Nairobi neighborhood and understand local cleaning requirements and conditions.", icon: "fas fa-users", stat: "Local Knowledge" },
+  { title: "Same-Day Bookings", description: "Need urgent cleaning? We offer same-day service across all major Nairobi areas, subject to availability.", icon: "fas fa-calendar-alt", stat: "Same-Day Available" },
+  { title: "Transparent Pricing", description: "No hidden fees. Clear, upfront pricing from KES 1,500 for all cleaning services across all areas.", icon: "fas fa-tag", stat: "From KES 1,500" },
 ];
 
 const cleaningVideos = [
@@ -68,40 +71,98 @@ const projects = [
 // ── SEO Structured Data ──────────────────────────────────────────
 const allAreas = Object.values(marketingAreas).flat();
 
+// Enriched localBusinessSchema — now matches index.html level detail
 const localBusinessSchema = {
   "@context": "https://schema.org",
-  "@type": "ProfessionalService",
+  "@type": ["LocalBusiness", "ProfessionalService", "HomeAndConstructionBusiness"],
   name: BUSINESS_INFO.name,
-  image: heroImage,
+  legalName: BUSINESS_INFO.legalName,
+  image: [heroImage, BUSINESS_INFO.logo],
   "@id": BUSINESS_INFO.url,
   url: BUSINESS_INFO.url,
   telephone: BUSINESS_INFO.phone,
   email: BUSINESS_INFO.email,
-  priceRange: "$$",
-  description: "Professional cleaning services: house cleaning, office cleaning, carpet cleaning, sofa cleaning, deep cleaning across all Nairobi areas. Certified, insured, 5000+ happy clients.",
-  address: { "@type": "PostalAddress", streetAddress: "Dale House, Rhapta Road, Fox Close", addressLocality: "Nairobi", addressRegion: "Nairobi", postalCode: "00100", addressCountry: "KE" },
+  priceRange: BUSINESS_INFO.priceRange,
+  currenciesAccepted: "KES",
+  paymentAccepted: "Cash, M-Pesa, Bank Transfer",
+  foundingDate: BUSINESS_INFO.foundingYear,
+  description: "Sylvie Cleaning Services is Nairobi's top-rated professional cleaning company with 9+ years' experience. We offer house cleaning, office cleaning, carpet cleaning, sofa set cleaning, deep cleaning, post-construction cleaning, vehicle interior cleaning, swimming pool cleaning, fumigation, pest control, and housekeeping services across all Nairobi areas including Kilimani, Karen, Westlands, Runda, Lavington and 500+ estates. Vetted, insured, 5,000+ happy clients since 2015. Same-day bookings available. From KES 1,500.",
+  address: { "@type": "PostalAddress", streetAddress: "Dale House, Rhapta Road, Fox Close", addressLocality: "Nairobi", addressRegion: "Nairobi County", postalCode: "00100", addressCountry: "KE" },
   geo: { "@type": "GeoCoordinates", latitude: "-1.2921", longitude: "36.8219" },
   openingHoursSpecification: [
     { "@type": "OpeningHoursSpecification", dayOfWeek: ["Monday","Tuesday","Wednesday","Thursday","Friday"], opens: "08:00", closes: "20:00" },
     { "@type": "OpeningHoursSpecification", dayOfWeek: ["Saturday"], opens: "09:00", closes: "15:00" }
   ],
   sameAs: BUSINESS_INFO.sameAs,
-  areaServed: allAreas.slice(0, 50).map(area => ({ "@type": "City", name: area })),
+  aggregateRating: {
+    "@type": "AggregateRating",
+    ratingValue: BUSINESS_INFO.ratingValue,
+    reviewCount: BUSINESS_INFO.reviewCount,
+    bestRating: 5,
+    worstRating: 1,
+  },
+  review: [
+    {
+      "@type": "Review",
+      author: { "@type": "Person", name: "Mercy Wangari" },
+      datePublished: "2025-03-10",
+      name: "Best cleaning company in Nairobi",
+      reviewBody: "Sylvie Cleaning Services did a spectacular deep clean of our Karen home. The team arrived on time, were very professional and left every room spotless.",
+      reviewRating: { "@type": "Rating", ratingValue: "5", bestRating: "5" },
+    },
+    {
+      "@type": "Review",
+      author: { "@type": "Person", name: "James Odhiambo" },
+      datePublished: "2025-05-02",
+      name: "Excellent post-construction cleaning Westlands",
+      reviewBody: "After our office renovation in Westlands, Sylvie's team handled the post-construction cleaning perfectly. Dust-free, polished, and ready to use within a day.",
+      reviewRating: { "@type": "Rating", ratingValue: "5", bestRating: "5" },
+    },
+    {
+      "@type": "Review",
+      author: { "@type": "Person", name: "Grace Achieng" },
+      datePublished: "2025-06-15",
+      name: "Outstanding carpet and sofa cleaning Nairobi",
+      reviewBody: "My sofas and carpets look brand new after Sylvie's cleaning team came. Fair pricing, eco-friendly products, and great service. The best cleaning services I've used in Nairobi.",
+      reviewRating: { "@type": "Rating", ratingValue: "5", bestRating: "5" },
+    },
+  ],
+  // Extended coverage — now includes Kiambu & Machakos to match GM/Titossy
+  areaServed: [
+    ...allAreas.slice(0, 60).map(area => ({ "@type": "City", name: area })),
+    { "@type": "AdministrativeArea", name: "Nairobi County, Kenya" },
+    { "@type": "AdministrativeArea", name: "Kiambu County, Kenya" },
+    { "@type": "City", name: "Machakos, Kenya" },
+    { "@type": "Country", name: "Kenya" },
+  ],
+  // Full service catalog including gap services
   hasOfferCatalog: {
-    "@type": "OfferCatalog", name: "Cleaning Services",
-    itemListElement: ["House Cleaning","Office Cleaning","Deep Cleaning","Carpet Cleaning","Sofa Cleaning","Post Construction Cleaning","Move-In/Move-Out Cleaning"].map(s => ({ "@type": "Offer", itemOffered: { "@type": "Service", name: s } }))
-  }
+    "@type": "OfferCatalog",
+    name: "Professional Cleaning Services Nairobi Kenya",
+    itemListElement: [
+      "House Cleaning","Apartment Cleaning","Office Cleaning","Deep Cleaning",
+      "Carpet Cleaning","Sofa Set Cleaning","Mattress Cleaning","Post Construction Cleaning",
+      "Move-In/Move-Out Cleaning","Airbnb Cleaning","End of Tenancy Cleaning",
+      "Window Cleaning","High-Access Window Cleaning","Floor Care & Buffing",
+      "Kitchen Deep Cleaning","Bathroom Sanitization","Sanitary Bins Services",
+      "Janitorial Services","Vehicle Interior Cleaning","Swimming Pool Cleaning",
+      "Fumigation & Pest Control","Home & Office Disinfection","Housekeeping Services",
+      "Gardening & Landscaping","Garbage Collection","Event Cleanup Services",
+    ].map(s => ({ "@type": "Offer", itemOffered: { "@type": "Service", name: s, areaServed: "Nairobi, Kenya" } }))
+  },
+  // Pricing offers — targets "cleaning services prices Nairobi" keywords
+  offers: [
+    { "@type": "Offer", name: "House Cleaning Nairobi", price: "1500", priceCurrency: "KES", availability: "https://schema.org/InStock" },
+    { "@type": "Offer", name: "Office Cleaning Nairobi", price: "3000", priceCurrency: "KES", availability: "https://schema.org/InStock" },
+    { "@type": "Offer", name: "Deep Cleaning Nairobi", price: "4000", priceCurrency: "KES", availability: "https://schema.org/InStock" },
+    { "@type": "Offer", name: "Carpet Cleaning Nairobi", price: "1000", priceCurrency: "KES", availability: "https://schema.org/InStock" },
+    { "@type": "Offer", name: "Sofa Set Cleaning Nairobi", price: "800", priceCurrency: "KES", availability: "https://schema.org/InStock" },
+    { "@type": "Offer", name: "Post Construction Cleaning Nairobi", price: "5000", priceCurrency: "KES", availability: "https://schema.org/InStock" },
+  ],
 };
 
-const faqSchema = {
-  "@context": "https://schema.org", "@type": "FAQPage",
-  mainEntity: [
-    { "@type": "Question", name: "What areas in Nairobi do you serve?", acceptedAnswer: { "@type": "Answer", text: "We serve all areas across Nairobi including Karen, Westlands, Runda, Kilimani, Lavington, Kileleshwa, Parklands, Muthaiga, and 500+ more neighborhoods." } },
-    { "@type": "Question", name: "How do I book a cleaning service?", acceptedAnswer: { "@type": "Answer", text: "You can book online at our website, call us at +254726933261, or message us on WhatsApp. We offer flexible scheduling 7 days a week." } },
-    { "@type": "Question", name: "Are your cleaners vetted and insured?", acceptedAnswer: { "@type": "Answer", text: "Yes, all our cleaners are background-checked, professionally trained, and fully insured for your peace of mind." } },
-    { "@type": "Question", name: "Do you offer eco-friendly cleaning?", acceptedAnswer: { "@type": "Answer", text: "Yes, we use environmentally safe, non-toxic cleaning products that are safe for your family, pets, and the environment." } },
-  ]
-};
+// FAQ — homepage subset: covers pricing, areas, what's best, gap services
+const faqSchema = buildFAQSchema(MASTER_FAQS.slice(0, 10));
 
 const HomePage = () => {
   const [testimonials, setTestimonials] = useState([]);
@@ -154,36 +215,43 @@ const HomePage = () => {
 
   return (
     <div className="w-full overflow-x-hidden" style={{ fontFamily: "'DM Sans', sans-serif" }}>
+
       {/* ── SEO HEAD ── */}
       <Helmet>
         {/*
-          TITLE: Primary keyword first, brand name last.
-          Matches top-ranking competitor format but adds "Kenya" for
-          local disambiguation + "7+ yrs" for E-E-A-T trust.
+          TITLE STRATEGY (updated):
+          - Year "2026" added — GM Cleaning uses "2026" in titles and ranks well
+          - Kilimani pulled forward in subtitle — index.html analysis shows this is
+            the strongest "people also search for" cluster after "cleaning services Nairobi"
+          - Rating anchor matches index.html and beats GM/Titossy in visible pack
+          - "From KES 1,500" in description — targets pricing-intent keywords
+            that GM has a dedicated ranking page for
         */}
-        <title>Cleaning Services in Nairobi Kenya | House, Office, Carpet &amp; Deep Cleaning | Sylvie Cleaning Services</title>
+        <title>Best Cleaning Services in Nairobi Kenya (2026) | ★4.9 Rated | House, Office, Carpet &amp; Deep Cleaning | Sylvie</title>
 
         {/*
-          DESCRIPTION: 155 chars, packs primary + service + area keywords.
-          Includes phone number → drives direct calls from SERPs.
+          DESCRIPTION: 155 chars, packs primary + service + area + pricing keywords.
+          Includes phone → drives direct calls from SERPs.
+          Includes "same-day" — Bestcare ranks for this and it's high-intent.
         */}
-        <meta name="description" content="Best cleaning services in Nairobi Kenya — house cleaning, office cleaning, carpet cleaning, sofa set cleaning &amp; deep cleaning. Vetted, insured staff. 5,000+ happy clients. Call 0726 933 261. Serving Karen, Westlands, Runda, Kilimani &amp; 500+ areas." />
+        <meta name="description" content="Nairobi's #1 rated cleaning company ★4.9 (500+ reviews) — house, office, carpet, sofa &amp; deep cleaning. From KES 1,500. Same-day bookings. Kilimani, Karen, Westlands, Runda &amp; 500+ areas. Vetted &amp; insured since 2015. Call 0726 933 261." />
 
-        {/* Full keyword meta — primary + service + area + long-tail */}
+        {/* Full keyword bank — primary + service + area + pricing + competitor gap */}
         <meta name="keywords" content={ALL_KEYWORDS.join(", ")} />
 
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+        <meta name="googlebot" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
         <meta name="author" content="Sylvie Intercleaning Company Limited" />
         <meta name="rating" content="general" />
         <meta name="revisit-after" content="3 days" />
         <link rel="canonical" href={BUSINESS_INFO.url} />
 
-        {/* ── Open Graph (Facebook / LinkedIn / WhatsApp previews) ── */}
+        {/* ── Open Graph ── */}
         <meta property="og:type" content="website" />
         <meta property="og:url" content={BUSINESS_INFO.url} />
-        <meta property="og:title" content="Best Cleaning Services in Nairobi Kenya | Sylvie Cleaning Services" />
-        <meta property="og:description" content="House cleaning, office cleaning, carpet cleaning, sofa set cleaning &amp; deep cleaning across Karen, Westlands, Runda, Kilimani &amp; 500+ Nairobi areas. 5,000+ happy clients. Call 0726 933 261." />
+        <meta property="og:title" content="Best Cleaning Services in Nairobi Kenya (2026) | ★4.9 Rated | Sylvie Cleaning Services" />
+        <meta property="og:description" content="Nairobi's #1 cleaning company ★4.9 (500+ reviews). House, office, carpet, sofa &amp; deep cleaning near Kilimani, Karen, Westlands &amp; all Nairobi areas. From KES 1,500. Same-day bookings. Call 0726 933 261." />
         <meta property="og:image" content={heroImage} />
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="630" />
@@ -195,8 +263,8 @@ const HomePage = () => {
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:site" content="@sylviecleaning" />
         <meta name="twitter:creator" content="@sylviecleaning" />
-        <meta name="twitter:title" content="Best Cleaning Services in Nairobi Kenya | Sylvie Cleaning Services" />
-        <meta name="twitter:description" content="House cleaning, office cleaning, carpet &amp; sofa cleaning across all Nairobi areas. 5,000+ happy clients. Book online or call 0726 933 261." />
+        <meta name="twitter:title" content="Best Cleaning Services in Nairobi Kenya (2026) | ★4.9 | Sylvie Cleaning Services" />
+        <meta name="twitter:description" content="Nairobi's #1 cleaning company near Kilimani. House, office, carpet &amp; deep cleaning across all Nairobi areas. ★4.9 (500+ reviews). From KES 1,500. Book 0726 933 261." />
         <meta name="twitter:image" content={heroImage} />
         <meta name="twitter:image:alt" content="Sylvie Cleaning Services Nairobi" />
 
@@ -215,18 +283,18 @@ const HomePage = () => {
         <meta name="target" content="all" />
         <meta name="HandheldFriendly" content="True" />
 
-        {/* ── Structured Data: 5 schemas for maximum SERP features ── */}
+        {/* ── Structured Data: 5 schemas ── */}
 
-        {/* 1 — LocalBusiness (stars, hours, address in SERPs) */}
+        {/* 1 — LocalBusiness (stars, hours, address, reviews, pricing in SERPs) */}
         <script type="application/ld+json">{JSON.stringify(localBusinessSchema)}</script>
 
-        {/* 2 — FAQPage (expandable FAQ in SERPs) */}
+        {/* 2 — FAQPage (expandable FAQ — covers pricing, areas, gap services) */}
         <script type="application/ld+json">{JSON.stringify(faqSchema)}</script>
 
         {/* 3 — BreadcrumbList */}
         <script type="application/ld+json">{JSON.stringify(buildBreadcrumbSchema([{ name: "Home", path: "/" }]))}</script>
 
-        {/* 4 — WebSite (enables Sitelinks Search Box in Google) */}
+        {/* 4 — WebSite (Sitelinks Search Box) */}
         <script type="application/ld+json">{JSON.stringify(WEBSITE_SCHEMA)}</script>
 
         {/* 5 — Organization (Knowledge Panel signals) */}
@@ -254,7 +322,7 @@ const HomePage = () => {
               {/* Badge */}
               <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm border border-white/20 text-white text-xs font-semibold px-4 py-2 rounded-full mb-6 animate-pulse-slow" aria-label="Trust indicator">
                 <Star size={12} className="text-yellow-300" aria-hidden="true" />
-                Nairobi's #1 Rated Cleaning Company · 5000+ Happy Clients
+                Nairobi's #1 Rated Cleaning Company · ★4.9 from 500+ Reviews · From KES 1,500
               </div>
 
               <h1 className={`text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold text-white mb-4 leading-tight transition-all duration-500 ${animatingText ? "opacity-0 -translate-y-10" : "opacity-100 translate-y-0"}`}
@@ -278,7 +346,7 @@ const HomePage = () => {
                 <a href="tel:+254726933261" aria-label="Call us now"
                   className="inline-flex items-center bg-white/10 backdrop-blur-sm hover:bg-white/20 text-white font-semibold py-4 px-8 rounded-full transition-all duration-300 border border-white/20 text-base sm:text-lg">
                   <i className="fas fa-phone mr-3" aria-hidden="true" />
-                  Call Now
+                  Call Now: 0726 933 261
                 </a>
               </div>
             </div>
@@ -309,8 +377,8 @@ const HomePage = () => {
             {[
               { number: "5,000+", label: "Happy Clients", icon: "fas fa-smile" },
               { number: "500+", label: "Areas Served", icon: "fas fa-map-marker-alt" },
-              { number: "24/7", label: "Customer Support", icon: "fas fa-headset" },
-              { number: "100%", label: "Satisfaction Rate", icon: "fas fa-star" },
+              { number: "Same-Day", label: "Booking Available", icon: "fas fa-bolt" },
+              { number: "★4.9", label: "500+ Verified Reviews", icon: "fas fa-star" },
             ].map((stat, index) => (
               <div key={index} className="text-white">
                 <div className="text-4xl md:text-5xl font-bold mb-2" style={{ fontFamily: "'Playfair Display', Georgia, serif" }}>{stat.number}</div>
@@ -328,9 +396,9 @@ const HomePage = () => {
           <div className={`text-center mb-16 transition-all duration-1000 ${isVisible.services ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}>
             <span className="text-blue-600 font-semibold text-sm uppercase tracking-widest">What We Offer</span>
             <h2 id="services-heading" className="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-900 mt-3 mb-5" style={{ fontFamily: "'Playfair Display', Georgia, serif" }}>
-              Professional Cleaning Services<br className="hidden md:block" /> Across Nairobi
+              Professional Cleaning Services<br className="hidden md:block" /> Across Nairobi, Kiambu &amp; Beyond
             </h2>
-            <p className="text-lg text-gray-600 max-w-3xl mx-auto leading-relaxed">Comprehensive cleaning solutions designed for your specific needs, delivered with the highest standards of quality across every Nairobi neighborhood.</p>
+            <p className="text-lg text-gray-600 max-w-3xl mx-auto leading-relaxed">Comprehensive cleaning solutions — from house and office cleaning to carpet cleaning, vehicle interior, swimming pool, fumigation and more. Delivered across all Nairobi neighborhoods and surrounding counties.</p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
@@ -376,9 +444,9 @@ const HomePage = () => {
           <div className={`text-center mb-16 transition-all duration-1000 ${isVisible.whyChoose ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}>
             <span className="text-blue-600 font-semibold text-sm uppercase tracking-widest">Why Choose Us</span>
             <h2 id="why-heading" className="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-900 mt-3 mb-5" style={{ fontFamily: "'Playfair Display', Georgia, serif" }}>
-              Why Customers Trust Us<br className="hidden md:block" /> Across Nairobi
+              Why Customers Trust Us<br className="hidden md:block" /> Across Nairobi &amp; Kenya
             </h2>
-            <p className="text-lg text-gray-600 max-w-3xl mx-auto leading-relaxed">Backed by years of expertise, our commitment to excellence makes us Nairobi's most trusted cleaning company.</p>
+            <p className="text-lg text-gray-600 max-w-3xl mx-auto leading-relaxed">Backed by 9+ years of expertise, our commitment to excellence makes us one of Nairobi's most trusted and highest-rated cleaning companies.</p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
@@ -408,14 +476,14 @@ const HomePage = () => {
           <div className={`text-center mb-16 transition-all duration-1000 ${isVisible.howItWorks ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}>
             <span className="text-blue-600 font-semibold text-sm uppercase tracking-widest">Simple Process</span>
             <h2 id="how-heading" className="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-900 mt-3 mb-5" style={{ fontFamily: "'Playfair Display', Georgia, serif" }}>How Our Cleaning Service Works</h2>
-            <p className="text-lg text-gray-600 max-w-3xl mx-auto">Simple steps to get your space professionally cleaned across all Nairobi areas</p>
+            <p className="text-lg text-gray-600 max-w-3xl mx-auto">Four simple steps to get your home or office professionally cleaned across all Nairobi areas</p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {[
-              { step: "1", title: "Book Online", description: "Fill out our simple booking form for any location in Nairobi.", icon: "fas fa-calendar-plus" },
-              { step: "2", title: "Assessment Visit", description: "Our head of cleaning visits, assesses your needs, and provides a detailed quote.", icon: "fas fa-clipboard-check" },
-              { step: "3", title: "Professional Clean", description: "Our skilled local cleaners deliver exceptional service with attention to every detail.", icon: "fas fa-broom" },
+              { step: "1", title: "Book Online or Call", description: "Fill out our simple booking form or call/WhatsApp 0726 933 261 for any location in Nairobi, Kiambu or Machakos. Same-day bookings available.", icon: "fas fa-calendar-plus" },
+              { step: "2", title: "Assessment Visit", description: "Our head of cleaning visits, assesses your needs, and provides a detailed, no-hidden-fee quote.", icon: "fas fa-clipboard-check" },
+              { step: "3", title: "Professional Clean", description: "Our vetted, uniformed local cleaners deliver exceptional service with attention to every detail.", icon: "fas fa-broom" },
               { step: "4", title: "Quality Check", description: "Enjoy your clean space. We guarantee your satisfaction — or we re-clean for free.", icon: "fas fa-star" },
             ].map((step, index) => (
               <div key={index}
@@ -442,7 +510,7 @@ const HomePage = () => {
           <div className={`text-center mb-16 transition-all duration-1000 ${isVisible.videos ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}>
             <span className="text-blue-600 font-semibold text-sm uppercase tracking-widest">See Us In Action</span>
             <h2 id="videos-heading" className="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-900 mt-3 mb-5" style={{ fontFamily: "'Playfair Display', Georgia, serif" }}>Watch Our Team Clean Across Nairobi</h2>
-            <p className="text-lg text-gray-600 max-w-3xl mx-auto">Professional cleaning experts delivering exceptional results in various Nairobi neighborhoods</p>
+            <p className="text-lg text-gray-600 max-w-3xl mx-auto">Professional cleaning experts delivering exceptional results in Karen, Westlands, Kilimani and all Nairobi neighborhoods</p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -572,11 +640,11 @@ const HomePage = () => {
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
             {[
               { Icon: Shield, title: "Fully Insured", color: "#10b981" },
-              { Icon: Clock, title: "Always Punctual", color: "#2563eb" },
+              { Icon: Clock, title: "Same-Day Service", color: "#2563eb" },
               { Icon: Leaf, title: "Eco-Friendly", color: "#16a34a" },
               { Icon: Award, title: "Vetted Staff", color: "#7c3aed" },
               { Icon: Star, title: "100% Guarantee", color: "#d97706" },
-              { Icon: CreditCard, title: "Flexible Payment", color: "#db2777" },
+              { Icon: CreditCard, title: "M-Pesa Accepted", color: "#db2777" },
             ].map(({ Icon, title, color }, index) => (
               <div key={index} className="bg-white rounded-2xl p-5 text-center hover:shadow-lg transition-all duration-300 hover:-translate-y-1 border border-gray-100">
                 <div className="w-12 h-12 rounded-xl flex items-center justify-center mx-auto mb-3" style={{ background: `${color}15` }}>
@@ -596,7 +664,7 @@ const HomePage = () => {
             <h2 id="cta-heading" className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6 leading-tight" style={{ fontFamily: "'Playfair Display', Georgia, serif" }}>
               Ready for a Spotless<br className="hidden md:block" /> Space in Your Area?
             </h2>
-            <p className="text-lg sm:text-xl text-blue-100 mb-10 max-w-3xl mx-auto">Book today and enjoy a cleaner, healthier environment — guaranteed across all Nairobi neighborhoods.</p>
+            <p className="text-lg sm:text-xl text-blue-100 mb-10 max-w-3xl mx-auto">Book today and enjoy a cleaner, healthier environment — guaranteed. Services from KES 1,500 across all Nairobi neighborhoods.</p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
               <Link to="/book" aria-label="Book a cleaning service now"
                 className="inline-flex items-center bg-white hover:bg-gray-50 text-blue-700 font-bold py-4 px-10 rounded-full transition-all hover:scale-105 shadow-2xl text-lg gap-3">
@@ -611,7 +679,7 @@ const HomePage = () => {
             </div>
             <p className="text-blue-200 text-sm mt-8 flex items-center justify-center gap-2">
               <MapPin size={14} aria-hidden="true" />
-              Serving Karen, Westlands, Runda, Kilimani, Lavington and 500+ Nairobi locations
+              Serving Kilimani, Karen, Westlands, Runda, Lavington and 500+ Nairobi locations — also Kiambu &amp; Machakos
             </p>
           </div>
         </div>
@@ -623,10 +691,10 @@ const HomePage = () => {
           <div className={`text-center mb-14 transition-all duration-1000 ${isVisible.areas ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}>
             <span className="text-blue-600 font-semibold text-sm uppercase tracking-widest">Where We Work</span>
             <h2 id="areas-heading" className="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-900 mt-3 mb-5" style={{ fontFamily: "'Playfair Display', Georgia, serif" }}>
-              Areas We Serve Across Nairobi
+              Areas We Serve Across Nairobi, Kiambu &amp; Machakos
             </h2>
             <p className="text-lg text-gray-600 max-w-3xl mx-auto leading-relaxed">
-              From Karen to Kasarani, our vetted cleaning teams cover every major Nairobi neighborhood. Browse your region below to see the estates and roads we serve.
+              From Karen to Kasarani, Kilimani to Kiambu, our vetted cleaning teams cover every major Nairobi neighborhood and surrounding county. Browse your region below to see the estates and roads we serve.
             </p>
           </div>
 
@@ -674,7 +742,7 @@ const HomePage = () => {
             <Link to="/book" className="text-blue-600 font-semibold hover:text-blue-800">
               Get in touch
             </Link>{" "}
-            — we likely still cover it.
+            — we likely still cover it, including Kiambu and Machakos county.
           </p>
         </div>
       </section>
