@@ -121,7 +121,7 @@ const AboutPage = () => {
             <p className="text-gray-600 max-w-2xl mx-auto">The principles that guide everything we do at Sylvie Cleaning Services</p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {foundationItems.map(({ Icon, title, desc, color, bg }, index) => (
+            {foundationItems.map(({ title, desc, color, bg }, index) => (
               <div key={index} className="rounded-2xl p-7 text-center hover:shadow-lg transition-all duration-300 hover:-translate-y-1" style={{ background: bg, border: `1px solid ${color}20` }}>
                 <div className="w-14 h-14 rounded-2xl flex items-center justify-center mx-auto mb-5" style={{ background: `${color}15` }}>
                   <Icon size={26} style={{ color }} aria-hidden="true" />
