@@ -3,13 +3,14 @@ import { Link } from "react-router-dom";
 import { Helmet } from "react-helmet";
 import aboutImage from "../../assets/images/newSlider6.jpg";
 import { Eye, Zap, Star, HeartHandshake } from "lucide-react";
+// ✅ FIX: Correct import path - going up to root, then into seo-keywords-boost
 import { 
   BUSINESS_INFO, 
   buildLocalBusinessSchema, 
   buildBreadcrumbSchema,
   ORGANIZATION_SCHEMA,
   WEBSITE_SCHEMA
-} from "../../utils/seo";
+} from "../../../seo-keywords-boost/seo.js";
 
 const AboutPage = () => {
   const pageTitle = "About Sylvie Intercleaning Company | Professional Cleaning Services Nairobi";
@@ -38,15 +39,17 @@ const AboutPage = () => {
     { icon: "fas fa-magnifying-glass", title: "Attention to Detail", desc: "Our hands-on quality-check process means nothing is missed, ever.", color: "#0891b2" },
   ];
 
-  // Get the LocalBusiness schema WITHOUT aggregateRating
-  // We'll create a custom version without the aggregateRating to avoid duplicates
-  const localBusinessSchema = {
-    ...buildLocalBusinessSchema(),
-    // Remove aggregateRating from the business schema to avoid duplication
-    aggregateRating: undefined,
-    // Remove reviews too since we're not displaying individual reviews on this page
-    review: undefined
+  // ✅ FIX: Create LocalBusiness schema WITHOUT aggregateRating and review
+  const getLocalBusinessSchemaWithoutRating = () => {
+    const schema = buildLocalBusinessSchema();
+    // Remove aggregateRating to avoid duplication error
+    delete schema.aggregateRating;
+    // Remove individual reviews to avoid duplication
+    delete schema.review;
+    return schema;
   };
+
+  const localBusinessSchema = getLocalBusinessSchemaWithoutRating();
 
   return (
     <div className="min-h-screen" style={{ fontFamily: "'DM Sans', sans-serif" }}>
@@ -102,7 +105,7 @@ const AboutPage = () => {
           ]))}
         </script>
         
-        {/* 5. SINGLE AggregateRating Schema - ONLY ONE! */}
+        {/* 5. ✅ SINGLE AggregateRating Schema - ONLY ONE per page! */}
         <script type="application/ld+json">
           {JSON.stringify({
             "@context": "https://schema.org",
