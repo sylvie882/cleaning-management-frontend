@@ -2,8 +2,14 @@
 import { Link } from "react-router-dom";
 import { Helmet } from "react-helmet";
 import aboutImage from "../../assets/images/newSlider6.jpg";
-import { Eye, Zap, Star, Shield, Users, Clock, CheckCircle, Award, HeartHandshake } from "lucide-react";
-import { BUSINESS_INFO, buildBreadcrumbSchema, buildLocalBusinessSchema } from "../../utils/seo";
+import { Eye, Zap, Star, HeartHandshake } from "lucide-react";
+import { 
+  BUSINESS_INFO, 
+  buildLocalBusinessSchema, 
+  buildBreadcrumbSchema,
+  ORGANIZATION_SCHEMA,
+  WEBSITE_SCHEMA
+} from "../../utils/seo";
 
 const AboutPage = () => {
   const pageTitle = "About Sylvie Intercleaning Company | Professional Cleaning Services Nairobi";
@@ -32,26 +38,89 @@ const AboutPage = () => {
     { icon: "fas fa-magnifying-glass", title: "Attention to Detail", desc: "Our hands-on quality-check process means nothing is missed, ever.", color: "#0891b2" },
   ];
 
+  // Get the LocalBusiness schema WITHOUT aggregateRating
+  // We'll create a custom version without the aggregateRating to avoid duplicates
+  const localBusinessSchema = {
+    ...buildLocalBusinessSchema(),
+    // Remove aggregateRating from the business schema to avoid duplication
+    aggregateRating: undefined,
+    // Remove reviews too since we're not displaying individual reviews on this page
+    review: undefined
+  };
+
   return (
     <div className="min-h-screen" style={{ fontFamily: "'DM Sans', sans-serif" }}>
       <Helmet>
         <title>{pageTitle}</title>
         <meta name="description" content={pageDesc} />
-        <meta name="keywords" content="Sylvie Cleaning Services about, professional cleaning company Nairobi, cleaning company Kenya, Sylvie Intercleaning Company Limited" />
+        <meta name="keywords" content="Sylvie Cleaning Services about, professional cleaning company Nairobi, cleaning company Kenya, Sylvie Intercleaning Company Limited, about Sylvie cleaning" />
         <meta name="robots" content="index, follow" />
         <link rel="canonical" href={canonicalUrl} />
+        
+        {/* Open Graph */}
         <meta property="og:type" content="website" />
         <meta property="og:url" content={canonicalUrl} />
         <meta property="og:title" content={pageTitle} />
         <meta property="og:description" content={pageDesc} />
         <meta property="og:site_name" content="Sylvie Cleaning Services" />
+        <meta property="og:image" content={`${BUSINESS_INFO.url}/og-image.jpg`} />
+        
+        {/* Twitter Card */}
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content={pageTitle} />
         <meta name="twitter:description" content={pageDesc} />
+        <meta name="twitter:image" content={`${BUSINESS_INFO.url}/og-image.jpg`} />
+        
+        {/* Geo tags */}
         <meta name="geo.region" content="KE-110" />
         <meta name="geo.placename" content="Nairobi, Kenya" />
-        <script type="application/ld+json">{JSON.stringify(buildLocalBusinessSchema())}</script>
-        <script type="application/ld+json">{JSON.stringify(buildBreadcrumbSchema([{ name: "Home", path: "/" }, { name: "About", path: "/about" }]))}</script>
+        <meta name="geo.position" content="-1.2921;36.8219" />
+        <meta name="ICBM" content="-1.2921, 36.8219" />
+        
+        {/* ===== STRUCTURED DATA ===== */}
+        
+        {/* 1. LocalBusiness Schema (WITHOUT aggregateRating) */}
+        <script type="application/ld+json">
+          {JSON.stringify(localBusinessSchema)}
+        </script>
+        
+        {/* 2. Organization Schema */}
+        <script type="application/ld+json">
+          {JSON.stringify(ORGANIZATION_SCHEMA)}
+        </script>
+        
+        {/* 3. Website Schema */}
+        <script type="application/ld+json">
+          {JSON.stringify(WEBSITE_SCHEMA)}
+        </script>
+        
+        {/* 4. Breadcrumb Schema */}
+        <script type="application/ld+json">
+          {JSON.stringify(buildBreadcrumbSchema([
+            { name: "Home", path: "/" }, 
+            { name: "About", path: "/about" }
+          ]))}
+        </script>
+        
+        {/* 5. SINGLE AggregateRating Schema - ONLY ONE! */}
+        <script type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "AggregateRating",
+            "ratingValue": BUSINESS_INFO.ratingValue,
+            "reviewCount": BUSINESS_INFO.reviewCount,
+            "bestRating": 5,
+            "worstRating": 1,
+            "itemReviewed": {
+              "@type": "LocalBusiness",
+              "name": BUSINESS_INFO.name,
+              "url": BUSINESS_INFO.url,
+              "image": BUSINESS_INFO.logo
+            }
+          })}
+        </script>
+        
+        {/* Fonts */}
         <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
       </Helmet>
 
@@ -96,7 +165,12 @@ const AboutPage = () => {
                 <p>Our hands-on approach, attention to detail, and the professionalism exhibited by our management and staff set us apart from competitors. We don't just clean — we transform spaces.</p>
               </div>
               <div className="flex flex-wrap gap-6 mt-8">
-                {[["5,000+", "Happy Clients"], ["500+", "Areas Served"], ["24/7", "Support"], ["100%", "Satisfaction Guarantee"]].map(([num, label]) => (
+                {[
+                  ["5,000+", "Happy Clients"], 
+                  ["500+", "Areas Served"], 
+                  ["24/7", "Support"], 
+                  ["100%", "Satisfaction Guarantee"]
+                ].map(([num, label]) => (
                   <div key={label} className="text-center">
                     <div className="text-2xl font-bold text-blue-600" style={{ fontFamily: "'Playfair Display', Georgia, serif" }}>{num}</div>
                     <div className="text-xs text-gray-500 font-medium mt-0.5">{label}</div>
@@ -106,7 +180,12 @@ const AboutPage = () => {
             </div>
             <div className="lg:w-1/2 order-1 lg:order-2">
               <div className="relative rounded-3xl overflow-hidden shadow-2xl">
-                <img src={aboutImage} alt="Sylvie Cleaning Services professional team at work in Nairobi" className="w-full h-80 object-cover" loading="lazy" />
+                <img 
+                  src={aboutImage} 
+                  alt="Sylvie Cleaning Services professional team at work in Nairobi" 
+                  className="w-full h-80 object-cover" 
+                  loading="lazy" 
+                />
                 <div className="absolute inset-0 bg-gradient-to-t from-blue-900/30 to-transparent" aria-hidden="true" />
               </div>
             </div>
@@ -122,7 +201,11 @@ const AboutPage = () => {
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {foundationItems.map(({ title, desc, color, bg }, index) => (
-              <div key={index} className="rounded-2xl p-7 text-center hover:shadow-lg transition-all duration-300 hover:-translate-y-1" style={{ background: bg, border: `1px solid ${color}20` }}>
+              <div 
+                key={index} 
+                className="rounded-2xl p-7 text-center hover:shadow-lg transition-all duration-300 hover:-translate-y-1" 
+                style={{ background: bg, border: `1px solid ${color}20` }}
+              >
                 <div className="w-14 h-14 rounded-2xl flex items-center justify-center mx-auto mb-5" style={{ background: `${color}15` }}>
                   <Icon size={26} style={{ color }} aria-hidden="true" />
                 </div>
@@ -162,7 +245,7 @@ const AboutPage = () => {
           </div>
           <div className="bg-white rounded-2xl shadow-lg p-8 border border-gray-100">
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6 text-center">
-              {["Nairobi", "Westlands", "Nakuru", "Kiambu", "Other Cities"].map((city) => (
+              {["Nairobi", "Westlands", "Nakuru", "Kiambu", "Machakos"].map((city) => (
                 <div key={city} className="group">
                   <div className="w-14 h-14 rounded-2xl flex items-center justify-center mx-auto mb-3 group-hover:scale-110 transition-transform" style={{ background: "#eff6ff" }}>
                     <i className="fas fa-map-marker-alt text-blue-600 text-lg" aria-hidden="true" />
@@ -197,7 +280,11 @@ const AboutPage = () => {
         </section>
 
         {/* CTA */}
-        <section className="rounded-3xl p-10 md:p-14 text-center text-white relative overflow-hidden" aria-labelledby="about-cta-heading" style={{ background: "linear-gradient(135deg, #1d4ed8 0%, #1e40af 50%, #312e81 100%)" }}>
+        <section 
+          className="rounded-3xl p-10 md:p-14 text-center text-white relative overflow-hidden" 
+          aria-labelledby="about-cta-heading" 
+          style={{ background: "linear-gradient(135deg, #1d4ed8 0%, #1e40af 50%, #312e81 100%)" }}
+        >
           <div className="absolute inset-0 overflow-hidden" aria-hidden="true">
             <div className="absolute -top-10 -right-10 w-64 h-64 rounded-full opacity-10 bg-white blur-3xl" />
           </div>
@@ -205,11 +292,19 @@ const AboutPage = () => {
             <h2 id="about-cta-heading" className="text-2xl md:text-3xl font-bold mb-4" style={{ fontFamily: "'Playfair Display', Georgia, serif" }}>Ready to Experience Sylvie Cleaning Quality?</h2>
             <p className="text-blue-100 text-lg mb-8 max-w-2xl mx-auto">Join 5000+ satisfied clients across Kenya who trust us with their cleaning needs.</p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link to="/book" aria-label="Book our cleaning services" className="inline-flex items-center gap-2 bg-white text-blue-700 hover:bg-blue-50 px-8 py-4 rounded-full font-bold text-base transition-all hover:scale-105 shadow-xl">
+              <Link 
+                to="/book" 
+                aria-label="Book our cleaning services" 
+                className="inline-flex items-center gap-2 bg-white text-blue-700 hover:bg-blue-50 px-8 py-4 rounded-full font-bold text-base transition-all hover:scale-105 shadow-xl"
+              >
                 <i className="fas fa-calendar-check" aria-hidden="true" />
                 Book Our Services
               </Link>
-              <Link to="/contact" aria-label="Contact us 24/7" className="inline-flex items-center gap-2 bg-transparent text-white border-2 border-white/30 hover:bg-white/10 px-8 py-4 rounded-full font-bold text-base transition-all">
+              <Link 
+                to="/contact" 
+                aria-label="Contact us 24/7" 
+                className="inline-flex items-center gap-2 bg-transparent text-white border-2 border-white/30 hover:bg-white/10 px-8 py-4 rounded-full font-bold text-base transition-all"
+              >
                 <i className="fas fa-phone" aria-hidden="true" />
                 Contact Us 24/7
               </Link>
@@ -217,10 +312,6 @@ const AboutPage = () => {
           </div>
         </section>
       </main>
-
-      <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=DM+Sans:wght@400;500;600;700&display=swap');
-      `}</style>
     </div>
   );
 };
